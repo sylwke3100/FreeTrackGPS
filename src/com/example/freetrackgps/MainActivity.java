@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private LocationManager service;
@@ -24,8 +25,8 @@ public class MainActivity extends Activity {
 	private Button pauseButton, startButton;
     private SharedPreferences SP;
 	private RouteManager currentRoute;
-
-	protected void onCreate(Bundle savedInstanceState) {
+    private boolean gpsCurrentStatus;
+    protected void onCreate(Bundle savedInstanceState) {
         SP = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -43,9 +44,10 @@ public class MainActivity extends Activity {
 		});
 		pauseButton.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View V){ onPauseRoute();}
-		});	
+		});
+        gpsCurrentStatus = false;
 
-        onCreateGPSConnection(textViewElements, service, currentRoute);
+        onCreateGPSConnection(textViewElements, service, currentRoute, gpsCurrentStatus);
         if(currentRoute.getStatus()!= 2){
             setPreviewStatus(View.INVISIBLE);
         }else{
@@ -71,11 +73,11 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    public void onCreateGPSConnection(List<TextView> textViewElements, LocationManager service, RouteManager currentRoute){
+    public void onCreateGPSConnection(List<TextView> textViewElements, LocationManager service, RouteManager currentRoute, boolean gpsCurrentStatus){
         if (service != null){
             int[] time = getResources().getIntArray(R.array.arr);
             int[] distance = getResources().getIntArray(R.array.sarr);
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute) );
+            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
             textViewElements.get(1).setText("On");
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (L != null){
@@ -88,7 +90,7 @@ public class MainActivity extends Activity {
             textViewElements.get(1).setText("Off");
             int[] time = getResources().getIntArray(R.array.arr);
             int[] distance = getResources().getIntArray(R.array.sarr);
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute) );
+            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
         }
     }
     public void setPreviewStatus(int status){
@@ -100,18 +102,23 @@ public class MainActivity extends Activity {
         }
     }
 	public void onStartRoute() {
-		if (currentRoute.getStatus() == 0){
+		if (currentRoute.getStatus() == 0 && gpsCurrentStatus == true){
 			currentRoute.start();
 			workoutStatus.setText("Active");
 			startButton.setText("Stop");
             setPreviewStatus(View.VISIBLE);
 		}
-		else{
-			currentRoute.stop();
-			workoutStatus.setText("--");
-			startButton.setText("Start");
-            setPreviewStatus(View.INVISIBLE);
-		}	
+		else {
+            if (gpsCurrentStatus == true) {
+                currentRoute.stop();
+                workoutStatus.setText("--");
+                startButton.setText("Start");
+                setPreviewStatus(View.INVISIBLE);
+            }
+            else{
+                Toast.makeText(getBaseContext(), "Error Start workout - check GPS connection", Toast.LENGTH_LONG).show();
+            }
+        }
 	}
 	public void onPauseRoute(){
 			if(currentRoute.getStatus() == 2){
