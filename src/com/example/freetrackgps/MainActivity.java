@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 		gpsPosition = (TextView)this.findViewById(R.id.textPosition);
 		workoutStatus = (TextView)this.findViewById(R.id.textSatlites);
 		workoutDistance = (TextView)this.findViewById(R.id.textWorkOut);
-		textViewElements = Arrays.asList(gpsPosition, gpsStatus, workoutStatus, workoutDistance);
+		textViewElements = Arrays.asList(gpsPosition, gpsStatus, workoutDistance);
 		pauseButton = (Button)this.findViewById(R.id.pauseButton);
 		startButton = (Button)this.findViewById(R.id.startButton);
 		currentRoute = new RouteManager(this);
