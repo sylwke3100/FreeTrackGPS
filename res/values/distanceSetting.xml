@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="sarr">
+        <item>50</item>
+        <item>100</item>
+        <item>180</item>
+    </integer-array>
+</resources>

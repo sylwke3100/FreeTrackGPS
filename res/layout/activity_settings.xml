@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                    android:layout_height="match_parent" tools:context=".Settings">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/settingGPSSpeedScan"
+            android:id="@+id/textView"
+            android:layout_marginTop="39dp"
+            android:layout_marginLeft="34dp"
+            android:textSize="14dp"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/settingDistanceBeetwenPointLabel"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/spinner" android:layout_alignLeft="@+id/textView"
+            android:layout_alignStart="@+id/textView" android:layout_marginTop="42dp" android:textSize="14dp"/>
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:spinnerMode="dropdown" android:layout_alignTop="@+id/textView"
+            android:layout_toRightOf="@+id/textView2" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner2" android:layout_alignTop="@+id/textView2"
+            android:layout_alignLeft="@+id/spinner"
+            android:layout_alignStart="@+id/spinner" android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/settingShowWorkoutInfoLabel"
+            android:id="@+id/textView3"
+            android:textSize="14dp"
+            android:layout_toStartOf="@+id/toggleButton"
+            android:layout_below="@+id/spinner2" android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2" android:layout_marginTop="72dp"/>
+    <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:id="@+id/toggleButton"
+            android:checked="false"
+            android:layout_alignTop="@+id/textView3" android:layout_alignLeft="@+id/spinner2"
+            android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel"
+            android:textOn="@string/onLabal"/>
+</RelativeLayout>

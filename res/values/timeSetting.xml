@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <integer-array name="arr">
+       <item>500</item>
+       <item>1000</item>
+       <item>1500</item>
+   </integer-array>
+</resources>

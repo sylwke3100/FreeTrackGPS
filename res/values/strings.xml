@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FreeTrackGPS</string>
+    <string name="action_settings">Settings</string>
+    <string name="gpsStatusLabel">GPS Status</string>
+    <string name="gpsPositionLabel">Position</string>
+    <string name="workoutStatusLabel">Workout status</string>
+    <string name="workoutDistanceLabel">Distance</string>
+    <string name="workoutStartLabel">Start</string>
+    <string name="workoutPauseLabel">Pause</string>
+    <string name="settingGPSSpeedScan">Speed GPS scan</string>
+    <string name="settingDistanceBeetwenPointLabel">Distance between points</string>
+    <string name="settingShowWorkoutInfoLabel">Show workout info if stop</string>
+    <string name="offLabel">Off</string>
+    <string name="onLabal">On</string>
+
+</resources>
