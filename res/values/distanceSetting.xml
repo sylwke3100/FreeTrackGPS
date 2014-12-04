@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="sarr">
+    <integer-array name="distanceArray">
         <item>50</item>
         <item>100</item>
         <item>180</item>

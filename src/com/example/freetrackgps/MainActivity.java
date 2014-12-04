@@ -78,9 +78,9 @@ public class MainActivity extends Activity {
     }
 
     public void onCreateGPSConnection(List<TextView> textViewElements, LocationManager service, RouteManager currentRoute, boolean gpsCurrentStatus){
+        int[] time = getResources().getIntArray(R.array.timeArray);
+        int[] distance = getResources().getIntArray(R.array.distanceArray);
         if (service != null){
-            int[] time = getResources().getIntArray(R.array.arr);
-            int[] distance = getResources().getIntArray(R.array.sarr);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
             textViewElements.get(1).setText(getString(R.string.onLabal));
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -92,8 +92,6 @@ public class MainActivity extends Activity {
         }
         else{
             textViewElements.get(1).setText(getString(R.string.offLabel));
-            int[] time = getResources().getIntArray(R.array.arr);
-            int[] distance = getResources().getIntArray(R.array.sarr);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
         }
     }
