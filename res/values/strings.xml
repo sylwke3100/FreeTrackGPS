@@ -3,6 +3,7 @@
 
     <string name="app_name">FreeTrackGPS</string>
     <string name="action_settings">Settings</string>
+    <string name="gpsSetting">Location Settings</string>
     <string name="gpsStatusLabel">GPS Status</string>
     <string name="gpsPositionLabel">Position</string>
     <string name="workoutStatusLabel">Workout status</string>

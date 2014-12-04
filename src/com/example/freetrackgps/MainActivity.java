@@ -68,6 +68,11 @@ public class MainActivity extends Activity {
                 Intent inent = new Intent(this, Settings.class);
                 startActivity(inent);
                 break;
+            case R.id.gpsSetting:
+                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
         }
         return true;
     }
@@ -77,7 +82,7 @@ public class MainActivity extends Activity {
             int[] time = getResources().getIntArray(R.array.arr);
             int[] distance = getResources().getIntArray(R.array.sarr);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
-            textViewElements.get(1).setText("On");
+            textViewElements.get(1).setText(getString(R.string.onLabal));
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (L != null){
                 String message = String.format( " %1$s %2$s", String.format( "%.2f", L.getLongitude()), String.format( "%.2f", L.getLatitude()),  String.format( "%.2f", L.getAltitude()) );
@@ -86,7 +91,7 @@ public class MainActivity extends Activity {
             }
         }
         else{
-            textViewElements.get(1).setText("Off");
+            textViewElements.get(1).setText(getString(R.string.offLabel));
             int[] time = getResources().getIntArray(R.array.arr);
             int[] distance = getResources().getIntArray(R.array.sarr);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
