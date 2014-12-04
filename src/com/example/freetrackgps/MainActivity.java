@@ -48,11 +48,10 @@ public class MainActivity extends Activity {
         gpsCurrentStatus = false;
 
         onCreateGPSConnection(textViewElements, service, currentRoute, gpsCurrentStatus);
-        if(currentRoute.getStatus()!= 2){
+        if(currentRoute.getStatus()!= 2)
             setPreviewStatus(View.INVISIBLE);
-        }else{
+        else
             setPreviewStatus(View.VISIBLE);
-        }
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,32 +103,32 @@ public class MainActivity extends Activity {
 	public void onStartRoute() {
 		if (currentRoute.getStatus() == 0 && gpsCurrentStatus == true){
 			currentRoute.start();
-			workoutStatus.setText("Active");
-			startButton.setText("Stop");
+			workoutStatus.setText(getString(R.string.activeLabel));
+			startButton.setText(getString(R.string.stopLabel));
             setPreviewStatus(View.VISIBLE);
 		}
 		else {
             if (gpsCurrentStatus == true) {
                 currentRoute.stop();
                 workoutStatus.setText("--");
-                startButton.setText("Start");
+                startButton.setText(getString(R.string.startLabel));
                 setPreviewStatus(View.INVISIBLE);
             }
             else{
-                Toast.makeText(getBaseContext(), "Error Start workout - check GPS connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), getString(R.string.errorGPSConnectuionInfo), Toast.LENGTH_LONG).show();
             }
         }
 	}
 	public void onPauseRoute(){
 			if(currentRoute.getStatus() == 2){
 				currentRoute.pause();
-				workoutStatus.setText("Pause");
-				pauseButton.setText("Unpause");
+				workoutStatus.setText(getString(R.string.pauseLabel));
+				pauseButton.setText(getString(R.string.unPauseLabel));
 			}
 			else if (currentRoute.getStatus() == 1){
 				currentRoute.unpause();
-				workoutStatus.setText("Active");
-				pauseButton.setText("Pause");
+				workoutStatus.setText(getString(R.string.activeLabel));
+				pauseButton.setText(getString(R.string.pauseLabel));
 			}
 	}
 }

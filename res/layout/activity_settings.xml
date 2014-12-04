@@ -54,6 +54,5 @@
             android:id="@+id/toggleButton"
             android:checked="false"
             android:layout_alignTop="@+id/textView3" android:layout_alignLeft="@+id/spinner2"
-            android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel"
-            android:textOn="@string/onLabal"/>
+            android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel"/>
 </RelativeLayout>
