@@ -73,6 +73,10 @@ public class MainActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
+            case R.id.action_about:
+                Intent inet = new Intent(this, About.class);
+                startActivity(inet);
+            break;
         }
         return true;
     }

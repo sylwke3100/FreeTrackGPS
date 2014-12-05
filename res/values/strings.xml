@@ -3,6 +3,7 @@
 
     <string name="app_name">FreeTrackGPS</string>
     <string name="action_settings">Settings</string>
+    <string name="action_about">About FreeTrackGPS</string>
     <string name="gpsSetting">Location Settings</string>
     <string name="gpsStatusLabel">GPS Status</string>
     <string name="gpsPositionLabel">Position</string>
@@ -21,5 +22,8 @@
     <string name="startLabel">Start</string>
     <string name="stopLabel">Stop</string>
     <string name="activeLabel">Active</string>
+    <string name="aboutProgram">Simple application for save gps workout to GPX file</string>
+    <string name="version">0.1</string>
+    <string name="versionLabel">version</string>
 
 </resources>

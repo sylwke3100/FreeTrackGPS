@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.freetrackgps.Settings" android:label="Settings"/>
+        <activity android:name=".About" android:label="About FreeTrackGPS"/>
 
     </application>
     

@@ -11,4 +11,10 @@
         android:orderInCategory="200"
         android:showAsAction="never"
         android:title="@string/gpsSetting" android:menuCategory="system"/>
+
+    <item
+            android:id="@+id/action_about"
+            android:orderInCategory="300"
+            android:showAsAction="never"
+            android:title="@string/action_about" android:menuCategory="system"/>
             </menu>

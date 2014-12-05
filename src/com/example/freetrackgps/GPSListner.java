@@ -1,5 +1,8 @@
 package com.example.freetrackgps;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.PendingIntent;
 import android.location.*;
 import android.widget.TextView;
 
