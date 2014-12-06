@@ -14,10 +14,16 @@ import java.io.File;
 
 import android.location.Location;
 
+
 public class RouteManager {
+    public enum routeStatus{
+        stop,
+        pasue,
+        start
+    }
 	private Context context;
 	private ArrayList<RouteElement> points = new ArrayList<RouteElement>();
-	private int status;
+	private routeStatus status;
 	private long startTime; 
 	private Location lastPosition;
 	private double distance;
@@ -29,7 +35,7 @@ public class RouteManager {
 	}
 	public void start(){
 		startTime = System.currentTimeMillis();
-		status = 2;
+		status = routeStatus.start;
 		distance = 0.0;
 		points.clear();
 		B = new StringBuffer();
@@ -43,7 +49,7 @@ public class RouteManager {
 	}
 	public void addPoint(Location currentLocation){
 		Date D = new Date();
-		if (status == 2){
+		if (status == routeStatus.start){
 			long currentTime = D.getTime();
 			GPX.addPoint(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime );	
 			if (lastPosition != null)
@@ -52,19 +58,19 @@ public class RouteManager {
 		lastPosition = currentLocation;
 	}
 	public void pause(){
-		status = 1;
+		status = routeStatus.pasue;
 	}
 	public void unpause(){
-		status = 2;
+		status = routeStatus.start;
 	}
 	public double getDistance(){
 		return distance;
 	}
-	public int getStatus(){
+	public routeStatus getStatus(){
 		return status;
 	}
 	public void stop(){
-		status = 0;
+		status = routeStatus.stop;
 		distance = 0.0;
 		lastPosition = null;
 		if(GPX.save() == true)

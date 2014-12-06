@@ -28,7 +28,7 @@ public class GPSConnectionManager {
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (L != null){
                 String message = String.format( " %1$s %2$s", String.format( "%.2f", L.getLongitude()), String.format( "%.2f", L.getLatitude()),  String.format( "%.2f", L.getAltitude()) );
-                if (currentRoute.getStatus() !=0)
+                if (currentRoute.getStatus() != RouteManager.routeStatus.stop)
                     textViewElements.get(0).setText(message);
             }
         }

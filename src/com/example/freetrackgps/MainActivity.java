@@ -48,14 +48,14 @@ public class MainActivity extends Activity {
 		});
 
         gpsConnect.onCreateConnection(textViewElements, service, currentRoute);
-        if(currentRoute.getStatus()!= 2)
+        if(currentRoute.getStatus()!= RouteManager.routeStatus.start)
             setPreviewStatus(View.INVISIBLE);
         else
             setPreviewStatus(View.VISIBLE);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-        if (currentRoute.getStatus() != 2) {
+        if (currentRoute.getStatus() != RouteManager.routeStatus.start) {
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
         }
     }
 	public void onStartRoute() {
-		if (currentRoute.getStatus() == 0 && gpsConnect.getStatus() == true){
+		if (currentRoute.getStatus() == RouteManager.routeStatus.stop && gpsConnect.getStatus() == true){
 			currentRoute.start();
 			workoutStatus.setText(getString(R.string.activeLabel));
 			startButton.setText(getString(R.string.stopLabel));
@@ -109,12 +109,12 @@ public class MainActivity extends Activity {
         }
 	}
 	public void onPauseRoute(){
-			if(currentRoute.getStatus() == 2){
+			if(currentRoute.getStatus() == RouteManager.routeStatus.start){
 				currentRoute.pause();
 				workoutStatus.setText(getString(R.string.pauseLabel));
 				pauseButton.setText(getString(R.string.unPauseLabel));
 			}
-			else if (currentRoute.getStatus() == 1){
+			else if (currentRoute.getStatus() == RouteManager.routeStatus.pasue){
 				currentRoute.unpause();
 				workoutStatus.setText(getString(R.string.activeLabel));
 				pauseButton.setText(getString(R.string.pauseLabel));

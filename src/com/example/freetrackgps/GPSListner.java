@@ -35,19 +35,19 @@ public class GPSListner implements LocationListener  {
     	case LocationProvider.AVAILABLE:
     		this.gpsStatus.setText("On");
             gpsCurrentStatus = true;
-    		if (localRoute.getStatus() == 1)
+    		if (localRoute.getStatus() == RouteManager.routeStatus.pasue)
     			localRoute.unpause();
     		break;
     	case LocationProvider.OUT_OF_SERVICE:
     		this.gpsStatus.setText("Off");
             gpsCurrentStatus = false;
-    		if (localRoute.getStatus() == 2)
+    		if (localRoute.getStatus() == RouteManager.routeStatus.start)
     			localRoute.pause();
     		break;
     	case LocationProvider.TEMPORARILY_UNAVAILABLE:
     		this.gpsStatus.setText("Off");
             gpsCurrentStatus = false;
-    		if (localRoute.getStatus() == 2)
+    		if (localRoute.getStatus() == RouteManager.routeStatus.start)
     			localRoute.pause();
     		break;
     	}
@@ -55,13 +55,13 @@ public class GPSListner implements LocationListener  {
     public void onProviderDisabled(String s) {
     	this.gpsStatus.setText("Off");
         gpsCurrentStatus = false;
-    	if (localRoute.getStatus() == 2)
+    	if (localRoute.getStatus() == RouteManager.routeStatus.start)
     		localRoute.pause();
     }
     public void onProviderEnabled(String s) {
     	this.gpsStatus.setText("On");
         gpsCurrentStatus = true;
-    	if (localRoute.getStatus() == 1)
+    	if (localRoute.getStatus() == RouteManager.routeStatus.pasue)
     		localRoute.unpause();
     }		
 }
