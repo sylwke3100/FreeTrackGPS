@@ -35,9 +35,8 @@ public class RouteManager {
 		B = new StringBuffer();
 		ContextWrapper c = new ContextWrapper(context);
 		File dir = new File(Environment.getExternalStorageDirectory()+"/workout/");
-		if(!(dir.exists() && dir.isDirectory())) {
+		if(!(dir.exists() && dir.isDirectory()))
 		   dir.mkdir();
-		}
 		B.append(Environment.getExternalStorageDirectory()+"/workout/");
 		B.append(p.format(new Date(startTime))+ ".gpx");
 		GPX = new GPXWriter(B.toString());
@@ -46,7 +45,6 @@ public class RouteManager {
 		Date D = new Date();
 		if (status == 2){
 			long currentTime = D.getTime();
-			//points.add(new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime  ));
 			GPX.addPoint(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime );	
 			if (lastPosition != null)
 				distance += lastPosition.distanceTo(currentLocation);

@@ -23,12 +23,13 @@ public class MainActivity extends Activity {
 	private String provider;
 	private List<TextView> textViewElements;
 	private Button pauseButton, startButton;
-    private SharedPreferences SP;
+    private SharedPreferences sharedPrefs;
 	private RouteManager currentRoute;
-    private boolean gpsCurrentStatus;
+    private GPSConnectionManager gpsConnect;
     protected void onCreate(Bundle savedInstanceState) {
-        SP = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharedPrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
 		super.onCreate(savedInstanceState);
+        gpsConnect = new GPSConnectionManager(getBaseContext());
 		setContentView(R.layout.activity_main);
 		service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		gpsStatus = (TextView)this.findViewById(R.id.textGPSStatus);
@@ -45,9 +46,8 @@ public class MainActivity extends Activity {
 		pauseButton.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View V){ onPauseRoute();}
 		});
-        gpsCurrentStatus = false;
 
-        onCreateGPSConnection(textViewElements, service, currentRoute, gpsCurrentStatus);
+        gpsConnect.onCreateConnection(textViewElements, service, currentRoute);
         if(currentRoute.getStatus()!= 2)
             setPreviewStatus(View.INVISIBLE);
         else
@@ -81,26 +81,8 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    public void onCreateGPSConnection(List<TextView> textViewElements, LocationManager service, RouteManager currentRoute, boolean gpsCurrentStatus){
-        int[] time = getResources().getIntArray(R.array.timeArray);
-        int[] distance = getResources().getIntArray(R.array.distanceArray);
-        if (service != null){
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
-            textViewElements.get(1).setText(getString(R.string.onLabal));
-            Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (L != null){
-                String message = String.format( " %1$s %2$s", String.format( "%.2f", L.getLongitude()), String.format( "%.2f", L.getLatitude()),  String.format( "%.2f", L.getAltitude()) );
-                if (currentRoute.getStatus() !=0)
-                    textViewElements.get(0).setText(message);
-            }
-        }
-        else{
-            textViewElements.get(1).setText(getString(R.string.offLabel));
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(SP.getInt("time", 1))], distance[(SP.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
-        }
-    }
     public void setPreviewStatus(int status){
-        if (SP.getBoolean("showWorkoutInfo", false)==false) {
+        if (sharedPrefs.getBoolean("showWorkoutInfo", false)==false) {
             workoutDistance.setVisibility(status);
             workoutStatus.setVisibility(status);
             ((TextView) this.findViewById(R.id.textView4)).setVisibility(status);
@@ -108,14 +90,14 @@ public class MainActivity extends Activity {
         }
     }
 	public void onStartRoute() {
-		if (currentRoute.getStatus() == 0 && gpsCurrentStatus == true){
+		if (currentRoute.getStatus() == 0 && gpsConnect.getStatus() == true){
 			currentRoute.start();
 			workoutStatus.setText(getString(R.string.activeLabel));
 			startButton.setText(getString(R.string.stopLabel));
             setPreviewStatus(View.VISIBLE);
 		}
 		else {
-            if (gpsCurrentStatus == true) {
+            if (gpsConnect.getStatus() == true) {
                 currentRoute.stop();
                 workoutStatus.setText("--");
                 startButton.setText(getString(R.string.startLabel));
