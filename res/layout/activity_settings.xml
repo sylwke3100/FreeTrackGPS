@@ -30,14 +30,14 @@
             android:id="@+id/spinner"
             android:spinnerMode="dropdown" android:layout_alignTop="@+id/textView"
             android:layout_toRightOf="@+id/textView2" android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" android:layout_x="188dp" android:layout_y="137dp"/>
+            android:layout_alignParentEnd="true" android:layout_x="188dp" android:layout_y="196dp"/>
     <Spinner
             android:layout_width="150dp"
             android:layout_height="33dp"
             android:id="@+id/spinner2" android:layout_alignTop="@+id/textView2"
             android:layout_alignLeft="@+id/spinner"
             android:layout_alignStart="@+id/spinner" android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" android:layout_x="188dp" android:layout_y="83dp"/>
+            android:layout_alignParentRight="true" android:layout_x="188dp" android:layout_y="141dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,5 +57,5 @@
             android:checked="false"
             android:layout_alignTop="@+id/textView3" android:layout_alignLeft="@+id/spinner2"
             android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="188dp"
-            android:layout_y="193dp" android:textOn="@string/onLabal"/>
+            android:layout_y="85dp" android:textOn="@string/onLabal"/>
 </AbsoluteLayout>
