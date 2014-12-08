@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
             setPreviewStatus(View.VISIBLE);
 		}
 		else {
-            if (gpsConnect.getStatus() == true) {
+            if (gpsConnect.getStatus() == true && currentRoute.getStatus() != RouteManager.routeStatus.stop ) {
                 currentRoute.stop();
                 workoutStatus.setText("--");
                 startButton.setText(getString(R.string.startLabel));

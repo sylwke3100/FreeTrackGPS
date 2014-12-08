@@ -14,8 +14,8 @@ import android.os.Bundle;
 public class GPSListner implements LocationListener  {
 	private TextView gpsPosition, gpsStatus, workoutDistance;
 	private RouteManager localRoute;
-    private boolean gpsCurrentStatus;
-	public GPSListner(List<TextView> E, RouteManager Rt, boolean gpsCurrentStatus){
+    private GPSConnectionManager.gpsStatus gpsCurrentStatus;
+	public GPSListner(List<TextView> E, RouteManager Rt, GPSConnectionManager.gpsStatus gpsCurrentStatus){
 		this.gpsPosition = E.get(0);
 		this.gpsStatus = E.get(1);
 		this.workoutDistance = E.get(2);
@@ -34,19 +34,19 @@ public class GPSListner implements LocationListener  {
     	switch(i){
     	case LocationProvider.AVAILABLE:
     		this.gpsStatus.setText("On");
-            gpsCurrentStatus = true;
+            gpsCurrentStatus.status = true;
     		if (localRoute.getStatus() == RouteManager.routeStatus.pasue)
     			localRoute.unpause();
     		break;
     	case LocationProvider.OUT_OF_SERVICE:
     		this.gpsStatus.setText("Off");
-            gpsCurrentStatus = false;
+            gpsCurrentStatus.status = false;
     		if (localRoute.getStatus() == RouteManager.routeStatus.start)
     			localRoute.pause();
     		break;
     	case LocationProvider.TEMPORARILY_UNAVAILABLE:
     		this.gpsStatus.setText("Off");
-            gpsCurrentStatus = false;
+            gpsCurrentStatus.status = false;
     		if (localRoute.getStatus() == RouteManager.routeStatus.start)
     			localRoute.pause();
     		break;
@@ -54,13 +54,13 @@ public class GPSListner implements LocationListener  {
     }
     public void onProviderDisabled(String s) {
     	this.gpsStatus.setText("Off");
-        gpsCurrentStatus = false;
+        gpsCurrentStatus.status = false;
     	if (localRoute.getStatus() == RouteManager.routeStatus.start)
     		localRoute.pause();
     }
     public void onProviderEnabled(String s) {
     	this.gpsStatus.setText("On");
-        gpsCurrentStatus = true;
+        gpsCurrentStatus.status = true;
     	if (localRoute.getStatus() == RouteManager.routeStatus.pasue)
     		localRoute.unpause();
     }		

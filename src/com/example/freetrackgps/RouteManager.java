@@ -32,6 +32,7 @@ public class RouteManager {
 	private StringBuffer B;
 	public RouteManager(Context C) {
 		context = C;
+        status = routeStatus.stop;
 	}
 	public void start(){
 		startTime = System.currentTimeMillis();
