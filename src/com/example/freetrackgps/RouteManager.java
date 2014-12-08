@@ -18,7 +18,7 @@ import android.location.Location;
 public class RouteManager {
     public enum routeStatus{
         stop,
-        pasue,
+        pause,
         start
     }
 	private Context context;
@@ -59,7 +59,7 @@ public class RouteManager {
 		lastPosition = currentLocation;
 	}
 	public void pause(){
-		status = routeStatus.pasue;
+		status = routeStatus.pause;
 	}
 	public void unpause(){
 		status = routeStatus.start;

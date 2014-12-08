@@ -35,7 +35,7 @@ public class GPSListner implements LocationListener  {
     	case LocationProvider.AVAILABLE:
     		this.gpsStatus.setText("On");
             gpsCurrentStatus.status = true;
-    		if (localRoute.getStatus() == RouteManager.routeStatus.pasue)
+    		if (localRoute.getStatus() == RouteManager.routeStatus.pause)
     			localRoute.unpause();
     		break;
     	case LocationProvider.OUT_OF_SERVICE:
@@ -61,7 +61,7 @@ public class GPSListner implements LocationListener  {
     public void onProviderEnabled(String s) {
     	this.gpsStatus.setText("On");
         gpsCurrentStatus.status = true;
-    	if (localRoute.getStatus() == RouteManager.routeStatus.pasue)
+    	if (localRoute.getStatus() == RouteManager.routeStatus.pause)
     		localRoute.unpause();
     }		
 }

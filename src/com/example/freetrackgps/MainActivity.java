@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
 				workoutStatus.setText(getString(R.string.pauseLabel));
 				pauseButton.setText(getString(R.string.unPauseLabel));
 			}
-			else if (currentRoute.getStatus() == RouteManager.routeStatus.pasue){
+			else if (currentRoute.getStatus() == RouteManager.routeStatus.pause){
 				currentRoute.unpause();
 				workoutStatus.setText(getString(R.string.activeLabel));
 				pauseButton.setText(getString(R.string.pauseLabel));
