@@ -23,21 +23,7 @@ public class Settings extends Activity {
         timeSetting =(Spinner) this.findViewById(R.id.spinner);
         distanceSetting = (Spinner) this.findViewById(R.id.spinner2);
         viewWorkouStatusSetting = (ToggleButton) this.findViewById(R.id.toggleButton);
-        List<String> speedTypes = new ArrayList<String>();
-        speedTypes.add("Fast");
-        speedTypes.add("Normal");
-        speedTypes.add("Slow");
-        ArrayAdapter<String> timeAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, speedTypes);
-        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        timeSetting.setAdapter(timeAdapter);
         timeSetting.setSelection(sharePrefs.getInt("time", 1));
-        List<String> distanceTypes = new ArrayList<String>();
-        distanceTypes.add("Near");
-        distanceTypes.add("Normal");
-        distanceTypes.add("Far");
-        ArrayAdapter<String> distanceAdapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_dropdown_item, distanceTypes);
-        distanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        distanceSetting.setAdapter(distanceAdapter);
         distanceSetting.setSelection(sharePrefs.getInt("distance", 1));
         viewWorkouStatusSetting.setChecked(sharePrefs.getBoolean("showWorkoutInfo", false));
         timeSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
