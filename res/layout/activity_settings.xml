@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/settingShowWorkoutInfoLabel"
-            android:id="@+id/textView3"
+            android:id="@+id/textViewVersion"
             android:textSize="14dp"
             android:layout_toStartOf="@+id/toggleButton"
             android:layout_below="@+id/spinner2" android:layout_alignLeft="@+id/textView2"
@@ -55,7 +55,7 @@
             android:text="New ToggleButton"
             android:id="@+id/toggleButton"
             android:checked="false"
-            android:layout_alignTop="@+id/textView3" android:layout_alignLeft="@+id/spinner2"
+            android:layout_alignTop="@+id/textViewVersion" android:layout_alignLeft="@+id/spinner2"
             android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="188dp"
             android:layout_y="85dp" android:textOn="@string/onLabal"/>
 </AbsoluteLayout>

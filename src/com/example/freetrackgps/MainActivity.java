@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
             workoutDistance.setVisibility(status);
             workoutStatus.setVisibility(status);
             ((TextView) this.findViewById(R.id.textView4)).setVisibility(status);
-            ((TextView) this.findViewById(R.id.textView3)).setVisibility(status);
+            ((TextView) this.findViewById(R.id.textViewVersion)).setVisibility(status);
         }
     }
 	public void onStartRoute() {

@@ -27,7 +27,7 @@
         android:text="- -" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
@@ -40,8 +40,8 @@
         android:id="@+id/textSatlites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignBaseline="@+id/textViewVersion"
+        android:layout_alignBottom="@+id/textViewVersion"
         android:layout_alignLeft="@+id/textPosition"
         android:text="- -"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -50,8 +50,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/textViewVersion"
+        android:layout_below="@+id/textViewVersion"
         android:layout_marginTop="23dp"
         android:text="@string/workoutDistanceLabel"
         android:textAppearance="?android:attr/textAppearanceLarge" />
