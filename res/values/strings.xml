@@ -25,5 +25,8 @@
     <string name="aboutProgram">Simple application for save gps workout to GPX file</string>
     <string name="version">0.1</string>
     <string name="versionLabel">version</string>
+    <string name="SaveTrueInfo">Save workout in </string>
+    <string name="SaveFalseInfo">Error workout in </string>
+    <string name="closeSettingsInfo">Restart application for apply changes</string>
 
 </resources>

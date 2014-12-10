@@ -62,7 +62,7 @@ public class Settings extends Activity {
 
     @Override
     protected void onDestroy() {
-        Toast.makeText(getBaseContext(), "Restart application for apply changes",Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.closeSettingsInfo),Toast.LENGTH_LONG).show();
         super.onDestroy();
     }
 }
