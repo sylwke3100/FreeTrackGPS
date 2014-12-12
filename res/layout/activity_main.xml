@@ -69,20 +69,18 @@
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/pauseButton"
-        android:layout_alignBottom="@+id/pauseButton"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="34dp"
-        android:text="@string/workoutStartLabel" />
+        android:layout_marginLeft="62dp"
+        android:text="@string/workoutStartLabel"
+        android:layout_below="@+id/textView" android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" android:layout_marginTop="48dp"/>
 
     <Button
         android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textWorkOut"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="44dp"
-        android:text="@string/workoutPauseLabel" />
+        android:text="@string/workoutPauseLabel"
+        android:layout_alignTop="@+id/startButton" android:layout_alignLeft="@+id/textGPSStatus"
+        android:layout_alignStart="@+id/textGPSStatus"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -98,10 +96,25 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="54dp"
         android:text="@string/gpsStatusLabel"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true" android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speedLabel"
+            android:id="@+id/textView"
+            android:textSize="18dp"
+            android:layout_below="@+id/textView4" android:layout_alignLeft="@+id/startButton"
+            android:layout_alignStart="@+id/startButton" android:layout_marginTop="35dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- -"
+            android:id="@+id/textSpeedView"
+            android:layout_toEndOf="@+id/textView1"
+            android:layout_alignBottom="@+id/textView" android:layout_alignLeft="@+id/textWorkOut"
+            android:layout_alignStart="@+id/textWorkOut"/>
 
 </RelativeLayout>

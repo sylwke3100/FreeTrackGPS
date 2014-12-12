@@ -14,13 +14,14 @@ import android.os.Bundle;
 
 public class GPSListner implements LocationListener  {
     private Context currentContext;
-	private TextView gpsPosition, gpsStatus, workoutDistance;
+	private TextView gpsPosition, gpsStatus, workoutDistance, workoutSpeed;
 	private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
 	public GPSListner(List<TextView> E, RouteManager Rt, GPSConnectionManager.gpsStatus gpsCurrentStatus){
 		this.gpsPosition = E.get(0);
 		this.gpsStatus = E.get(1);
 		this.workoutDistance = E.get(2);
+        this.workoutSpeed = E.get(3);
 		localRoute = Rt;
         this.gpsCurrentStatus  = gpsCurrentStatus;
 	}
@@ -29,6 +30,7 @@ public class GPSListner implements LocationListener  {
         if (localRoute != null && location != null && location.hasAltitude() == true ){
         	localRoute.addPoint(location);
         	this.workoutDistance.setText(String.format("%.2f", localRoute.getDistance()) + " m");
+            this.workoutSpeed.setText(location.getSpeed() +" km/h");
         }
         this.gpsPosition.setText(message);
     }

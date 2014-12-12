@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private LocationManager service;
-	private TextView gpsStatus, gpsPosition, workoutStatus, workoutDistance; 
+	private TextView gpsStatus, gpsPosition, workoutStatus, workoutDistance, workoutSpeed;
 	private String provider;
 	private List<TextView> textViewElements;
 	private Button pauseButton, startButton;
@@ -36,7 +36,8 @@ public class MainActivity extends Activity {
 		gpsPosition = (TextView)this.findViewById(R.id.textPosition);
 		workoutStatus = (TextView)this.findViewById(R.id.textSatlites);
 		workoutDistance = (TextView)this.findViewById(R.id.textWorkOut);
-		textViewElements = Arrays.asList(gpsPosition, gpsStatus, workoutDistance);
+        workoutSpeed = (TextView)this.findViewById(R.id.textSpeedView);
+		textViewElements = Arrays.asList(gpsPosition, gpsStatus, workoutDistance, workoutSpeed);
 		pauseButton = (Button)this.findViewById(R.id.pauseButton);
 		startButton = (Button)this.findViewById(R.id.startButton);
 		currentRoute = new RouteManager(this);
@@ -85,8 +86,10 @@ public class MainActivity extends Activity {
         if (sharedPrefs.getBoolean("showWorkoutInfo", false)==false) {
             workoutDistance.setVisibility(status);
             workoutStatus.setVisibility(status);
+            workoutSpeed.setVisibility(status);
             ((TextView) this.findViewById(R.id.textView4)).setVisibility(status);
             ((TextView) this.findViewById(R.id.textViewVersion)).setVisibility(status);
+            ((TextView) this.findViewById(R.id.textView)).setVisibility(status);
         }
     }
 	public void onStartRoute() {
