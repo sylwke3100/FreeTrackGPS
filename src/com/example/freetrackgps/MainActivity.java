@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.location.*;
 import android.content.*;
 import android.view.MenuItem;
-
+import android.app.AlertDialog;
 
 import android.view.View;
 import android.widget.Toast;
@@ -123,4 +123,21 @@ public class MainActivity extends Activity {
 				pauseButton.setText(getString(R.string.pauseLabel));
 			}
 	}
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getString(R.string.finishApp))
+                .setMessage(getString(R.string.finishAppInfo))
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+    protected void onDestroy(){
+        super.onDestroy();
+    }
 }
