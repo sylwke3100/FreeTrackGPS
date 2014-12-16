@@ -1,23 +1,22 @@
 package com.example.freetrackgps;
 
 import android.content.Context;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
+import android.support.v4.app.NotificationCompat;
 
 public class LocalNotificationManager {
     private Context localContext;
     private int icon;
     private String title;
     private NotificationManager notifcationManager;
-    private Notification.Builder mainNotification;
+    private NotificationCompat.Builder mainNotification;
     public  LocalNotificationManager(Context currentContext, int icon, String title){
         this.localContext = currentContext;
         this.icon = icon;
         this.title = title;
-        mainNotification = new Notification.Builder(currentContext);
+        mainNotification = new NotificationCompat.Builder(currentContext);
         mainNotification.setContentTitle(this.title);
         mainNotification.setSmallIcon(R.drawable.icon);
         notifcationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
