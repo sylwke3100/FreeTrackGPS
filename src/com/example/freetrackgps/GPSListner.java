@@ -33,7 +33,7 @@ public class GPSListner implements LocationListener  {
         if (localRoute != null && location != null && location.hasAltitude() == true ){
         	localRoute.addPoint(location);
         	this.workoutDistance.setText(String.format("%.2f", localRoute.getDistance()) + " m");
-            this.workoutSpeed.setText(location.getSpeed() +" km/h");
+            this.workoutSpeed.setText(String.format("%d", (int)location.getSpeed() ) +" km/h");
             notify.setContent(currentContext.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2f", localRoute.getDistance())+" m");
             notify.sendNotyfi();
         }
