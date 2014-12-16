@@ -18,7 +18,7 @@ public class GPSConnectionManager {
     }
     private gpsStatus gpsCurrentStatus;
     public GPSConnectionManager(Context context){
-        mainContext = context;
+        this.mainContext = context;
         sharedPrefs = mainContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
         gpsCurrentStatus = new gpsStatus();
     }
@@ -26,7 +26,7 @@ public class GPSConnectionManager {
         int[] time = mainContext.getResources().getIntArray(R.array.timeArray);
         int[] distance = mainContext.getResources().getIntArray(R.array.distanceArray);
         if (service != null){
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", 1))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
+            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", 1))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus, this.mainContext) );
             textViewElements.get(1).setText(mainContext.getString(R.string.onLabal));
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (L != null){
@@ -38,7 +38,7 @@ public class GPSConnectionManager {
         }
         else{
             textViewElements.get(1).setText(mainContext.getString(R.string.offLabel));
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", 1))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus) );
+            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", 1))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus, this.mainContext) );
         }
     }
     public boolean getStatus(){

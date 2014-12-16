@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         sharedPrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
 		super.onCreate(savedInstanceState);
-        gpsConnect = new GPSConnectionManager(getBaseContext());
+        gpsConnect = new GPSConnectionManager(this);
 		setContentView(R.layout.activity_main);
 		service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		gpsStatus = (TextView)this.findViewById(R.id.textGPSStatus);

@@ -13,17 +13,20 @@ import android.os.Bundle;
 
 
 public class GPSListner implements LocationListener  {
+    private LocalNotificationManager notify;
     private Context currentContext;
 	private TextView gpsPosition, gpsStatus, workoutDistance, workoutSpeed;
 	private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
-	public GPSListner(List<TextView> E, RouteManager Rt, GPSConnectionManager.gpsStatus gpsCurrentStatus){
+	public GPSListner(List<TextView> E, RouteManager Rt, GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext){
 		this.gpsPosition = E.get(0);
 		this.gpsStatus = E.get(1);
 		this.workoutDistance = E.get(2);
         this.workoutSpeed = E.get(3);
 		localRoute = Rt;
         this.gpsCurrentStatus  = gpsCurrentStatus;
+        notify = new LocalNotificationManager(mainContext, R.drawable.icon, mainContext.getString(R.string.app_name));
+        this.currentContext = mainContext;
 	}
     public void onLocationChanged(Location location) {
         String message = String.format( " %1$s %2$s %3$s",String.format( "%.2f", location.getLongitude()), String.format( "%.2f",location.getLatitude()), String.format( "%.2f",location.getAltitude()));
@@ -31,6 +34,8 @@ public class GPSListner implements LocationListener  {
         	localRoute.addPoint(location);
         	this.workoutDistance.setText(String.format("%.2f", localRoute.getDistance()) + " m");
             this.workoutSpeed.setText(location.getSpeed() +" km/h");
+            notify.setContent(currentContext.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2f", localRoute.getDistance())+" m");
+            notify.sendNotyfi();
         }
         this.gpsPosition.setText(message);
     }
