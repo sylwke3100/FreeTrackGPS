@@ -29,8 +29,8 @@ public class GPSConnectionManager {
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", 1))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(textViewElements, currentRoute, gpsCurrentStatus, this.mainContext) );
             textViewElements.get(1).setText(mainContext.getString(R.string.onLabal));
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            gpsCurrentStatus.status = true;
             if (L != null){
-                gpsCurrentStatus.status = true;
                 String message = String.format( " %1$s %2$s", String.format( "%.2f", L.getLongitude()), String.format( "%.2f", L.getLatitude()),  String.format( "%.2f", L.getAltitude()) );
                 if (currentRoute.getStatus() != RouteManager.routeStatus.stop)
                     textViewElements.get(0).setText(message);
