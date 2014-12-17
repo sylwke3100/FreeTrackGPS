@@ -132,6 +132,7 @@ public class MainActivity extends Activity {
                 {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
+                        System.exit(0);
                     }
                 })
                 .setNegativeButton("No", null)
