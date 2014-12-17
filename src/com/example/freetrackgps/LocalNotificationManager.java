@@ -29,5 +29,8 @@ public class LocalNotificationManager {
     public void sendNotyfi(){
         notifcationManager.notify(0, mainNotification.build());
     }
+    public void deleteNotify(){
+        notifcationManager.cancel(0);
+    }
 
 }

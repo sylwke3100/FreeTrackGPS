@@ -29,6 +29,7 @@ public class RouteManager {
 	private double distance;
 	private SimpleDateFormat p = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
 	private GPXWriter gpx;
+    private LocalNotificationManager localNotify;
 	private StringBuffer fileNameBuffer;
 	public RouteManager(Context C) {
 		context = C;
@@ -47,6 +48,8 @@ public class RouteManager {
 		fileNameBuffer.append(Environment.getExternalStorageDirectory() + "/workout/");
 		fileNameBuffer.append(p.format(new Date(startTime)) + ".gpx");
 		gpx = new GPXWriter(fileNameBuffer.toString());
+        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fm", distance));
+        localNotify.sendNotyfi();
 	}
 	public void addPoint(Location currentLocation){
 		Date D = new Date();
@@ -80,5 +83,9 @@ public class RouteManager {
 			Toast.makeText(context, context.getString(R.string.SaveFalseInfo), Toast.LENGTH_LONG).show();
 		fileNameBuffer = null;
 		gpx = null;
+        localNotify.deleteNotify();
 	}
+    public void setNotifiy(LocalNotificationManager notifiy){
+        this.localNotify = notifiy;
+    }
 }

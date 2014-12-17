@@ -27,6 +27,7 @@ public class GPSListner implements LocationListener  {
         this.gpsCurrentStatus  = gpsCurrentStatus;
         notify = new LocalNotificationManager(mainContext, R.drawable.icon, mainContext.getString(R.string.app_name));
         this.currentContext = mainContext;
+        localRoute.setNotifiy(notify);
 	}
     public void onLocationChanged(Location location) {
         String message = String.format( " %1$s %2$s %3$s",String.format( "%.2f", location.getLongitude()), String.format( "%.2f",location.getLatitude()), String.format( "%.2f",location.getAltitude()));
