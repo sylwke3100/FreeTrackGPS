@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.app.PendingIntent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
 public class LocalNotificationManager {
     private Context localContext;
@@ -20,7 +21,11 @@ public class LocalNotificationManager {
         mainNotification.setContentTitle(this.title);
         mainNotification.setSmallIcon(R.drawable.icon);
         notifcationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pending = PendingIntent.getActivity(localContext, 0, new Intent(),0);
+        Intent intent = new Intent(localContext, MainActivity.class);
+        TaskStackBuilder currentstackBuilder = TaskStackBuilder.create(localContext);
+        currentstackBuilder.addParentStack(MainActivity.class);
+        currentstackBuilder.addNextIntent(intent);
+        PendingIntent pending = currentstackBuilder.getPendingIntent(0,  PendingIntent.FLAG_UPDATE_CURRENT);
         mainNotification.setContentIntent(pending);
     }
     public void setContent(String content){
