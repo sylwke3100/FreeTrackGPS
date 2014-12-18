@@ -8,21 +8,15 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 public class LocalNotificationManager {
-    private Context localContext;
-    private int icon;
-    private String title;
     private NotificationManager notifcationManager;
     private NotificationCompat.Builder mainNotification;
-    public  LocalNotificationManager(Context currentContext, int icon, String title){
-        this.localContext = currentContext;
-        this.icon = icon;
-        this.title = title;
+    public  LocalNotificationManager(Context currentContext, int smallIcon, String title){
         mainNotification = new NotificationCompat.Builder(currentContext);
-        mainNotification.setContentTitle(this.title);
-        mainNotification.setSmallIcon(R.drawable.icon);
+        mainNotification.setContentTitle(title);
+        mainNotification.setSmallIcon(smallIcon);
         notifcationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent(localContext, MainActivity.class);
-        TaskStackBuilder currentstackBuilder = TaskStackBuilder.create(localContext);
+        Intent intent = new Intent(currentContext, MainActivity.class);
+        TaskStackBuilder currentstackBuilder = TaskStackBuilder.create(currentContext);
         currentstackBuilder.addParentStack(MainActivity.class);
         currentstackBuilder.addNextIntent(intent);
         PendingIntent pending = currentstackBuilder.getPendingIntent(0,  PendingIntent.FLAG_UPDATE_CURRENT);
