@@ -35,8 +35,10 @@ public class GPSListner implements LocationListener  {
         	localRoute.addPoint(location);
         	this.workoutDistance.setText(String.format("%.2f", localRoute.getDistance()) + " m");
             this.workoutSpeed.setText(String.format("%d", (int)location.getSpeed() ) +" km/h");
-            notify.setContent(currentContext.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2f", localRoute.getDistance())+" m");
-            notify.sendNotyfi();
+            if(localRoute.getStatus() == RouteManager.routeStatus.start) {
+                notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f", localRoute.getDistance()) + " m");
+                notify.sendNotyfi();
+            }
         }
         this.gpsPosition.setText(message);
     }
