@@ -32,6 +32,7 @@ public class GPXWriter {
 		try {
 			bufferedWriter = new BufferedWriter(new FileWriter(filepath));
 			write(content.toString());
+            content.delete(0, content.length());
 			isOpen = true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -52,6 +53,7 @@ public class GPXWriter {
 		content.append("<time>" + POINT_DATE_FORMATTER.format(new Date(time)) + "</time>\n");
 		content.append("</trkpt>\n");
 		write(content.toString());
+        content.delete(0, content.length());
 	}
 	public Boolean save(){
 		content.append("</trkseg>\n</trk>\n</gpx>");
