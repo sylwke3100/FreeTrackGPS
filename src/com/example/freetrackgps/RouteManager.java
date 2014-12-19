@@ -48,7 +48,7 @@ public class RouteManager {
 		fileNameBuffer.append(Environment.getExternalStorageDirectory() + "/workout/");
 		fileNameBuffer.append(p.format(new Date(startTime)) + ".gpx");
 		gpx = new GPXWriter(fileNameBuffer.toString());
-        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fm", distance));
+        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fkm", getDistance()));
         localNotify.sendNotyfi();
 	}
 	public void addPoint(Location currentLocation){
@@ -68,7 +68,7 @@ public class RouteManager {
 		status = routeStatus.start;
 	}
 	public double getDistance(){
-		return distance;
+		return distance/1000;
 	}
 	public routeStatus getStatus(){
 		return status;
