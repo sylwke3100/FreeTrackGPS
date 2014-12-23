@@ -60,4 +60,15 @@
             android:layout_alignTop="@+id/textViewVersion" android:layout_alignLeft="@+id/spinner2"
             android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="188dp"
             android:layout_y="85dp" android:textOn="@string/onLabal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/NotificationLabel"
+            android:id="@+id/textView3" android:layout_x="13dp" android:layout_y="45dp" android:textSize="14dp"/>
+    <ToggleButton
+            android:layout_width="76dp"
+            android:layout_height="36dp"
+            android:text="New ToggleButton"
+            android:id="@+id/toggleButton2" android:layout_x="188dp" android:layout_y="41dp" android:checked="false"
+            android:textOff="@string/offLabel" android:textOn="@string/onLabal"/>
 </AbsoluteLayout>

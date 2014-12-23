@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.SharedPreferences;
 
 public class Settings extends Activity {
 
     private Spinner timeSetting, distanceSetting;
-    private ToggleButton viewWorkouStatusSetting;
+    private ToggleButton viewWorkoutStatusSetting, showNotificationSetting;
     private SharedPreferences sharePrefs;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,10 +19,12 @@ public class Settings extends Activity {
         setContentView(R.layout.activity_settings);
         timeSetting =(Spinner) this.findViewById(R.id.spinner);
         distanceSetting = (Spinner) this.findViewById(R.id.spinner2);
-        viewWorkouStatusSetting = (ToggleButton) this.findViewById(R.id.toggleButton);
+        viewWorkoutStatusSetting = (ToggleButton) this.findViewById(R.id.toggleButton);
+        showNotificationSetting = (ToggleButton) this.findViewById(R.id.toggleButton2);
         timeSetting.setSelection(sharePrefs.getInt("time", 1));
         distanceSetting.setSelection(sharePrefs.getInt("distance", 1));
-        viewWorkouStatusSetting.setChecked(sharePrefs.getBoolean("showWorkoutInfo", false));
+        viewWorkoutStatusSetting.setChecked(sharePrefs.getBoolean("showWorkoutInfo", false));
+        showNotificationSetting.setChecked(sharePrefs.getBoolean("showNotificationWorkout", true));
         timeSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -50,12 +49,20 @@ public class Settings extends Activity {
                 distanceSetting.setSelection(sharePrefs.getInt("distance", 1));
             }
         });
-        viewWorkouStatusSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewWorkoutStatusSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
-                    preferencesEditor.putBoolean("showWorkoutInfo",isChecked);
-                    preferencesEditor.commit();
+                SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
+                preferencesEditor.putBoolean("showWorkoutInfo", isChecked);
+                preferencesEditor.commit();
+            }
+        });
+        showNotificationSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
+                preferencesEditor.putBoolean("showNotificationWorkout", isChecked);
+                preferencesEditor.commit();
             }
         });
     }
