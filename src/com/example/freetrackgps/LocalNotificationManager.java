@@ -19,11 +19,11 @@ public class LocalNotificationManager {
         mainNotification.setSmallIcon(smallIcon);
         notifcationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(currentContext, MainActivity.class);
-        TaskStackBuilder currentstackBuilder = TaskStackBuilder.create(currentContext);
-        currentstackBuilder.addParentStack(MainActivity.class);
-        currentstackBuilder.addNextIntent(intent);
-        PendingIntent pending = currentstackBuilder.getPendingIntent(0,  PendingIntent.FLAG_UPDATE_CURRENT);
-        mainNotification.setContentIntent(pending);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pendingIntent = PendingIntent.getActivity(currentContext, 0, intent, 0);
+        mainNotification.setContentIntent(pendingIntent);
         pref = currentContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
     }
     public void setContent(String content){

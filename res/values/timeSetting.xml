@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <integer-array name="timeArray">
-       <item>500</item>
-       <item>1000</item>
-       <item>1500</item>
-   </integer-array>
+    <integer-array name="timeArray">
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+    </integer-array>
 </resources>
