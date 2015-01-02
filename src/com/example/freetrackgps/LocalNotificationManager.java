@@ -20,6 +20,8 @@ public class LocalNotificationManager {
         notifcationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(currentContext, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainNotification.setAutoCancel(false);
+        mainNotification.setOngoing(true);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent pendingIntent = PendingIntent.getActivity(currentContext, 0, intent, 0);
