@@ -131,6 +131,7 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int which) {
+                        currentRoute.stop();
                         finish();
                         System.exit(0);
                     }
@@ -140,5 +141,6 @@ public class MainActivity extends Activity {
     }
     protected void onDestroy(){
         super.onDestroy();
+        currentRoute.stop();
     }
 }
