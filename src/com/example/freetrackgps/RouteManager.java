@@ -13,17 +13,13 @@ import android.content.ContextWrapper;
 import java.io.File;
 
 import android.location.Location;
+import com.example.freetrackgps.DefaultValues;
 
 
 public class RouteManager {
-    public enum routeStatus{
-        stop,
-        pause,
-        start
-    }
 	private Context context;
 	private ArrayList<RouteElement> points = new ArrayList<RouteElement>();
-	private routeStatus status;
+	private DefaultValues.routeStatus status;
 	private long startTime; 
 	private Location lastPosition;
 	private double distance;
@@ -33,11 +29,11 @@ public class RouteManager {
 	private StringBuffer fileNameBuffer;
 	public RouteManager(Context C) {
 		context = C;
-        status = routeStatus.stop;
+        status = DefaultValues.routeStatus.stop;
 	}
 	public void start(){
 		startTime = System.currentTimeMillis();
-		status = routeStatus.start;
+		status = DefaultValues.routeStatus.start;
 		distance = 0.0;
 		points.clear();
 		fileNameBuffer = new StringBuffer();
@@ -53,7 +49,7 @@ public class RouteManager {
 	}
 	public void addPoint(Location currentLocation){
 		Date D = new Date();
-		if (status == routeStatus.start){
+		if (status == DefaultValues.routeStatus.start){
 			long currentTime = D.getTime();
 			gpx.addPoint(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime);	
 			if (lastPosition != null)
@@ -62,19 +58,19 @@ public class RouteManager {
 		lastPosition = currentLocation;
 	}
 	public void pause(){
-		status = routeStatus.pause;
+		status = DefaultValues.routeStatus.pause;
 	}
 	public void unpause(){
-		status = routeStatus.start;
+		status = DefaultValues.routeStatus.start;
 	}
 	public double getDistance(){
 		return distance/1000;
 	}
-	public routeStatus getStatus(){
+	public DefaultValues.routeStatus getStatus(){
 		return status;
 	}
 	public void stop(){
-		status = routeStatus.stop;
+		status = DefaultValues.routeStatus.stop;
 		distance = 0.0;
 		lastPosition = null;
 		if(gpx.save() == true)

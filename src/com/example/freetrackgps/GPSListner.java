@@ -35,7 +35,7 @@ public class GPSListner implements LocationListener  {
         	localRoute.addPoint(location);
         	this.workoutDistance.setText(String.format("%.2f km", localRoute.getDistance()));
             this.workoutSpeed.setText(String.format("%d", (int)location.getSpeed() ) +" km/h");
-            if(localRoute.getStatus() == RouteManager.routeStatus.start) {
+            if(localRoute.getStatus() == DefaultValues.routeStatus.start) {
                 notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km", localRoute.getDistance())+" Speed: "+String.format("%d", (int)location.getSpeed() ) +" km/h");
                 notify.sendNotyfi();
             }
@@ -47,19 +47,19 @@ public class GPSListner implements LocationListener  {
     	case LocationProvider.AVAILABLE:
     		this.gpsStatus.setText(currentContext.getString(R.string.onLabal));
             gpsCurrentStatus.status = true;
-    		if (localRoute.getStatus() == RouteManager.routeStatus.pause)
+    		if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
     			localRoute.unpause();
     		break;
     	case LocationProvider.OUT_OF_SERVICE:
     		this.gpsStatus.setText(currentContext.getString(R.string.offLabel));
             gpsCurrentStatus.status = false;
-    		if (localRoute.getStatus() == RouteManager.routeStatus.start)
+    		if (localRoute.getStatus() == DefaultValues.routeStatus.start)
     			localRoute.pause();
     		break;
     	case LocationProvider.TEMPORARILY_UNAVAILABLE:
     		this.gpsStatus.setText(currentContext.getString(R.string.offLabel));
             gpsCurrentStatus.status = false;
-    		if (localRoute.getStatus() == RouteManager.routeStatus.start)
+    		if (localRoute.getStatus() == DefaultValues.routeStatus.start)
     			localRoute.pause();
     		break;
     	}
@@ -67,13 +67,13 @@ public class GPSListner implements LocationListener  {
     public void onProviderDisabled(String s) {
     	this.gpsStatus.setText("Off");
         gpsCurrentStatus.status = false;
-    	if (localRoute.getStatus() == RouteManager.routeStatus.start)
+    	if (localRoute.getStatus() == DefaultValues.routeStatus.start)
     		localRoute.pause();
     }
     public void onProviderEnabled(String s) {
     	this.gpsStatus.setText("On");
         gpsCurrentStatus.status = true;
-    	if (localRoute.getStatus() == RouteManager.routeStatus.pause)
+    	if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
     		localRoute.unpause();
     }		
 }

@@ -49,14 +49,14 @@ public class MainActivity extends Activity {
 		});
 
         gpsConnect.onCreateConnection(textViewElements, service, currentRoute);
-        if(currentRoute.getStatus()!= RouteManager.routeStatus.start)
+        if(currentRoute.getStatus()!= DefaultValues.routeStatus.start)
             setPreviewStatus(View.INVISIBLE);
         else
             setPreviewStatus(View.VISIBLE);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-        if (currentRoute.getStatus() != RouteManager.routeStatus.start) {
+        if (currentRoute.getStatus() != DefaultValues.routeStatus.start) {
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
@@ -93,14 +93,14 @@ public class MainActivity extends Activity {
         }
     }
 	public void onStartRoute() {
-		if (currentRoute.getStatus() == RouteManager.routeStatus.stop && gpsConnect.getStatus() == true){
+		if (currentRoute.getStatus() == DefaultValues.routeStatus.stop && gpsConnect.getStatus() == true){
 			currentRoute.start();
 			workoutStatus.setText(getString(R.string.activeLabel));
 			startButton.setText(getString(R.string.stopLabel));
             setPreviewStatus(View.VISIBLE);
 		}
 		else {
-            if (gpsConnect.getStatus() == true && currentRoute.getStatus() != RouteManager.routeStatus.stop ) {
+            if (gpsConnect.getStatus() == true && currentRoute.getStatus() != DefaultValues.routeStatus.stop ) {
                 currentRoute.stop();
                 workoutStatus.setText("--");
                 startButton.setText(getString(R.string.startLabel));
@@ -112,12 +112,12 @@ public class MainActivity extends Activity {
         }
 	}
 	public void onPauseRoute(){
-			if(currentRoute.getStatus() == RouteManager.routeStatus.start){
+			if(currentRoute.getStatus() == DefaultValues.routeStatus.start){
 				currentRoute.pause();
 				workoutStatus.setText(getString(R.string.pauseLabel));
 				pauseButton.setText(getString(R.string.unPauseLabel));
 			}
-			else if (currentRoute.getStatus() == RouteManager.routeStatus.pause){
+			else if (currentRoute.getStatus() == DefaultValues.routeStatus.pause){
 				currentRoute.unpause();
 				workoutStatus.setText(getString(R.string.activeLabel));
 				pauseButton.setText(getString(R.string.pauseLabel));
