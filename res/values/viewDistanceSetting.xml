@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="viewDistanceSetting">
+        <item>Very near</item>
         <item>Near</item>
         <item>Normal</item>
         <item>Far</item>

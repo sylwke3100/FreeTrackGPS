@@ -21,8 +21,8 @@ public class Settings extends Activity {
         distanceSetting = (Spinner) this.findViewById(R.id.spinner2);
         viewWorkoutStatusSetting = (ToggleButton) this.findViewById(R.id.toggleButton);
         showNotificationSetting = (ToggleButton) this.findViewById(R.id.toggleButton2);
-        timeSetting.setSelection(sharePrefs.getInt("time", 1));
-        distanceSetting.setSelection(sharePrefs.getInt("distance", 1));
+        timeSetting.setSelection(sharePrefs.getInt("time", DefaultValues.defaultMinSpeedIndex));
+        distanceSetting.setSelection(sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
         viewWorkoutStatusSetting.setChecked(sharePrefs.getBoolean("showWorkoutInfo", false));
         showNotificationSetting.setChecked(sharePrefs.getBoolean("showNotificationWorkout", true));
         timeSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -34,7 +34,7 @@ public class Settings extends Activity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                timeSetting.setSelection(sharePrefs.getInt("time", 1));
+                timeSetting.setSelection(sharePrefs.getInt("time", DefaultValues.defaultMinSpeedIndex));
             }
         });
         distanceSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -46,7 +46,7 @@ public class Settings extends Activity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                distanceSetting.setSelection(sharePrefs.getInt("distance", 1));
+                distanceSetting.setSelection(sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
             }
         });
         viewWorkoutStatusSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
