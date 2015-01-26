@@ -65,6 +65,10 @@ public class MainActivity extends Activity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+            case R.id.action_workout:
+                Intent ine = new Intent(this, WorkoutViewer.class);
+                startActivity(ine);
+                break;
             case R.id.action_settings:
                 Intent inent = new Intent(this, Settings.class);
                 startActivity(inent);

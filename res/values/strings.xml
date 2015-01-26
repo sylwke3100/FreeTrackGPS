@@ -32,5 +32,6 @@
     <string name="finishApp">Close FreeTrackGPS</string>
     <string name="finishAppInfo">Do you want close application?</string>
     <string name="NotificationLabel">Show notification workout</string>
+    <string name="workoutsListLabel">Workouts List</string>
 
 </resources>
