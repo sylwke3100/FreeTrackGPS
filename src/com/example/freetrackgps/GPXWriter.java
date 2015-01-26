@@ -21,13 +21,13 @@ public class GPXWriter {
              + " version=\"1.1\""
              + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
              + " xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd \">";
-	public GPXWriter(String fileName) {
+	public GPXWriter(String fileName, long startTime) {
         calendar = Calendar.getInstance();
         content = new StringBuilder();
 		filepath = fileName;
 		content.append(XMLHEADER + GPXINIT+ "\n");
 		content.append("<metadata>\n<author>GPX Track</author>\n</metadata>");
-		content.append("<trk>\n<name>GPX Workout</name>\n<time>" + POINT_DATE_FORMATTER.format(calendar.getTime()) +"</time>\n");
+		content.append("<trk>\n<name>GPX Workout</name>\n<time>" + POINT_DATE_FORMATTER.format(startTime) +"</time>\n");
         content.append("<trkseg>\n");
 		try {
 			bufferedWriter = new BufferedWriter(new FileWriter(filepath));
@@ -47,10 +47,10 @@ public class GPXWriter {
 			isOpen = false;
 		}
 	}
-	public void addPoint(double lat, double lon, double alt, long time){
-		content.append("<trkpt lat=\""+lat+"\" lon=\""+lon+"\">\n");
-		content.append("<ele>"+alt+"</ele>\n");
-		content.append("<time>" + POINT_DATE_FORMATTER.format(new Date(time)) + "</time>\n");
+	public void addPoint(RouteElement point){
+		content.append("<trkpt lat=\""+point.lat+"\" lon=\""+point.lon+"\">\n");
+		content.append("<ele>"+point.alt+"</ele>\n");
+		content.append("<time>" + POINT_DATE_FORMATTER.format(new Date(point.time)) + "</time>\n");
 		content.append("</trkpt>\n");
 		write(content.toString());
         content.delete(0, content.length());
