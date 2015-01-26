@@ -27,12 +27,16 @@ public class RouteManager {
 	private GPXWriter gpx;
     private LocalNotificationManager localNotify;
 	private StringBuffer fileNameBuffer;
+    private DatabaseManager currentDB;
+    private long currentId;
 	public RouteManager(Context C) {
 		context = C;
         status = DefaultValues.routeStatus.stop;
+        currentDB = new DatabaseManager(C);
 	}
 	public void start(){
 		startTime = System.currentTimeMillis();
+        currentId = currentDB.startWorkout(startTime);
 		status = DefaultValues.routeStatus.start;
 		distance = 0.0;
 		points.clear();
@@ -54,6 +58,7 @@ public class RouteManager {
 			gpx.addPoint(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime);	
 			if (lastPosition != null)
 				distance += lastPosition.distanceTo(currentLocation);
+            currentDB.addPoint(currentId, new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime), distance);
 		}
 		lastPosition = currentLocation;
 	}
@@ -80,6 +85,7 @@ public class RouteManager {
 		fileNameBuffer = null;
 		gpx = null;
         localNotify.deleteNotify();
+        currentId = -1;
 	}
     public void setNotifiy(LocalNotificationManager notifiy){
         this.localNotify = notifiy;
