@@ -70,6 +70,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return currentList;
     }
 
+    public void deleteRoute(long id){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.delete("workoutsList","id="+Long.toString(id), null);
+        writableDatabase.delete("workoutPoint","id="+Long.toString(id), null);
+        writableDatabase.close();
+    }
+
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         onCreate(db);
     }
