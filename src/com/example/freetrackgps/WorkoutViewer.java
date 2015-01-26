@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class WorkoutViewer extends Activity {
     private SimpleAdapter simpleAdapter;
-    private static final SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");
+    private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     private DatabaseManager currentDataBase;
     private ListView listWorkout;
     public void onCreate(Bundle savedInstanceState) {
