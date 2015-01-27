@@ -58,15 +58,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public List<RouteListElement> getRoutesList() {
         List<RouteListElement> currentList = new LinkedList<RouteListElement>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor currentCursor = db.rawQuery("SELECT * FROM workoutsList ORDER BY timeStart DESC", null);
+        SQLiteDatabase readableDatabase = this.getReadableDatabase();
+        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutsList ORDER BY timeStart DESC", null);
         if (currentCursor.moveToFirst()) {
             do {
                 currentList.add(new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2)));
             }
             while (currentCursor.moveToNext());
         }
-        db.close();
+        readableDatabase.close();
         return currentList;
     }
 
@@ -75,6 +75,20 @@ public class DatabaseManager extends SQLiteOpenHelper {
         writableDatabase.delete("workoutsList","id="+Long.toString(id), null);
         writableDatabase.delete("workoutPoint","id="+Long.toString(id), null);
         writableDatabase.close();
+    }
+
+    public List<RouteElement> getPointsInRoute(long id){
+        List<RouteElement> currentList = new LinkedList<RouteElement>();
+        SQLiteDatabase readableDatabase = this.getReadableDatabase();
+        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutPoint WHERE id="+Long.toString(id), null);
+        if (currentCursor.moveToFirst()) {
+            do {
+                currentList.add(new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),currentCursor.getDouble(5), currentCursor.getLong(2)));
+            }
+            while (currentCursor.moveToNext());
+        }
+        readableDatabase.close();
+        return  currentList;
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
