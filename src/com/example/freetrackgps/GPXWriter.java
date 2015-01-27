@@ -14,7 +14,7 @@ public class GPXWriter {
 	private Boolean isOpen = false;
 	private BufferedWriter bufferedWriter;
     private Calendar calendar;
-	private String gpxHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
+	private String XMLHEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	private static final String gpxInit = "<gpx"
              + " xmlns=\"http://www.topografix.com/GPX/1/1\""
@@ -25,7 +25,7 @@ public class GPXWriter {
         calendar = Calendar.getInstance();
         content = new StringBuilder();
 		filepath = fileName;
-		content.append(gpxHeader + gpxInit+ "\n");
+		content.append(XMLHEADER + gpxInit+ "\n");
 		content.append("<metadata>\n<author>GPX Track</author>\n</metadata>");
 		content.append("<trk>\n<name>GPX Workout</name>\n<time>" + dateFormat.format(startTime) +"</time>\n");
         content.append("<trkseg>\n");

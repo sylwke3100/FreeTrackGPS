@@ -83,7 +83,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutPoint WHERE id="+Long.toString(id), null);
         if (currentCursor.moveToFirst()) {
             do {
-                currentList.add(new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),currentCursor.getDouble(5), currentCursor.getLong(2)));
+                currentList.add(new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),currentCursor.getDouble(5), currentCursor.getLong(1)));
             }
             while (currentCursor.moveToNext());
         }

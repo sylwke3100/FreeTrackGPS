@@ -18,15 +18,11 @@ import com.example.freetrackgps.DefaultValues;
 
 public class RouteManager {
 	private Context context;
-	private ArrayList<RouteElement> points = new ArrayList<RouteElement>();
 	private DefaultValues.routeStatus status;
 	private long startTime; 
 	private Location lastPosition;
 	private double distance;
-	private SimpleDateFormat p = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
-	private GPXWriter gpx;
     private LocalNotificationManager localNotify;
-	private StringBuffer fileNameBuffer;
     private DatabaseManager currentDB;
     private long currentId;
 	public RouteManager(Context C) {
@@ -39,15 +35,6 @@ public class RouteManager {
         currentId = currentDB.startWorkout(startTime);
 		status = DefaultValues.routeStatus.start;
 		distance = 0.0;
-		points.clear();
-		fileNameBuffer = new StringBuffer();
-		ContextWrapper c = new ContextWrapper(context);
-		File dir = new File(Environment.getExternalStorageDirectory()+"/workout/");
-		if(!(dir.exists() && dir.isDirectory()))
-		   dir.mkdir();
-		fileNameBuffer.append(Environment.getExternalStorageDirectory() + "/workout/");
-		fileNameBuffer.append(p.format(new Date(startTime)) + ".gpx");
-		gpx = new GPXWriter(fileNameBuffer.toString(), startTime);
         localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fkm", getDistance()));
         localNotify.sendNotyfi();
 	}
@@ -59,7 +46,6 @@ public class RouteManager {
 			if (lastPosition != null)
 				distance += lastPosition.distanceTo(currentLocation);
             currentDB.addPoint(currentId, routePoint, distance);
-            gpx.addPoint(routePoint);
 		}
 		lastPosition = currentLocation;
 	}
@@ -79,12 +65,6 @@ public class RouteManager {
 		status = DefaultValues.routeStatus.stop;
 		distance = 0.0;
 		lastPosition = null;
-		if(gpx.save() == true)
-			Toast.makeText(context, context.getString(R.string.SaveTrueInfo)+" "+ fileNameBuffer.toString(), Toast.LENGTH_LONG).show();
-		else
-			Toast.makeText(context, context.getString(R.string.SaveFalseInfo), Toast.LENGTH_LONG).show();
-		fileNameBuffer = null;
-		gpx = null;
         localNotify.deleteNotify();
         currentId = -1;
 	}

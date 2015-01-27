@@ -34,5 +34,6 @@
     <string name="NotificationLabel">Show notification workout</string>
     <string name="workoutsListLabel">Workouts list</string>
     <string name="workoutDeleteLabel">delete</string>
+    <string name="workoutExportLabel">export</string>
 
 </resources>

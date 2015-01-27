@@ -1,7 +1,9 @@
 package com.example.freetrackgps;
 
 import android.app.Activity;
+import android.content.ContextWrapper;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -9,9 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
 
@@ -21,6 +26,7 @@ public class WorkoutViewer extends Activity {
     private DatabaseManager currentDataBase;
     private ListView listWorkout;
     private List<RouteListElement> elements;
+    private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.workout_views_activity);
@@ -56,8 +62,32 @@ public class WorkoutViewer extends Activity {
                 currentDataBase.deleteRoute(elements.get(info.position).id);
                 this.onUpdateWorkoutsList();
                 return true;
+            case R.id.action_workout_export:
+                onExportWorkout(elements.get(info.position));
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    public void onExportWorkout(RouteListElement object){
+        List<RouteElement> pointsWorkout = currentDataBase.getPointsInRoute(object.id);
+        GPXWriter gpx;
+        StringBuffer fileNameBuffer = new StringBuffer();
+        ContextWrapper c = new ContextWrapper(getBaseContext());
+        File dir = new File(Environment.getExternalStorageDirectory()+"/workout/");
+        if(!(dir.exists() && dir.isDirectory()))
+            dir.mkdir();
+        fileNameBuffer.append(Environment.getExternalStorageDirectory() + "/workout/");
+        fileNameBuffer.append(fileGpxFormat.format(new Date(object.startTime)) + ".gpx");
+        gpx = new GPXWriter(fileNameBuffer.toString(), object.startTime);
+        for (RouteElement point: pointsWorkout){
+            gpx.addPoint(point);
+        }
+        if(gpx.save() == true)
+            Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.SaveTrueInfo) + " " + fileNameBuffer.toString(), Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.SaveFalseInfo), Toast.LENGTH_LONG).show();
+
     }
 }
