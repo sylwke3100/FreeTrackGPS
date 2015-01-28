@@ -1,67 +1,103 @@
 package com.example.freetrackgps;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import android.util.Xml;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.io.FileNotFoundException;
+
 
 public class GPXWriter {
-	private String filepath;
-	private StringBuilder content;
 	private Boolean isOpen = false;
-	private BufferedWriter bufferedWriter;
-    private Calendar calendar;
-	private String XMLHEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
+    private FileOutputStream gpxOutputStream;
+    private XmlSerializer gpxSerializer;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-	private static final String gpxInit = "<gpx"
-             + " xmlns=\"http://www.topografix.com/GPX/1/1\""
-             + " version=\"1.1\""
-             + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
-             + " xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd \">";
 	public GPXWriter(String fileName, long startTime) {
-        calendar = Calendar.getInstance();
-        content = new StringBuilder();
-		filepath = fileName;
-		content.append(XMLHEADER + gpxInit+ "\n");
-		content.append("<metadata>\n<author>GPX Track</author>\n</metadata>");
-		content.append("<trk>\n<name>GPX Workout</name>\n<time>" + dateFormat.format(startTime) +"</time>\n");
-        content.append("<trkseg>\n");
-		try {
-			bufferedWriter = new BufferedWriter(new FileWriter(filepath));
-			write(content.toString());
-            content.delete(0, content.length());
-			isOpen = true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			isOpen = false;
-		}
-	}
-	private void write(String data){
-		try{
-			bufferedWriter.write(data);
-		} catch (IOException e) {
-			e.printStackTrace();
-			isOpen = false;
-		}
-	}
+        try {
+            gpxOutputStream = new FileOutputStream(fileName);
+            isOpen = true;
+        }catch (FileNotFoundException fnfe){
+            isOpen = false;
+        }
+        gpxSerializer = Xml.newSerializer();
+        try{
+            if (isOpen) {
+                gpxSerializer.setOutput(gpxOutputStream, "UTF-8");
+                gpxSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+                gpxSerializer.startDocument("UTF-8", true);
+            }
+        }catch (IOException e){
+            isOpen = false;
+        }
+        createHeader();
+        createMetadata(startTime);
+    }
+
+    private void createHeader(){
+        if(isOpen)
+            try {
+                gpxSerializer.startTag("", "gpx");
+                gpxSerializer.attribute("", "xmlns", "http://www.topografix.com/GPX/1/1");
+                gpxSerializer.attribute("", "version", "1.1");
+                gpxSerializer.attribute("", "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                gpxSerializer.attribute("", "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
+            } catch (IOException e) {
+                isOpen = false;
+            }
+    }
+
+    private void createMetadata(long startTime) {
+        if (isOpen)
+            try {
+                gpxSerializer.startTag("", "metadata");
+                gpxSerializer.startTag("", "author");
+                gpxSerializer.text("FreeTrackGPS");
+                gpxSerializer.endTag("", "author");
+                gpxSerializer.endTag("", "metadata");
+                gpxSerializer.startTag("", "trk");
+                gpxSerializer.startTag("", "name");
+                gpxSerializer.text("GPS workout");
+                gpxSerializer.endTag("", "name");
+                gpxSerializer.startTag("", "time");
+                gpxSerializer.text(dateFormat.format(startTime));
+                gpxSerializer.endTag("", "time");
+                gpxSerializer.startTag("", "trkseg");
+            } catch (IOException e) {
+                isOpen = false;
+            }
+    }
+
 	public void addPoint(RouteElement point){
-		content.append("<trkpt lat=\""+point.lat+"\" lon=\""+point.lon+"\">\n");
-		content.append("<ele>"+point.alt+"</ele>\n");
-		content.append("<time>" + dateFormat.format(new Date(point.time)) + "</time>\n");
-		content.append("</trkpt>\n");
-		write(content.toString());
-        content.delete(0, content.length());
+		if(isOpen)
+            try{
+                gpxSerializer.startTag("", "trkpt");
+                gpxSerializer.attribute("", "lat", Double.toString(point.lat));
+                gpxSerializer.attribute("", "lon", Double.toString(point.lon));
+                gpxSerializer.startTag("", "ele");
+                gpxSerializer.text(Double.toString(point.alt));
+                gpxSerializer.endTag("", "ele");
+                gpxSerializer.startTag("", "time");
+                gpxSerializer.text(dateFormat.format(point.time));
+                gpxSerializer.endTag("", "time");
+                gpxSerializer.endTag("", "trkpt");
+            }catch (IOException e){
+                isOpen = false;
+            }
 	}
 	public Boolean save(){
-		content.append("</trkseg>\n</trk>\n</gpx>");
-		write(content.toString());
-		try {
-			bufferedWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        if(isOpen)
+            try {
+                gpxSerializer.endTag("", "trkseg");
+                gpxSerializer.endTag("", "trk");
+                gpxSerializer.endTag("", "gpx");
+                gpxSerializer.endDocument();
+                gpxSerializer.flush();
+                gpxOutputStream.close();
+
+            } catch (IOException e) {
+                isOpen = false;
+            }
 		return isOpen;
-	}
+    }
 }
