@@ -28,10 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.example.freetrackgps.Settings" android:label="Settings"
+        <activity android:name=".SettingsActivity" android:label="Settings"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".About" android:label="About FreeTrackGPS" android:screenOrientation="portrait"/>
-        <activity android:name=".WorkoutViewer" android:label="View Workouts"/>
+        <activity android:name=".AboutActivity" android:label="About FreeTrackGPS" android:screenOrientation="portrait"/>
+        <activity android:name=".WorkoutsPreviewActivity" android:label="View Workouts"/>
 
     </application>
 

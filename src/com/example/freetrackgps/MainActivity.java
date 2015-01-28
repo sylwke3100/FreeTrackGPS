@@ -66,11 +66,11 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_workout:
-                Intent ine = new Intent(this, WorkoutViewer.class);
+                Intent ine = new Intent(this, WorkoutsPreviewActivity.class);
                 startActivity(ine);
                 break;
             case R.id.action_settings:
-                Intent inent = new Intent(this, Settings.class);
+                Intent inent = new Intent(this, SettingsActivity.class);
                 startActivity(inent);
                 break;
             case R.id.gpsSetting:
@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
                 break;
             case R.id.action_about:
-                Intent inet = new Intent(this, About.class);
+                Intent inet = new Intent(this, AboutActivity.class);
                 startActivity(inet);
             break;
         }

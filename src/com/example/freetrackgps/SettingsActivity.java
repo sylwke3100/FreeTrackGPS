@@ -7,7 +7,7 @@ import android.widget.*;
 
 import android.content.SharedPreferences;
 
-public class Settings extends Activity {
+public class SettingsActivity extends Activity {
 
     private Spinner timeSetting, distanceSetting;
     private ToggleButton viewWorkoutStatusSetting, showNotificationSetting;

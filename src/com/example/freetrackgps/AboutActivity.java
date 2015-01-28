@@ -6,7 +6,7 @@ import android.content.pm.PackageInfo;
 import android.widget.TextView;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-public class About extends Activity {
+public class AboutActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

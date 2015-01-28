@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
 
-public class WorkoutViewer extends Activity {
+public class WorkoutsPreviewActivity extends Activity {
     private SimpleAdapter simpleAdapter;
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     private DatabaseManager currentDataBase;
