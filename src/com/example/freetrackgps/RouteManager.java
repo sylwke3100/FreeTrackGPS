@@ -1,19 +1,9 @@
 package com.example.freetrackgps;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import android.app.PendingIntent;
-import android.os.Environment;
-import android.widget.Toast;
 
 import android.content.Context;
-import android.content.ContextWrapper;
-
-import java.io.File;
-
 import android.location.Location;
-import com.example.freetrackgps.DefaultValues;
+
+import java.util.Date;
 
 
 public class RouteManager {

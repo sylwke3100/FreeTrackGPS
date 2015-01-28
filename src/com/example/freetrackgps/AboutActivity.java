@@ -1,10 +1,10 @@
 package com.example.freetrackgps;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.pm.PackageInfo;
-import android.widget.TextView;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Bundle;
+import android.widget.TextView;
 
 public class AboutActivity extends Activity {
     @Override

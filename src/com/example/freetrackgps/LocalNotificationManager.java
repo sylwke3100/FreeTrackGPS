@@ -1,13 +1,12 @@
 package com.example.freetrackgps;
 
 import android.app.Activity;
-import android.content.Context;
 import android.app.NotificationManager;
-import android.content.Intent;
 import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 
 public class LocalNotificationManager {
     private SharedPreferences pref;

@@ -3,10 +3,9 @@ package com.example.freetrackgps;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.channels.Pipe;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 
 public class GPXWriter {
 	private String filepath;

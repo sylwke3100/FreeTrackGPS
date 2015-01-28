@@ -1,15 +1,13 @@
 package com.example.freetrackgps;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.location.*;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationProvider;
+import android.os.Bundle;
 import android.widget.TextView;
 
 import java.util.List;
-
-import android.os.Bundle;
 
 
 public class GPSListner implements LocationListener  {
