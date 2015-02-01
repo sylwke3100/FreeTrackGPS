@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
 	private Button pauseButton, startButton;
     private SharedPreferences sharedPrefs;
 	private RouteManager currentRoute;
+    private MainActivityGuiOperations mainOperations;
     private GPSConnectionManager gpsConnect;
     protected void onCreate(Bundle savedInstanceState) {
         sharedPrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
 		workoutStatus = (TextView)this.findViewById(R.id.textSatlites);
 		workoutDistance = (TextView)this.findViewById(R.id.textWorkOut);
         workoutSpeed = (TextView)this.findViewById(R.id.textSpeedView);
-		textViewElements = Arrays.asList(gpsPosition, gpsStatus, workoutDistance, workoutSpeed);
+		textViewElements = Arrays.asList(gpsStatus, gpsPosition, workoutSpeed, workoutDistance);
 		pauseButton = (Button)this.findViewById(R.id.pauseButton);
 		startButton = (Button)this.findViewById(R.id.startButton);
 		currentRoute = new RouteManager(this);
@@ -48,8 +49,8 @@ public class MainActivity extends Activity {
 		pauseButton.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View V){ onPauseRoute();}
 		});
-
-        gpsConnect.onCreateConnection(textViewElements, service, currentRoute);
+        mainOperations = new MainActivityGuiOperations(getBaseContext(), textViewElements);
+        gpsConnect.onCreateConnection(mainOperations, service, currentRoute);
         if(currentRoute.getStatus()!= DefaultValues.routeStatus.start)
             setPreviewStatus(View.INVISIBLE);
         else

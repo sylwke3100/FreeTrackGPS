@@ -5,25 +5,19 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.widget.TextView;
-
-import java.util.List;
 
 
 public class GPSListner implements LocationListener  {
     private LocalNotificationManager notify;
     private Context currentContext;
-	private TextView gpsPosition, gpsStatus, workoutDistance, workoutSpeed;
+	private MainActivityGuiOperations operations;
 	private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
-	public GPSListner(List<TextView> E,
+	public GPSListner(MainActivityGuiOperations listenerOperations,
                       RouteManager Rt,
                       GPSConnectionManager.gpsStatus gpsCurrentStatus,
                       Context mainContext){
-		this.gpsPosition = E.get(0);
-		this.gpsStatus = E.get(1);
-		this.workoutDistance = E.get(2);
-        this.workoutSpeed = E.get(3);
+		this.operations = listenerOperations;
 		localRoute = Rt;
         this.gpsCurrentStatus  = gpsCurrentStatus;
         notify = new LocalNotificationManager(mainContext, R.drawable.icon, mainContext.getString(R.string.app_name));
@@ -31,36 +25,35 @@ public class GPSListner implements LocationListener  {
         localRoute.setNotifiy(notify);
 	}
     public void onLocationChanged(Location location) {
-        String message = String.format( " %1$s %2$s %3$s",String.format( "%.2f", location.getLongitude()), String.format( "%.2f",location.getLatitude()), String.format( "%.2f",location.getAltitude()));
         if (localRoute != null && location != null && location.hasAltitude() == true ){
         	localRoute.addPoint(location);
-        	this.workoutDistance.setText(String.format("%.2f km", localRoute.getDistance()));
-            this.workoutSpeed.setText(String.format("%d", (int)location.getSpeed() ) +" km/h");
+        	this.operations.setWorkoutDistance(localRoute.getDistance());
+            this.operations.setWorkoutSpeed(location.getSpeed());
             if(localRoute.getStatus() == DefaultValues.routeStatus.start) {
                 notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km", localRoute.getDistance())+" Speed: "+String.format("%d", (int)location.getSpeed() ) +" km/h");
                 notify.sendNotyfi();
             }
         }
-        this.gpsPosition.setText(message);
+        this.operations.setGpsPosition(location.getLatitude(), location.getLongitude());
     }
     public void onStatusChanged(String s,
                                 int i,
                                 Bundle b) {
     	switch(i){
     	case LocationProvider.AVAILABLE:
-    		this.gpsStatus.setText(currentContext.getString(R.string.onLabal));
+    		this.operations.setOnGPS();
             gpsCurrentStatus.status = true;
     		if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
     			localRoute.unpause();
     		break;
     	case LocationProvider.OUT_OF_SERVICE:
-    		this.gpsStatus.setText(currentContext.getString(R.string.offLabel));
+            this.operations.setOffGPS();
             gpsCurrentStatus.status = false;
     		if (localRoute.getStatus() == DefaultValues.routeStatus.start)
     			localRoute.pause();
     		break;
     	case LocationProvider.TEMPORARILY_UNAVAILABLE:
-    		this.gpsStatus.setText(currentContext.getString(R.string.offLabel));
+    		this.operations.setOffGPS();
             gpsCurrentStatus.status = false;
     		if (localRoute.getStatus() == DefaultValues.routeStatus.start)
     			localRoute.pause();
@@ -68,13 +61,13 @@ public class GPSListner implements LocationListener  {
     	}
     }
     public void onProviderDisabled(String s) {
-    	this.gpsStatus.setText("Off");
+    	this.operations.setOffGPS();
         gpsCurrentStatus.status = false;
     	if (localRoute.getStatus() == DefaultValues.routeStatus.start)
     		localRoute.pause();
     }
     public void onProviderEnabled(String s) {
-    	this.gpsStatus.setText("On");
+    	this.operations.setOnGPS();
         gpsCurrentStatus.status = true;
     	if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
     		localRoute.unpause();

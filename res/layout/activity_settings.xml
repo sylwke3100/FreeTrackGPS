@@ -59,7 +59,7 @@
             android:checked="false"
             android:layout_alignTop="@+id/textViewVersion" android:layout_alignLeft="@+id/spinner2"
             android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="188dp"
-            android:layout_y="85dp" android:textOn="@string/onLabal"/>
+            android:layout_y="85dp" android:textOn="@string/onLabel"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,5 +70,5 @@
             android:layout_height="36dp"
             android:text="New ToggleButton"
             android:id="@+id/toggleButton2" android:layout_x="188dp" android:layout_y="41dp" android:checked="false"
-            android:textOff="@string/offLabel" android:textOn="@string/onLabal"/>
+            android:textOff="@string/offLabel" android:textOn="@string/onLabel"/>
 </AbsoluteLayout>
