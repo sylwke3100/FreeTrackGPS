@@ -12,13 +12,13 @@
     <string name="workoutStartLabel">Start</string>
     <string name="workoutPauseLabel">Pause</string>
     <string name="settingGPSSpeedScan">Speed GPS scan</string>
-    <string name="settingDistanceBeetwenPointLabel">Distance between points</string>
+    <string name="settingDistanceBetweenPointLabel">Distance between points</string>
     <string name="settingShowWorkoutInfoLabel">Show workout info if stop</string>
     <string name="offLabel">Off</string>
     <string name="onLabel">On</string>
     <string name="pauseLabel">Pause</string>
     <string name="unPauseLabel">UnPause</string>
-    <string name="errorGPSConnectuionInfo">Error Start workout - check GPS connection</string>
+    <string name="errorGPSConnectionInfo">Error Start workout - check GPS connection</string>
     <string name="startLabel">Start</string>
     <string name="stopLabel">Stop</string>
     <string name="activeLabel">Active</string>

@@ -106,14 +106,14 @@ public class MainActivity extends Activity {
             setPreviewStatus(View.VISIBLE);
 		}
 		else {
-            if (gpsConnect.getStatus() == true && currentRoute.getStatus() != DefaultValues.routeStatus.stop ) {
+            if (currentRoute.getStatus() != DefaultValues.routeStatus.stop ) {
                 currentRoute.stop();
                 workoutStatus.setText("--");
                 startButton.setText(getString(R.string.startLabel));
                 setPreviewStatus(View.INVISIBLE);
             }
             else{
-                Toast.makeText(getBaseContext(), getString(R.string.errorGPSConnectuionInfo), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), getString(R.string.errorGPSConnectionInfo), Toast.LENGTH_LONG).show();
             }
         }
 	}
