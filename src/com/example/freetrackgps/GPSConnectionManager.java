@@ -23,7 +23,9 @@ public class GPSConnectionManager {
         sharedPrefs = mainContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
         gpsCurrentStatus = new gpsStatus();
     }
-    public void onCreateConnection(List<TextView> textViewElements, LocationManager service, RouteManager currentRoute){
+    public void onCreateConnection(List<TextView> textViewElements,
+                                   LocationManager service,
+                                   RouteManager currentRoute){
         int[] time = mainContext.getResources().getIntArray(R.array.timeArray);
         int[] distance = mainContext.getResources().getIntArray(R.array.distanceArray);
         if (service != null){

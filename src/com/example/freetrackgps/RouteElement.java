@@ -1,12 +1,15 @@
 package com.example.freetrackgps;
 
 public class RouteElement {
-	public double lat, lon, alt;
+	public double latitude, longitude, altitude;
 	public long time;
-	public RouteElement(double la, double lo, double al, long t) {
-		this.lat = la;
-		this.lon = lo;
-		this.alt = al;
-		this.time = t;
+	public RouteElement(double latitude,
+                        double longitude,
+                        double altitude,
+                        long time) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.altitude = altitude;
+		this.time = time;
 	}
 }

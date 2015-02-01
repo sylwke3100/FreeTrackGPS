@@ -12,7 +12,9 @@ public class LocalNotificationManager {
     private SharedPreferences pref;
     private NotificationManager notifcationManager;
     private NotificationCompat.Builder mainNotification;
-    public  LocalNotificationManager(Context currentContext, int smallIcon, String title){
+    public  LocalNotificationManager(Context currentContext,
+                                     int smallIcon,
+                                     String title){
         mainNotification = new NotificationCompat.Builder(currentContext);
         mainNotification.setContentTitle(title);
         mainNotification.setSmallIcon(smallIcon);

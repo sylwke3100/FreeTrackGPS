@@ -13,7 +13,8 @@ public class GPXWriter {
     private FileOutputStream gpxOutputStream;
     private XmlSerializer gpxSerializer;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-	public GPXWriter(String fileName, long startTime) {
+	public GPXWriter(String fileName,
+                     long startTime) {
         try {
             gpxOutputStream = new FileOutputStream(fileName);
             isOpen = true;
@@ -72,10 +73,10 @@ public class GPXWriter {
 		if(isOpen)
             try{
                 gpxSerializer.startTag("", "trkpt");
-                gpxSerializer.attribute("", "lat", Double.toString(point.lat));
-                gpxSerializer.attribute("", "lon", Double.toString(point.lon));
+                gpxSerializer.attribute("", "latitude", Double.toString(point.latitude));
+                gpxSerializer.attribute("", "longitude", Double.toString(point.longitude));
                 gpxSerializer.startTag("", "ele");
-                gpxSerializer.text(Double.toString(point.alt));
+                gpxSerializer.text(Double.toString(point.altitude));
                 gpxSerializer.endTag("", "ele");
                 gpxSerializer.startTag("", "time");
                 gpxSerializer.text(dateFormat.format(point.time));

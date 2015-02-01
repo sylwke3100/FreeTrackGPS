@@ -16,7 +16,10 @@ public class GPSListner implements LocationListener  {
 	private TextView gpsPosition, gpsStatus, workoutDistance, workoutSpeed;
 	private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
-	public GPSListner(List<TextView> E, RouteManager Rt, GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext){
+	public GPSListner(List<TextView> E,
+                      RouteManager Rt,
+                      GPSConnectionManager.gpsStatus gpsCurrentStatus,
+                      Context mainContext){
 		this.gpsPosition = E.get(0);
 		this.gpsStatus = E.get(1);
 		this.workoutDistance = E.get(2);
@@ -40,7 +43,9 @@ public class GPSListner implements LocationListener  {
         }
         this.gpsPosition.setText(message);
     }
-    public void onStatusChanged(String s, int i, Bundle b) {
+    public void onStatusChanged(String s,
+                                int i,
+                                Bundle b) {
     	switch(i){
     	case LocationProvider.AVAILABLE:
     		this.gpsStatus.setText(currentContext.getString(R.string.onLabal));

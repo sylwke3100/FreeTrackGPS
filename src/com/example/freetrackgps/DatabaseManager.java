@@ -34,16 +34,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return id;
     }
 
-    public void addPoint(long workoutId, RouteElement point, double distance){
+    public void addPoint(long workoutId,
+                         RouteElement point,
+                         double distance){
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         ContentValues updatedValues = new ContentValues();
         values.put("id", workoutId);
         values.put("timestamp", point.time);
         values.put("distance", distance);
-        values.put("latitude", point.lat);
-        values.put("longitude", point.lon);
-        values.put("altitude", point.alt);
+        values.put("latitude", point.latitude);
+        values.put("longitude", point.longitude);
+        values.put("altitude", point.altitude);
         writableDatabase.insert("workoutPoint", null, values);
         updatedValues.put("distance", distance);
         String filter = "id="+workoutId;
@@ -86,7 +88,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return  currentList;
     }
 
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db,
+                          int oldVersion,
+                          int newVersion){
         onCreate(db);
     }
 }
