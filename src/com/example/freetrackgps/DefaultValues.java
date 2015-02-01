@@ -8,4 +8,7 @@ public class DefaultValues {
         pause,
         start
     }
+    public static String defaultDatabaseName = "workout";
+    public static String defaultFolderWithWorkout = "/workout/";
+    public static String defaultFileFormat = "gpx";
 }

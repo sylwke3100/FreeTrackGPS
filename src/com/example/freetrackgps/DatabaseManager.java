@@ -11,11 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DatabaseManager extends SQLiteOpenHelper {
-    private static String databaseName = "workout";
     private static final int databaseVersion = 1;
 
     public DatabaseManager(Context context){
-        super(context, databaseName, null, databaseVersion);
+        super(context, DefaultValues.defaultDatabaseName, null, databaseVersion);
     }
 
     public void onCreate(SQLiteDatabase db){

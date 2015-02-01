@@ -45,12 +45,11 @@ public class WorkoutsPreviewOperations {
         List<RouteElement> pointsWorkout = currentDataBase.getPointsInRoute(object.id);
         GPXWriter gpx;
         StringBuffer fileNameBuffer = new StringBuffer();
-        ContextWrapper c = new ContextWrapper(localContext);
-        File dir = new File(Environment.getExternalStorageDirectory()+"/workout/");
+        File dir = new File(Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
         if(!(dir.exists() && dir.isDirectory()))
             dir.mkdir();
-        fileNameBuffer.append(Environment.getExternalStorageDirectory() + "/workout/");
-        fileNameBuffer.append(fileGpxFormat.format(new Date(object.startTime)) + ".gpx");
+        fileNameBuffer.append(Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
+        fileNameBuffer.append(fileGpxFormat.format(new Date(object.startTime)) + "." + DefaultValues.defaultFileFormat);
         gpx = new GPXWriter(fileNameBuffer.toString(), object.startTime);
         for (RouteElement point: pointsWorkout){
             gpx.addPoint(point);
