@@ -73,8 +73,8 @@ public class GPXWriter {
 		if(isOpen)
             try{
                 gpxSerializer.startTag("", "trkpt");
-                gpxSerializer.attribute("", "latitude", Double.toString(point.latitude));
-                gpxSerializer.attribute("", "longitude", Double.toString(point.longitude));
+                gpxSerializer.attribute("", "lat", Double.toString(point.latitude));
+                gpxSerializer.attribute("", "lon", Double.toString(point.longitude));
                 gpxSerializer.startTag("", "ele");
                 gpxSerializer.text(Double.toString(point.altitude));
                 gpxSerializer.endTag("", "ele");
