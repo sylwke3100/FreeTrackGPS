@@ -16,7 +16,7 @@ public class WorkoutsPreviewActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.workout_views_activity);
+        setContentView(R.layout.activity_workout_views);
         listWorkout = (ListView) this.findViewById(R.id.listWorkout);
         registerForContextMenu(listWorkout);
         workoutsPreviewOperations = new WorkoutsPreviewOperations(getBaseContext());
@@ -24,7 +24,7 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     private void onUpdateWorkoutsList() {
-        simpleAdapter = new SimpleAdapter(this, workoutsPreviewOperations.getUpdatedWorkoutsList(), R.layout.lines_layout, new String[]{"time", "distance"}, new int[]{R.id.line_time, R.id.line_distance});
+        simpleAdapter = new SimpleAdapter(this, workoutsPreviewOperations.getUpdatedWorkoutsList(), R.layout.textview_row_lines, new String[]{"time", "distance"}, new int[]{R.id.line_time, R.id.line_distance});
         listWorkout.setAdapter(simpleAdapter);
     }
 
@@ -32,7 +32,7 @@ public class WorkoutsPreviewActivity extends Activity {
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.context_view_menu, menu);
+        inflater.inflate(R.menu.context_workoutspreview, menu);
     }
 
     public boolean onContextItemSelected(MenuItem item) {
@@ -51,7 +51,7 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.normal_menu_workouts_view, menu);
+        getMenuInflater().inflate(R.menu.option_workoutpreview, menu);
         return  true;
     }
 

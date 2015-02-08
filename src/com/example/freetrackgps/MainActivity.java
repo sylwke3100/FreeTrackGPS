@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
         if (currentRoute.getStatus() != DefaultValues.routeStatus.start) {
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.option_main, menu);
             return true;
         }
         return  false;

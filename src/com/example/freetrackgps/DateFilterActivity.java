@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class DateFilterActivity extends Activity {
@@ -18,7 +17,7 @@ public class DateFilterActivity extends Activity {
     @Override public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.date_filter_activity);
+        setContentView(R.layout.activity_date_filter);
         sharePrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
         okButton = (Button) findViewById(R.id.okButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
@@ -26,14 +25,12 @@ public class DateFilterActivity extends Activity {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 saveFilter();
-                setResult(1);
                 finish();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 cancelFilter();
-                setResult(1);
                 finish();
             }
         });
@@ -42,7 +39,6 @@ public class DateFilterActivity extends Activity {
 
     @Override public void onBackPressed() {
         super.onBackPressed();
-        setResult(0);
         finish();
     }
 
