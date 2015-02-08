@@ -34,5 +34,9 @@
     <string name="workoutsListLabel">Workouts list</string>
     <string name="workoutDeleteLabel">delete</string>
     <string name="workoutExportLabel">export</string>
+    <string name="workoutsFilterByDate">Filter by date</string>
+    <string name="okLabel">Ok</string>
+    <string name="cancelLabel">Cancel</string>
+    <string name="setFilterLabel">Set filter for workouts</string>
 
 </resources>

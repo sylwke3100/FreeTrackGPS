@@ -1,31 +1,40 @@
 package com.example.freetrackgps;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.SharedPreferences;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 public class WorkoutsPreviewOperations {
+    private SharedPreferences sharePrefs;
     private DatabaseManager currentDataBase;
     private List<RouteListElement> elements;
     private Context localContext;
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
+    private DatabaseTimeFilter filter = new DatabaseTimeFilter();
     WorkoutsPreviewOperations(Context context){
         currentDataBase = new DatabaseManager(context);
         localContext = context;
+        sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
     }
 
     public ArrayList<HashMap<String,String>> getUpdatedWorkoutsList(){
-        elements = currentDataBase.getRoutesList();
+        long time = sharePrefs.getLong("filterOneTime", -1);
+        if (time!= -1)
+            setOneFilter(time);
+        else
+            setOneFilter(0);
+        elements = currentDataBase.getRoutesList(filter);
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         for(RouteListElement element: elements){
             HashMap<String,String> simpleItem = new HashMap<String, String>();
@@ -58,6 +67,9 @@ public class WorkoutsPreviewOperations {
             Toast.makeText(localContext, localContext.getString(R.string.SaveTrueInfo) + " " + fileNameBuffer.toString(), Toast.LENGTH_LONG).show();
         else
             Toast.makeText(localContext, localContext.getString(R.string.SaveFalseInfo), Toast.LENGTH_LONG).show();
+    }
 
+    public void setOneFilter(long time){
+        filter.setViewFilter(time);
     }
 }

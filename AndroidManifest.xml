@@ -32,6 +32,7 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".AboutActivity" android:label="About FreeTrackGPS" android:screenOrientation="portrait"/>
         <activity android:name=".WorkoutsPreviewActivity" android:label="View Workouts"/>
+        <activity android:name=".DateFilterActivity"/>
 
     </application>
 

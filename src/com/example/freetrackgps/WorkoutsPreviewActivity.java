@@ -1,11 +1,9 @@
 package com.example.freetrackgps;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -13,7 +11,6 @@ import android.widget.SimpleAdapter;
 
 public class WorkoutsPreviewActivity extends Activity {
     private SimpleAdapter simpleAdapter;
-
     private WorkoutsPreviewOperations workoutsPreviewOperations;
     private ListView listWorkout;
 
@@ -51,5 +48,24 @@ public class WorkoutsPreviewActivity extends Activity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.normal_menu_workouts_view, menu);
+        return  true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_filter_by_date:
+                Intent intent = new Intent(this, DateFilterActivity.class);
+                startActivity(intent);
+                break;
+        } return true;
+    }
+
+    public void onResume(){
+        super.onResume();
+        onUpdateWorkoutsList();
     }
 }

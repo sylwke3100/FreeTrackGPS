@@ -1,6 +1,5 @@
 package com.example.freetrackgps;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DatabaseManager extends SQLiteOpenHelper {
+public class DatabaseManager extends SQLiteOpenHelper{
     private static final int databaseVersion = 1;
 
     public DatabaseManager(Context context){
@@ -48,15 +47,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
         values.put("altitude", point.altitude);
         writableDatabase.insert("workoutPoint", null, values);
         updatedValues.put("distance", distance);
-        String filter = "id="+workoutId;
-        writableDatabase.update("workoutsList", updatedValues, filter, null);
+        writableDatabase.update("workoutsList", updatedValues, "id=" + workoutId, null);
         writableDatabase.close();
     }
 
-    public List<RouteListElement> getRoutesList() {
+    public List<RouteListElement> getRoutesList(DatabaseFilter filter) {
         List<RouteListElement> currentList = new LinkedList<RouteListElement>();
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
-        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutsList ORDER BY timeStart DESC", null);
+        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutsList" + filter.getGeneratedFilterString() + " ORDER BY timeStart DESC", null);
         if (currentCursor.moveToFirst()) {
             do {
                 currentList.add(new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2)));
@@ -77,7 +75,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public List<RouteElement> getPointsInRoute(long id){
         List<RouteElement> currentList = new LinkedList<RouteElement>();
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
-        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutPoint WHERE id="+Long.toString(id), null);
+        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutPoint WHERE id=" + Long.toString(id), null);
         if (currentCursor.moveToFirst()) {
             do {
                 currentList.add(new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),currentCursor.getDouble(5), currentCursor.getLong(1)));
