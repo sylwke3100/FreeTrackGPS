@@ -13,7 +13,7 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.activity_about);
         try {
             PackageInfo manager= this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            ((TextView) this.findViewById(R.id.textViewVersion)).setText(manager.versionName);
+            ((TextView) this.findViewById(R.id.textWorkoutStatusLabel)).setText(manager.versionName);
         } catch (NameNotFoundException e) {
         }
     }

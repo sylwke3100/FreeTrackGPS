@@ -1,58 +1,81 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context=".MainActivity">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/tableLayout1"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" >
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_gravity="center" android:gravity="center">
+        <TextView android:text="@string/app_name" android:textSize="20dp" android:textAlignment="gravity"
+                  android:layout_column="0"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" android:textStyle="bold"
+                  android:layout_marginTop="10dp"/>
+    </LinearLayout>
+    <TableRow android:layout_marginTop="20dp">
 
+        <TextView
+                android:id="@+id/textGPSStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gpsStatusLabel"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_alignParentTop="true" android:layout_alignLeft="@+id/startButton"
+                android:layout_alignStart="@+id/startButton"/>
+
+        <TextView
+                android:id="@+id/textGPSStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textGPSStatusLabel"
+                android:layout_toRightOf="@+id/textGPSStatusLabel"
+                android:text="- -" android:layout_column="6"/>
+    </TableRow>
+
+    <TableRow android:layout_marginTop="20dp" android:layout_marginBottom="10dp">
+        <TextView
+                android:id="@+id/textGPSPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/startButton"
+                android:layout_below="@+id/textGPSStatusLabel"
+                android:text="@string/gpsPositionLabel"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+
+        <TextView
+                android:id="@+id/textPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textGPSPosition"
+                android:layout_alignBottom="@+id/textGPSPosition"
+                android:layout_toRightOf="@+id/textGPSStatus"
+                android:text="- -" android:layout_column="6"/>
+    </TableRow>
+
+    <TableRow android:layout_marginBottom="20dp">
+        <TextView
+                android:id="@+id/textWorkoutStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textGPSPosition"
+                android:layout_below="@+id/textGPSPosition"
+                android:text="@string/workoutStatusLabel"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+                android:id="@+id/textWorkoutStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="- -"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="6"/>
+    </TableRow>
+    <TableRow>
     <TextView
-            android:id="@+id/textGPSStatus"
+            android:id="@+id/textDistanceLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView1"
-            android:layout_marginLeft="46dp"
-            android:layout_toRightOf="@+id/textView1"
-            android:text="- -"/>
-
-    <TextView
-            android:id="@+id/textPosition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView2"
-            android:layout_alignBottom="@+id/textView2"
-            android:layout_toRightOf="@+id/textGPSStatus"
-            android:text="- -"/>
-
-    <TextView
-            android:id="@+id/textViewVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="18dp"
-            android:text="@string/workoutStatusLabel"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <TextView
-            android:id="@+id/textSatlites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textViewVersion"
-            android:layout_alignBottom="@+id/textViewVersion"
-            android:layout_alignLeft="@+id/textPosition"
-            android:text="- -"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-    <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewVersion"
-            android:layout_below="@+id/textViewVersion"
-            android:layout_marginTop="23dp"
+            android:layout_alignLeft="@+id/textWorkoutStatusLabel"
+            android:layout_below="@+id/textWorkoutStatusLabel"
             android:text="@string/workoutDistanceLabel"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -60,62 +83,85 @@
             android:id="@+id/textWorkOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView4"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_alignLeft="@+id/textSatlites"
-            android:text="--"/>
+            android:layout_alignBaseline="@+id/textDistanceLabel"
+            android:layout_alignBottom="@+id/textDistanceLabel"
+            android:layout_alignLeft="@+id/textWorkoutStatus"
+            android:text="- -" android:layout_column="6"/>
+    </TableRow>
 
-    <Button
-            android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="62dp"
-            android:text="@string/workoutStartLabel"
-            android:layout_below="@+id/textView" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" android:layout_marginTop="48dp"/>
+    <TableRow android:layout_marginTop="10dp" android:layout_marginBottom="20dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speedLabel"
+                android:id="@+id/textSpeedLabel"
+                android:textSize="18dp"
+                android:layout_below="@+id/textDistanceLabel" android:layout_alignRight="@+id/textGPSPosition"
+                android:layout_alignEnd="@+id/textGPSPosition"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="- -"
+                android:id="@+id/textSpeedView"
+                android:layout_toEndOf="@+id/textGPSStatusLabel"
+                android:layout_alignBottom="@+id/textSpeedLabel" android:layout_alignLeft="@+id/textWorkOut"
+                android:layout_alignStart="@+id/textWorkOut" android:layout_column="6"/>
+    </TableRow>
+    <TableRow>
 
-    <Button
-            android:id="@+id/pauseButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/workoutPauseLabel"
-            android:layout_alignTop="@+id/startButton" android:layout_alignLeft="@+id/textGPSStatus"
-            android:layout_alignStart="@+id/textGPSStatus"/>
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <Button
+                android:id="@+id/startButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/workoutStartLabel" android:layout_column="3"></Button>
+        <Button
+                android:id="@+id/pauseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/workoutPauseLabel"
+                android:layout_alignStart="@+id/textGPSStatus" android:layout_column="8"
+                />
+    </TableRow>
 
-    <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/startButton"
-            android:layout_below="@+id/textView1"
-            android:layout_marginTop="30dp"
-            android:text="@string/gpsPositionLabel"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gpsStatusLabel"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_alignParentTop="true" android:layout_alignLeft="@+id/textView2"
-            android:layout_alignStart="@+id/textView2"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/speedLabel"
-            android:id="@+id/textView"
-            android:textSize="18dp"
-            android:layout_marginTop="21dp"
-            android:layout_below="@+id/textView4" android:layout_alignRight="@+id/textView2"
-            android:layout_alignEnd="@+id/textView2"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="- -"
-            android:id="@+id/textSpeedView"
-            android:layout_toEndOf="@+id/textView1"
-            android:layout_alignBottom="@+id/textView" android:layout_alignLeft="@+id/textWorkOut"
-            android:layout_alignStart="@+id/textWorkOut"/>
-
-</RelativeLayout>
+</TableLayout>

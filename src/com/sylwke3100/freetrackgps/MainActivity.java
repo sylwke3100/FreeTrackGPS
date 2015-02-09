@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 		service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		gpsStatus = (TextView)this.findViewById(R.id.textGPSStatus);
 		gpsPosition = (TextView)this.findViewById(R.id.textPosition);
-		workoutStatus = (TextView)this.findViewById(R.id.textSatlites);
+		workoutStatus = (TextView)this.findViewById(R.id.textWorkoutStatus);
 		workoutDistance = (TextView)this.findViewById(R.id.textWorkOut);
         workoutSpeed = (TextView)this.findViewById(R.id.textSpeedView);
 		textViewElements = Arrays.asList(gpsStatus, gpsPosition, workoutSpeed, workoutDistance);
@@ -93,9 +93,9 @@ public class MainActivity extends Activity {
             workoutDistance.setVisibility(status);
             workoutStatus.setVisibility(status);
             workoutSpeed.setVisibility(status);
-            ((TextView) this.findViewById(R.id.textView4)).setVisibility(status);
-            ((TextView) this.findViewById(R.id.textViewVersion)).setVisibility(status);
-            ((TextView) this.findViewById(R.id.textView)).setVisibility(status);
+            ((TextView) this.findViewById(R.id.textDistanceLabel)).setVisibility(status);
+            ((TextView) this.findViewById(R.id.textWorkoutStatusLabel)).setVisibility(status);
+            ((TextView) this.findViewById(R.id.textSpeedLabel)).setVisibility(status);
         }
     }
 	public void onStartRoute() {

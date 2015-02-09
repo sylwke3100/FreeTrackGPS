@@ -9,7 +9,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/settingGPSSpeedScan"
-            android:id="@+id/textView"
+            android:id="@+id/textSpeedLabel"
             android:layout_marginTop="39dp"
             android:layout_marginLeft="34dp"
             android:textSize="14dp"
@@ -20,22 +20,22 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/settingDistanceBetweenPointLabel"
-            android:id="@+id/textView2"
-            android:layout_below="@+id/spinner" android:layout_alignLeft="@+id/textView"
-            android:layout_alignStart="@+id/textView" android:layout_marginTop="42dp" android:textSize="14dp"
+            android:id="@+id/textGPSPosition"
+            android:layout_below="@+id/spinner" android:layout_alignLeft="@+id/textSpeedLabel"
+            android:layout_alignStart="@+id/textSpeedLabel" android:layout_marginTop="42dp" android:textSize="14dp"
             android:layout_x="13dp" android:layout_y="150dp"/>
     <Spinner
             android:layout_width="150dp"
             android:layout_height="35dp"
             android:id="@+id/spinner"
-            android:spinnerMode="dropdown" android:layout_alignTop="@+id/textView"
-            android:layout_toRightOf="@+id/textView2" android:layout_alignParentRight="true"
+            android:spinnerMode="dropdown" android:layout_alignTop="@+id/textSpeedLabel"
+            android:layout_toRightOf="@+id/textGPSPosition" android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" android:layout_x="188dp" android:layout_y="196dp"
             android:entries="@array/viewTimeSetting"/>
     <Spinner
             android:layout_width="150dp"
             android:layout_height="33dp"
-            android:id="@+id/spinner2" android:layout_alignTop="@+id/textView2"
+            android:id="@+id/spinner2" android:layout_alignTop="@+id/textGPSPosition"
             android:layout_alignLeft="@+id/spinner"
             android:layout_alignStart="@+id/spinner" android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true" android:layout_x="188dp" android:layout_y="141dp"
@@ -45,11 +45,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/settingShowWorkoutInfoLabel"
-            android:id="@+id/textViewVersion"
+            android:id="@+id/textWorkoutStatusLabel"
             android:textSize="14dp"
             android:layout_toStartOf="@+id/toggleButton"
-            android:layout_below="@+id/spinner2" android:layout_alignLeft="@+id/textView2"
-            android:layout_alignStart="@+id/textView2" android:layout_marginTop="72dp" android:layout_x="13dp"
+            android:layout_below="@+id/spinner2" android:layout_alignLeft="@+id/textGPSPosition"
+            android:layout_alignStart="@+id/textGPSPosition" android:layout_marginTop="72dp" android:layout_x="13dp"
             android:layout_y="91dp"/>
     <ToggleButton
             android:layout_width="76dp"
@@ -57,7 +57,7 @@
             android:text="New ToggleButton"
             android:id="@+id/toggleButton"
             android:checked="false"
-            android:layout_alignTop="@+id/textViewVersion" android:layout_alignLeft="@+id/spinner2"
+            android:layout_alignTop="@+id/textWorkoutStatusLabel" android:layout_alignLeft="@+id/spinner2"
             android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="188dp"
             android:layout_y="85dp" android:textOn="@string/onLabel"/>
     <TextView

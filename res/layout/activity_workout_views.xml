@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/workoutsListLabel"
-            android:id="@+id/textView" android:layout_x="110dp" android:layout_y="4dp"
+            android:id="@+id/textSpeedLabel" android:layout_x="110dp" android:layout_y="4dp"
             android:layout_below="@+id/scrollView" android:layout_centerHorizontal="true" android:textStyle="bold"/>
     <ScrollView
             android:layout_width="wrap_content"
