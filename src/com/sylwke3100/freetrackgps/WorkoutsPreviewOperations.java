@@ -1,12 +1,9 @@
-package com.example.freetrackgps;
+package com.sylwke3100.freetrackgps;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.provider.ContactsContract;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;

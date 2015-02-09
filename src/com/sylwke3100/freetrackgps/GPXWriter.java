@@ -1,4 +1,4 @@
-package com.example.freetrackgps;
+package com.sylwke3100.freetrackgps;
 
 import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;

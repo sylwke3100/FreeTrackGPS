@@ -1,4 +1,4 @@
-package com.example.freetrackgps;
+package com.sylwke3100.freetrackgps;
 
 public class DefaultValues {
     public static int defaultMinSpeedIndex = 1;
