@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
     <item
-            android:id="@+id/action_filter_by_date"
-            android:icon="@drawable/ic_launcher"
-            android:title="@string/workoutsFilterByDate" />
+            android:title="@string/menu"
+            android:id="@+id/action_overflow"
+            android:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_filter_by_date"
+                android:icon="@drawable/emptytick"
+                android:title="@string/workoutsFilterByDate"
+                android:showAsAction="always|withText"/>
+        </menu>
+    </item>
 
 </menu>

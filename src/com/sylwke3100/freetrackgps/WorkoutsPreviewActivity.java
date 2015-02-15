@@ -8,11 +8,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-
 public class WorkoutsPreviewActivity extends Activity {
     private SimpleAdapter simpleAdapter;
     private WorkoutsPreviewOperations workoutsPreviewOperations;
     private ListView listWorkout;
+    private Menu optionsMenu;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,18 +50,34 @@ public class WorkoutsPreviewActivity extends Activity {
         }
     }
 
+    public void updateIconOptionMenu(){
+        if (workoutsPreviewOperations.getStatusTimeFilter())
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon(R.drawable.tick);
+        else
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon((R.drawable.emptytick));
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_workoutpreview, menu);
-        return  true;
+        this.optionsMenu = menu;
+        updateIconOptionMenu();
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu){
+        updateIconOptionMenu();
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        updateIconOptionMenu();
         switch (item.getItemId()) {
             case R.id.action_filter_by_date:
                 Intent intent = new Intent(this, DateFilterActivity.class);
                 startActivity(intent);
                 break;
-        } return true;
+        }
+        return true;
     }
 
     public void onResume(){

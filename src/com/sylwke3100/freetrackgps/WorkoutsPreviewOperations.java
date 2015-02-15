@@ -69,4 +69,12 @@ public class WorkoutsPreviewOperations {
     public void setOneFilter(long time){
         filter.setViewFilter(time);
     }
+
+    public boolean getStatusTimeFilter(){
+        Long value =  sharePrefs.getLong("filterOneTime", -1);
+        if(value!= -1)
+            return true;
+        else
+            return false;
+    }
 }
