@@ -35,7 +35,7 @@ public class WorkoutsPreviewOperations {
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         for(RouteListElement element: elements){
             HashMap<String,String> simpleItem = new HashMap<String, String>();
-            simpleItem.put("time", formatDate.format(element.startTime));
+            simpleItem.put("time", formatDate.format(element.startTime) + element.getPreparedName());
             simpleItem.put("distance",  String.format("%.2f km", element.distance/1000));
             list.add(simpleItem);
         }
@@ -70,11 +70,22 @@ public class WorkoutsPreviewOperations {
         filter.setViewFilter(time);
     }
 
-    public boolean getStatusTimeFilter(){
-        Long value =  sharePrefs.getLong("filterOneTime", -1);
-        if(value!= -1)
+    public boolean getStatusTimeFilter() {
+        Long value = sharePrefs.getLong("filterOneTime", -1);
+        if (value != -1)
             return true;
         else
             return false;
+    }
+
+    public String getWorkoutName(int id){
+        RouteListElement object= elements.get(id);
+        return object.name;
+    }
+
+    public void updateWorkoutName(int id,
+                                  String name){
+        RouteListElement object= elements.get(id);
+        currentDataBase.updateNameWorkout(object.id, name);
     }
 }

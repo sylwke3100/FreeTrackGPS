@@ -1,10 +1,13 @@
 package com.sylwke3100.freetrackgps;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -28,7 +31,8 @@ public class WorkoutsPreviewActivity extends Activity {
         listWorkout.setAdapter(simpleAdapter);
     }
 
-    public void onCreateContextMenu(ContextMenu menu, View v,
+    public void onCreateContextMenu(ContextMenu menu,
+                                    View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
@@ -45,6 +49,8 @@ public class WorkoutsPreviewActivity extends Activity {
             case R.id.action_workout_export:
                 workoutsPreviewOperations.exportWorkout(info.position);
                 return true;
+            case R.id.action_workout_change:
+                onUpdateNameWorkout(info.position);
             default:
                 return super.onContextItemSelected(item);
         }
@@ -78,6 +84,30 @@ public class WorkoutsPreviewActivity extends Activity {
                 break;
         }
         return true;
+    }
+
+    public void onUpdateNameWorkout(final int idWorkout){
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.prompt_workout_name_edit, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptView);
+        final EditText input = (EditText) promptView.findViewById(R.id.nameWorkout);
+        input.setText(workoutsPreviewOperations.getWorkoutName(idWorkout));
+        alertDialogBuilder
+            .setCancelable(false)
+            .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    workoutsPreviewOperations.updateWorkoutName(idWorkout, input.getText().toString());
+                    onUpdateWorkoutsList();
+                }
+            })
+            .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
     }
 
     public void onResume(){

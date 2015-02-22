@@ -39,5 +39,7 @@
     <string name="cancelLabel">Cancel</string>
     <string name="setFilterLabel">Set filter for workouts</string>
     <string name="menu">Menu</string>
+    <string name="changeNameLabel">change name</string>
+    <string name="changeWorkoutNameLabel">Change workout name</string>
 
 </resources>

@@ -10,14 +10,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DatabaseManager extends SQLiteOpenHelper{
-    private static final int databaseVersion = 1;
+    private static final int databaseVersion = 2;
 
     public DatabaseManager(Context context){
         super(context, DefaultValues.defaultDatabaseName, null, databaseVersion);
     }
 
     public void onCreate(SQLiteDatabase db){
-        String query = "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER)";
+        String query = "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String)";
         db.execSQL(query);
         query = "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)";
         db.execSQL(query);
@@ -57,7 +57,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
         Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutsList" + filter.getGeneratedFilterString() + " ORDER BY timeStart DESC", null);
         if (currentCursor.moveToFirst()) {
             do {
-                currentList.add(new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2)));
+                currentList.add(new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2), currentCursor.getString(3)));
             }
             while (currentCursor.moveToNext());
         }
@@ -86,9 +86,21 @@ public class DatabaseManager extends SQLiteOpenHelper{
         return  currentList;
     }
 
+    public void updateNameWorkout(long idWorkout,
+                                  String name){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        writableDatabase.update("workoutsList", values, "id=" + Long.toString(idWorkout), null );
+        writableDatabase.close();
+    }
+
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion,
                           int newVersion){
-        onCreate(db);
+        if (oldVersion !=newVersion && newVersion == 2){
+            db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
+        } else
+            onCreate(db);
     }
 }
