@@ -56,11 +56,11 @@ public class WorkoutsPreviewOperations {
             dir.mkdir();
         fileNameBuffer.append(Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
         fileNameBuffer.append(fileGpxFormat.format(new Date(object.startTime)) + "." + DefaultValues.defaultFileFormat);
-        gpx = new GPXWriter(fileNameBuffer.toString(), object.startTime);
+        gpx = new GPXWriter(fileNameBuffer.toString(), object.startTime, object.name);
         for (RouteElement point: pointsWorkout){
             gpx.addPoint(point);
         }
-        if(gpx.save() == true)
+        if(gpx.save())
             Toast.makeText(localContext, localContext.getString(R.string.SaveTrueInfo) + " " + fileNameBuffer.toString(), Toast.LENGTH_LONG).show();
         else
             Toast.makeText(localContext, localContext.getString(R.string.SaveFalseInfo), Toast.LENGTH_LONG).show();

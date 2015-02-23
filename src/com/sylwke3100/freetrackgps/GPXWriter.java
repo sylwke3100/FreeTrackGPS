@@ -14,7 +14,8 @@ public class GPXWriter {
     private XmlSerializer gpxSerializer;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	public GPXWriter(String fileName,
-                     long startTime) {
+                   long startTime,
+                   String nameWorkout) {
         try {
             gpxOutputStream = new FileOutputStream(fileName);
             isOpen = true;
@@ -32,7 +33,7 @@ public class GPXWriter {
             isOpen = false;
         }
         createHeader();
-        createMetadata(startTime);
+        createMetadata(startTime, nameWorkout);
     }
 
     private void createHeader(){
@@ -48,7 +49,17 @@ public class GPXWriter {
             }
     }
 
-    private void createMetadata(long startTime) {
+    private String generateName(String name){
+        if (name == null)
+            return "GPS Workout";
+        else
+            if(name.isEmpty())
+                return "GPS workout";
+            else
+                return name;
+    }
+
+    private void createMetadata(long startTime, String name) {
         if (isOpen)
             try {
                 gpxSerializer.startTag("", "metadata");
@@ -58,7 +69,7 @@ public class GPXWriter {
                 gpxSerializer.endTag("", "metadata");
                 gpxSerializer.startTag("", "trk");
                 gpxSerializer.startTag("", "name");
-                gpxSerializer.text("GPS workout");
+                gpxSerializer.text( generateName(name) );
                 gpxSerializer.endTag("", "name");
                 gpxSerializer.startTag("", "time");
                 gpxSerializer.text(dateFormat.format(startTime));
