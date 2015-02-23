@@ -26,7 +26,7 @@ public class GPSConnectionManager {
         int[] time = mainContext.getResources().getIntArray(R.array.timeArray);
         int[] distance = mainContext.getResources().getIntArray(R.array.distanceArray);
         if (service != null){
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(operations, currentRoute, gpsCurrentStatus, this.mainContext) );
+            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))], distance[(sharedPrefs.getInt("distance",1))], new GPSListener(operations, currentRoute, gpsCurrentStatus, this.mainContext) );
             operations.setOnGPS();
             Location L= (Location)service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             gpsCurrentStatus.status = true;
@@ -37,7 +37,7 @@ public class GPSConnectionManager {
         }
         else{
             operations.setOffGPS();
-            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))], distance[(sharedPrefs.getInt("distance",1))], new GPSListner(operations, currentRoute, gpsCurrentStatus, this.mainContext) );
+            service.requestLocationUpdates(LocationManager.GPS_PROVIDER, time[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))], distance[(sharedPrefs.getInt("distance",1))], new GPSListener(operations, currentRoute, gpsCurrentStatus, this.mainContext) );
         }
     }
     public boolean getStatus(){

@@ -25,8 +25,8 @@ public class RouteManager {
       currentId = currentDB.startWorkout(startTime);
 		status = DefaultValues.routeStatus.start;
 		distance = 0.0;
-        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fkm", getDistance()));
-        localNotify.sendNotyfi();
+        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fkm", getDistanceInKm()));
+        localNotify.sendNotify();
 	}
 	public void addPoint(Location currentLocation){
 		Date D = new Date();
@@ -42,10 +42,10 @@ public class RouteManager {
 	public void pause(){
 		status = DefaultValues.routeStatus.pause;
 	}
-	public void unpause(){
+	public void unPause(){
 		status = DefaultValues.routeStatus.start;
 	}
-	public double getDistance(){
+	public double getDistanceInKm(){
 		return distance/1000;
 	}
 	public DefaultValues.routeStatus getStatus(){
@@ -58,7 +58,7 @@ public class RouteManager {
         localNotify.deleteNotify();
         currentId = -1;
 	}
-    public void setNotifiy(LocalNotificationManager notifiy){
-        this.localNotify = notifiy;
+    public void setNotifyInstance(LocalNotificationManager notify){
+        this.localNotify = notify;
     }
 }

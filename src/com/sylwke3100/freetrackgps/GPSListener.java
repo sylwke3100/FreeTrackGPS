@@ -7,31 +7,29 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 
 
-public class GPSListner implements LocationListener  {
+public class GPSListener implements LocationListener  {
     private LocalNotificationManager notify;
     private Context currentContext;
 	private MainActivityGuiOperations operations;
 	private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
-	public GPSListner(MainActivityGuiOperations listenerOperations,
-                      RouteManager Rt,
-                      GPSConnectionManager.gpsStatus gpsCurrentStatus,
-                      Context mainContext){
+	public GPSListener(MainActivityGuiOperations listenerOperations, RouteManager Rt,
+      GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext){
 		this.operations = listenerOperations;
 		localRoute = Rt;
         this.gpsCurrentStatus  = gpsCurrentStatus;
         notify = new LocalNotificationManager(mainContext, R.drawable.icon, mainContext.getString(R.string.app_name));
         this.currentContext = mainContext;
-        localRoute.setNotifiy(notify);
+        localRoute.setNotifyInstance(notify);
 	}
     public void onLocationChanged(Location location) {
         if (localRoute != null && location != null && location.hasAltitude() == true ){
         	localRoute.addPoint(location);
-        	this.operations.setWorkoutDistance(localRoute.getDistance());
+        	this.operations.setWorkoutDistance(localRoute.getDistanceInKm());
             this.operations.setWorkoutSpeed(location.getSpeed());
             if(localRoute.getStatus() == DefaultValues.routeStatus.start) {
-                notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km ", localRoute.getDistance())+currentContext.getString(R.string.speedLabel)+": "+String.format("%d", (int)location.getSpeed() ) +" km/h");
-                notify.sendNotyfi();
+                notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km ", localRoute.getDistanceInKm())+currentContext.getString(R.string.speedLabel)+": "+String.format("%d", (int)location.getSpeed() ) +" km/h");
+                notify.sendNotify();
             }
         }
         this.operations.setGpsPosition(location.getLatitude(), location.getLongitude());
@@ -44,7 +42,7 @@ public class GPSListner implements LocationListener  {
     		this.operations.setOnGPS();
             gpsCurrentStatus.status = true;
     		if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
-    			localRoute.unpause();
+    			localRoute.unPause();
     		break;
     	case LocationProvider.OUT_OF_SERVICE:
             this.operations.setOffGPS();
@@ -70,7 +68,7 @@ public class GPSListner implements LocationListener  {
     	this.operations.setOnGPS();
         gpsCurrentStatus.status = true;
     	if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
-    		localRoute.unpause();
+    		localRoute.unPause();
     }		
 }
     

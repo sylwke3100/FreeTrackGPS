@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 		gpsPosition = (TextView)this.findViewById(R.id.textPosition);
 		workoutStatus = (TextView)this.findViewById(R.id.textWorkoutStatus);
 		workoutDistance = (TextView)this.findViewById(R.id.textWorkOut);
-        workoutSpeed = (TextView)this.findViewById(R.id.textSpeedView);
+    workoutSpeed = (TextView)this.findViewById(R.id.textSpeedView);
 		textViewElements = Arrays.asList(gpsStatus, gpsPosition, workoutSpeed, workoutDistance);
 		pauseButton = (Button)this.findViewById(R.id.pauseButton);
 		startButton = (Button)this.findViewById(R.id.startButton);
@@ -49,17 +49,17 @@ public class MainActivity extends Activity {
 		pauseButton.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View V){ onPauseRoute();}
 		});
-        mainOperations = new MainActivityGuiOperations(getBaseContext(), textViewElements);
-        gpsConnect.onCreateConnection(mainOperations, service, currentRoute);
-        if(currentRoute.getStatus()!= DefaultValues.routeStatus.start)
-            setPreviewStatus(View.INVISIBLE);
-        else
-            setPreviewStatus(View.VISIBLE);
+    mainOperations = new MainActivityGuiOperations(getBaseContext(), textViewElements);
+    gpsConnect.onCreateConnection(mainOperations, service, currentRoute);
+    if(currentRoute.getStatus()!= DefaultValues.routeStatus.start)
+        setPreviewStatus(View.INVISIBLE);
+    else
+        setPreviewStatus(View.VISIBLE);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
         if (currentRoute.getStatus() != DefaultValues.routeStatus.start) {
-            getMenuInflater().inflate(R.menu.option_main, menu);
+            getMenuInflater().inflate(R.menu.options_main, menu);
             return true;
         }
         return  false;
@@ -68,21 +68,21 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_workout:
-                Intent ine = new Intent(this, WorkoutsPreviewActivity.class);
-                startActivity(ine);
+                Intent workoutPreviewActivityIntent = new Intent(this, WorkoutsPreviewActivity.class);
+                startActivity(workoutPreviewActivityIntent);
                 break;
             case R.id.action_settings:
-                Intent inent = new Intent(this, SettingsActivity.class);
-                startActivity(inent);
+                Intent settingActivityIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingActivityIntent);
                 break;
             case R.id.gpsSetting:
-                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                Intent locationSettingsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                locationSettingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(locationSettingsIntent);
                 break;
             case R.id.action_about:
-                Intent inet = new Intent(this, AboutActivity.class);
-                startActivity(inet);
+                Intent AboutActivityIntent = new Intent(this, AboutActivity.class);
+                startActivity(AboutActivityIntent);
             break;
         }
         return true;
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 				pauseButton.setText(getString(R.string.unPauseLabel));
 			}
 			else if (currentRoute.getStatus() == DefaultValues.routeStatus.pause){
-				currentRoute.unpause();
+				currentRoute.unPause();
 				workoutStatus.setText(getString(R.string.activeLabel));
 				pauseButton.setText(getString(R.string.pauseLabel));
 			}

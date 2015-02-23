@@ -10,34 +10,34 @@ import android.support.v4.app.NotificationCompat;
 
 public class LocalNotificationManager {
     private SharedPreferences pref;
-    private NotificationManager notifcationManager;
-    private NotificationCompat.Builder mainNotification;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder globalNotification;
     public  LocalNotificationManager(Context currentContext,
                                      int smallIcon,
                                      String title){
-        mainNotification = new NotificationCompat.Builder(currentContext);
-        mainNotification.setContentTitle(title);
-        mainNotification.setSmallIcon(smallIcon);
-        notifcationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent(currentContext, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mainNotification.setAutoCancel(false);
-        mainNotification.setOngoing(true);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent pendingIntent = PendingIntent.getActivity(currentContext, 0, intent, 0);
-        mainNotification.setContentIntent(pendingIntent);
+        globalNotification = new NotificationCompat.Builder(currentContext);
+        globalNotification.setContentTitle(title);
+        globalNotification.setSmallIcon(smallIcon);
+        notificationManager = (NotificationManager) currentContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent mainActivityIntent = new Intent(currentContext, MainActivity.class);
+        mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        globalNotification.setAutoCancel(false);
+        globalNotification.setOngoing(true);
+        mainActivityIntent.setAction(Intent.ACTION_MAIN);
+        mainActivityIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pendingIntent = PendingIntent.getActivity(currentContext, 0, mainActivityIntent, 0);
+        globalNotification.setContentIntent(pendingIntent);
         pref = currentContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
     }
     public void setContent(String content){
-        mainNotification.setContentText(content);
+        globalNotification.setContentText(content);
     }
-    public void sendNotyfi(){
+    public void sendNotify(){
         if (pref.getBoolean("showNotificationWorkout", true))
-            notifcationManager.notify(0, mainNotification.build());
+            notificationManager.notify(0, globalNotification.build());
     }
     public void deleteNotify(){
-        notifcationManager.cancel(0);
+        notificationManager.cancel(0);
     }
 
 }

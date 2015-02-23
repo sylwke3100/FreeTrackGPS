@@ -64,7 +64,7 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option_workoutpreview, menu);
+        getMenuInflater().inflate(R.menu.options_workoutpreview, menu);
         this.optionsMenu = menu;
         updateIconOptionMenu();
         return super.onCreateOptionsMenu(menu);
