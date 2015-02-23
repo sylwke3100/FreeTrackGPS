@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-            android:id="@+id/action_workout_export"
-            android:icon="@drawable/ic_launcher"
-            android:title="@string/workoutExportLabel" />
 
     <item
             android:id="@+id/action_workout_change"
             android:title="@string/changeNameLabel" />
     <item
-            android:id="@+id/action_workout_delete"
-            android:icon="@drawable/ic_launcher"
-            android:title="@string/workoutDeleteLabel" />
+            android:id="@+id/action_workout_export"
+            android:title="@string/workoutExportLabel" />
 
+    <item
+            android:id="@+id/action_workout_delete"
+            android:title="@string/workoutDeleteLabel" />
 
 </menu>
