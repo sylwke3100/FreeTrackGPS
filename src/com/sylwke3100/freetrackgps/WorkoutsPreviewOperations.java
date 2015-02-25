@@ -18,7 +18,7 @@ public class WorkoutsPreviewOperations {
     private Context localContext;
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
-    private DatabaseTimeFilter filter = new DatabaseTimeFilter();
+    private DatabaseTimeFilter timeFilter = new DatabaseTimeFilter();
     WorkoutsPreviewOperations(Context context){
         currentDataBase = new DatabaseManager(context);
         localContext = context;
@@ -31,7 +31,9 @@ public class WorkoutsPreviewOperations {
             setOneFilter(time);
         else
             setOneFilter(0);
-        elements = currentDataBase.getRoutesList(filter);
+        List<DatabaseFilter> filtersList = new LinkedList<DatabaseFilter>();
+        filtersList.add(timeFilter);
+        elements = currentDataBase.getRoutesList(filtersList);
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         for(RouteListElement element: elements){
             HashMap<String,String> simpleItem = new HashMap<String, String>();
@@ -67,7 +69,7 @@ public class WorkoutsPreviewOperations {
     }
 
     public void setOneFilter(long time){
-        filter.setViewFilter(time);
+        timeFilter.setViewFilter(time);
     }
 
     public boolean getStatusTimeFilter() {

@@ -24,12 +24,19 @@ public class DatabaseTimeFilter implements DatabaseFilter {
 
     public String getGeneratedFilterString(){
         if (startTimeFilter > 0 && endTimeFilter == 0)
-            return " WHERE timeStart>= " + Long.toString(startTimeFilter);
+            return "timeStart>= " + Long.toString(startTimeFilter);
         else{
             if (startTimeFilter > 0 && endTimeFilter > 0)
-                return " WHERE timeStart>= " + Long.toString(startTimeFilter) + "AND timeStart<= " + Long.toString(endTimeFilter);
+                return "timeStart>= " + Long.toString(startTimeFilter) + "AND timeStart<= " + Long.toString(endTimeFilter);
             else
                 return "";
         }
+    }
+
+    public boolean isActive(){
+        if ((startTimeFilter > 0 && endTimeFilter == 0) || (startTimeFilter > 0 && endTimeFilter > 0))
+            return true;
+        else
+            return false;
     }
 }
