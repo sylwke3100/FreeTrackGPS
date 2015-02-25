@@ -51,8 +51,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.close();
     }
 
-    public List<RouteListElement> getRoutesList(List<DatabaseFilter> filters) {
-        List<RouteListElement> currentList = new LinkedList<RouteListElement>();
+    private String getPreparedStringFilters(List<DatabaseFilter> filters){
         boolean isActiveAnyFilter = false;
         String databaseFilterString = new String();
         databaseFilterString = " WHERE ";
@@ -63,11 +62,16 @@ public class DatabaseManager extends SQLiteOpenHelper{
             }
         }
         if (!(filters.size() == 0) && isActiveAnyFilter == true)
-            databaseFilterString = databaseFilterString.substring(0, databaseFilterString.length() - 4);
+            databaseFilterString = databaseFilterString.substring(0, databaseFilterString.length() - 5);
         else
             databaseFilterString = "";
+        return databaseFilterString;
+    }
+
+    public List<RouteListElement> getRoutesList(List<DatabaseFilter> filters) {
+        List<RouteListElement> currentList = new LinkedList<RouteListElement>();
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
-        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutsList" + databaseFilterString + " ORDER BY timeStart DESC", null);
+        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM workoutsList" + getPreparedStringFilters(filters) + " ORDER BY timeStart DESC", null);
         if (currentCursor.moveToFirst()) {
             do {
                 currentList.add(new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2), currentCursor.getString(3)));

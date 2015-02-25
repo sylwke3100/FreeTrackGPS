@@ -61,6 +61,11 @@ public class WorkoutsPreviewActivity extends Activity {
             optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon(R.drawable.tick);
         else
             optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon((R.drawable.emptytick));
+        if (workoutsPreviewOperations.getStatusNameFilter())
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon(R.drawable.tick);
+        else
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon((R.drawable.emptytick));
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,8 +87,35 @@ public class WorkoutsPreviewActivity extends Activity {
                 Intent intent = new Intent(this, DateFilterActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_filter_by_name:
+                onUpdateNameFilter();
+                break;
         }
         return true;
+    }
+
+    public void onUpdateNameFilter(){
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.prompt_workout_name_filer, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptView);
+        final EditText input = (EditText) promptView.findViewById(R.id.nameFilter);
+        input.setText(workoutsPreviewOperations.getFilterName());
+        alertDialogBuilder
+            .setCancelable(false)
+            .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    workoutsPreviewOperations.setNameFilter(input.getText().toString());
+                    onUpdateWorkoutsList();
+                }
+            })
+            .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
     }
 
     public void onUpdateNameWorkout(final int idWorkout){

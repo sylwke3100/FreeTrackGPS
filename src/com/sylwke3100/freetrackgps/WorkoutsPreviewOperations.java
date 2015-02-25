@@ -18,21 +18,25 @@ public class WorkoutsPreviewOperations {
     private Context localContext;
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
-    private DatabaseTimeFilter timeFilter = new DatabaseTimeFilter();
+    private DatabaseTimeFilter timeFilter;
+    private DatabaseNameFilter nameFilter;
     WorkoutsPreviewOperations(Context context){
         currentDataBase = new DatabaseManager(context);
         localContext = context;
         sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        timeFilter = new DatabaseTimeFilter();
+        nameFilter = new DatabaseNameFilter(context);
     }
 
     public ArrayList<HashMap<String,String>> getUpdatedWorkoutsList(){
         long time = sharePrefs.getLong("filterOneTime", -1);
         if (time!= -1)
-            setOneFilter(time);
+            setTimeOneFilter(time);
         else
-            setOneFilter(0);
+            setTimeOneFilter(0);
         List<DatabaseFilter> filtersList = new LinkedList<DatabaseFilter>();
         filtersList.add(timeFilter);
+        filtersList.add(nameFilter);
         elements = currentDataBase.getRoutesList(filtersList);
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
         for(RouteListElement element: elements){
@@ -68,9 +72,15 @@ public class WorkoutsPreviewOperations {
             Toast.makeText(localContext, localContext.getString(R.string.SaveFalseInfo), Toast.LENGTH_LONG).show();
     }
 
-    public void setOneFilter(long time){
+    public void setTimeOneFilter(long time){
         timeFilter.setViewFilter(time);
+
     }
+
+    public void setNameFilter(String name){
+        nameFilter.setViewFilter(name);
+    }
+
 
     public boolean getStatusTimeFilter() {
         Long value = sharePrefs.getLong("filterOneTime", -1);
@@ -78,6 +88,17 @@ public class WorkoutsPreviewOperations {
             return true;
         else
             return false;
+    }
+
+    public boolean getStatusNameFilter() {
+        if (nameFilter.isActive())
+            return true;
+        else
+            return false;
+    }
+
+    public String getFilterName(){
+        return sharePrefs.getString("filterName", "");
     }
 
     public String getWorkoutName(int id){

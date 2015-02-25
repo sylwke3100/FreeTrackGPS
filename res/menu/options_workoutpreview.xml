@@ -12,6 +12,12 @@
                 android:icon="@drawable/emptytick"
                 android:title="@string/workoutsFilterByDate"
                 android:showAsAction="always|withText"/>
+
+            <item
+                    android:id="@+id/action_filter_by_name"
+                    android:icon="@drawable/emptytick"
+                    android:title="@string/workoutsFilterByName"
+                    android:showAsAction="always|withText"/>
         </menu>
     </item>
 
