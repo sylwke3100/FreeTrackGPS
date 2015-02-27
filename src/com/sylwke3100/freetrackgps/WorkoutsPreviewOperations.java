@@ -24,16 +24,11 @@ public class WorkoutsPreviewOperations {
         currentDataBase = new DatabaseManager(context);
         localContext = context;
         sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
-        timeFilter = new DatabaseTimeFilter();
+        timeFilter = new DatabaseTimeFilter(context);
         nameFilter = new DatabaseNameFilter(context);
     }
 
     public ArrayList<HashMap<String,String>> getUpdatedWorkoutsList(){
-        long time = sharePrefs.getLong("filterOneTime", -1);
-        if (time!= -1)
-            setTimeOneFilter(time);
-        else
-            setTimeOneFilter(0);
         List<DatabaseFilter> filtersList = new LinkedList<DatabaseFilter>();
         filtersList.add(timeFilter);
         filtersList.add(nameFilter);
@@ -82,9 +77,8 @@ public class WorkoutsPreviewOperations {
     }
 
 
-    public boolean getStatusTimeFilter() {
-        Long value = sharePrefs.getLong("filterOneTime", -1);
-        if (value != -1)
+    public boolean getStatusTimeFilter() {;
+        if (timeFilter.isActive())
             return true;
         else
             return false;
