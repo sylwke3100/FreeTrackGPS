@@ -17,6 +17,7 @@
             android:id="@+id/nameFilter"
             android:layout_width="match_parent"
             android:inputType="text"
+            android:maxLength="50"
             android:layout_height="wrap_content" >
 
         <requestFocus />
