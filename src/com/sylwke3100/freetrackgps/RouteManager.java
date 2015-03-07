@@ -25,7 +25,7 @@ public class RouteManager {
       currentId = currentDB.startWorkout(startTime);
 		status = DefaultValues.routeStatus.start;
 		distance = 0.0;
-        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2fkm", getDistanceInKm()));
+        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2f km", getDistanceInKm()));
         localNotify.sendNotify();
 	}
 	public void addPoint(Location currentLocation){

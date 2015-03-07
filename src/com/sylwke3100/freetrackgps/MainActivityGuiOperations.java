@@ -32,7 +32,7 @@ public class MainActivityGuiOperations {
     }
 
     public void setWorkoutSpeed(double speed){
-        this.workoutSpeed.setText(String.format("%d", (int) speed) + " km/h");
+        this.workoutSpeed.setText(String.format("%d km/h", (int) speed));
     }
 
     public void setWorkoutDistance(double distance){
