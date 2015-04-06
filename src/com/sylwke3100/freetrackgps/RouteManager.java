@@ -12,13 +12,14 @@ public class RouteManager {
 	private long startTime; 
 	private Location lastPosition;
 	private double distance;
-    private LocalNotificationManager localNotify;
-    private DatabaseManager currentDB;
-    private long currentId;
+  private LocalNotificationManager localNotify;
+  private DatabaseManager currentDB;
+  private long currentId;
+
 	public RouteManager(Context C) {
 		context = C;
-        status = DefaultValues.routeStatus.stop;
-        currentDB = new DatabaseManager(C);
+    status = DefaultValues.routeStatus.stop;
+    currentDB = new DatabaseManager(C);
 	}
 	public void start(){
 		startTime = System.currentTimeMillis();
@@ -55,8 +56,8 @@ public class RouteManager {
 		status = DefaultValues.routeStatus.stop;
 		distance = 0.0;
 		lastPosition = null;
-        localNotify.deleteNotify();
-        currentId = -1;
+    localNotify.deleteNotify();
+    currentId = -1;
 	}
     public void setNotifyInstance(LocalNotificationManager notify){
         this.localNotify = notify;
