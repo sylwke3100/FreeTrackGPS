@@ -28,10 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.sylwke3100.freetrackgps.SettingsActivity" android:label="Settings"
+        <activity android:name="com.sylwke3100.freetrackgps.SettingsActivity" android:label="@string/action_settings"
                   android:screenOrientation="portrait"/>
-        <activity android:name="com.sylwke3100.freetrackgps.AboutActivity" android:label="About FreeTrackGPS" android:screenOrientation="portrait"/>
-        <activity android:name="com.sylwke3100.freetrackgps.WorkoutsPreviewActivity" android:label="View Workouts"/>
+        <activity android:name="com.sylwke3100.freetrackgps.AboutActivity" android:label="@string/aboutProgram" android:screenOrientation="portrait"/>
+        <activity android:name="com.sylwke3100.freetrackgps.WorkoutsPreviewActivity" android:label="@string/workoutsListLabel"/>
         <activity android:name="com.sylwke3100.freetrackgps.DateFilterActivity"/>
 
     </application>

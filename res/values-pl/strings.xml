@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SaveFalseInfo">Błąd zapisu treningu w</string>
+    <string name="NotificationLabel">Pokaż powiadomienia treninug</string>
+    <string name="SaveTrueInfo">Zapis treningu w</string>
+    <string name="aboutProgram">Prosta aplikacja do zapisu treningu do pliku GPX</string>
+    <string name="action_about">O FreeTrackGPS</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="activeLabel">Aktywne</string>
+    <string name="app_name">FreeTrackGPS</string>
+    <string name="cancelLabel">Anuluj</string>
+    <string name="changeNameLabel">zmień nazwę</string>
+    <string name="changeWorkoutNameFilterLabel">Zmień wartość filtru nazwy</string>
+    <string name="changeWorkoutNameLabel">Zmień nazwę treningu</string>
+    <string name="closeSettingsInfo">Uruchom ponownie aplikacje dla zastosowania zmian</string>
+    <string name="errorGPSConnectionInfo">Błąd startu treningu - sprawdź połączenie GPS</string>
+    <string name="finishApp">Zamknij FreeTrackGPS</string>
+    <string name="finishAppInfo">Chcesz zamknąć aplikacje?</string>
+    <string name="gpsPositionLabel">Pozycja</string>
+    <string name="gpsSetting">Ustawienia Lokalizacji</string>
+    <string name="gpsStatusLabel">Status GPS</string>
+    <string name="menu">Menu</string>
+    <string name="offLabel">Wył</string>
+    <string name="okLabel">Ok</string>
+    <string name="onLabel">Wł</string>
+    <string name="pauseLabel">Pauza</string>
+    <string name="setFilterLabel">Ustaw filter dla treningów</string>
+    <string name="settingDistanceBetweenPointLabel">Dystans pomiędzy punktami</string>
+    <string name="settingGPSSpeedScan">Szybkość skanowania GPS</string>
+    <string name="settingShowWorkoutInfoLabel">Pokaż informacje treningu jeśli wyłączony</string>
+    <string name="speedLabel">Szybkość</string>
+    <string name="startLabel">Start</string>
+    <string name="stopLabel">Stop</string>
+    <string name="unPauseLabel">Wznów</string>
+    <string name="versionLabel">wersja</string>
+    <string name="workoutDeleteLabel">usuń</string>
+    <string name="workoutDistanceLabel">Dystans</string>
+    <string name="workoutExportLabel">export</string>
+    <string name="workoutPauseLabel">Pauza</string>
+    <string name="workoutStartLabel">Start</string>
+    <string name="workoutStatusLabel">Status treningu</string>
+    <string name="workoutsFilterByDate">Filtruj po dacie</string>
+    <string name="workoutsFilterByName">Filtruj po nazwie</string>
+    <string name="workoutsListLabel">Lista treningów</string>
+</resources>

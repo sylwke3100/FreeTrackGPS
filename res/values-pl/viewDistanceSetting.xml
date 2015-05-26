@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="viewDistanceSetting">
+        <item>Bardzo blisko</item>
+        <item>Blisko</item>
+        <item>Normalnie</item>
+        <item>Daleko</item>
+    </string-array>
+</resources>
