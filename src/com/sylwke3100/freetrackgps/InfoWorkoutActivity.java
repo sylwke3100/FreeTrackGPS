@@ -11,6 +11,7 @@ public class InfoWorkoutActivity extends Activity {
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");
     private long lastEndDate = 0;
     private double maxHeight = 0, minHeight = 0;
+    private int pointCount = 0;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
@@ -24,6 +25,9 @@ public class InfoWorkoutActivity extends Activity {
                 ((TextView) findViewById(R.id.nameWorkoutTextView)).setText(bnd.getString("routeName"));
             else
                 ((TextView) findViewById(R.id.nameWorkoutTextView)).setText( getString(R.string.Unnamend));
+            ((TextView) findViewById(R.id.pointsText)).setText(Integer.toString(pointCount));
+            ((TextView) findViewById(R.id.maxHeightText)).setText( String.format("%.2f m", maxHeight ) );
+            ((TextView) findViewById(R.id.minHeightText)).setText( String.format("%.2f m", minHeight ) );
         }
     }
     private void calculateRouteRroperties(int id){
@@ -32,8 +36,9 @@ public class InfoWorkoutActivity extends Activity {
         for(RouteElement element: route){
             lastEndDate = element.time;
             if(element.altitude > maxHeight) maxHeight = element.altitude;
-            if(element.altitude < minHeight) minHeight = element.altitude;
+            if(element.altitude < maxHeight) minHeight = element.altitude;
         }
+        pointCount = route.size();
     }
 
 

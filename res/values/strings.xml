@@ -46,5 +46,8 @@
     <string name="Unnamend">Unnamed</string>
     <string name="startTimeLabel">Start time</string>
     <string name="endTimeLabel">End time</string>
+    <string name="Points">Points</string>
+    <string name="minHeight">Min height</string>
+    <string name="maxHeight">Max height</string>
 
 </resources>

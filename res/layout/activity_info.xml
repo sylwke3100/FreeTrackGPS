@@ -8,8 +8,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/nameWorkoutTextView" android:layout_x="146dp" android:layout_y="52dp"
-            android:text="@string/Unnamend"/>
+            android:id="@+id/nameWorkoutTextView" android:layout_y="53dp"
+            android:text="@string/Unnamend" android:layout_x="129dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,4 +36,30 @@
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="0" android:id="@+id/endTimeText" android:layout_x="164dp"
               android:layout_y="160dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Points"
+            android:id="@+id/PointsLabel" android:layout_x="68dp" android:layout_y="186dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/pointsText" android:layout_x="164dp" android:layout_y="186dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/minHeight"
+            android:id="@+id/minHeightLabel" android:layout_x="68dp" android:layout_y="211dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/minHeightText" android:layout_x="164dp" android:layout_y="211dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="@string/maxHeight" android:id="@+id/maxHeightLabel"
+              android:layout_x="68dp" android:layout_y="235dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="0" android:id="@+id/maxHeightText" android:layout_x="164dp"
+              android:layout_y="235dp"/>
 </AbsoluteLayout>
