@@ -42,8 +42,11 @@
     <string name="workoutsFilterByDate">Filtruj po dacie</string>
     <string name="workoutsFilterByName">Filtruj po nazwie</string>
     <string name="workoutsListLabel">Lista treningów</string>
-    <string name="Unnamend">Unnamed</string>
-    <string name="startTimeLabel">Start time</string>
-    <string name="endTimeLabel">End time</string>
-    <string name="Points">Points</string>
+    <string name="Unnamend">Bez nazwy</string>
+    <string name="startTimeLabel">Czas rozpoczęcia</string>
+    <string name="endTimeLabel">Czas końca</string>
+    <string name="Points">Punkty</string>
+    <string name="maxHeight">Max. wysokość</string>
+    <string name="minHeight">Min. wysokość</string>
+    <string name="action_info">O treningu</string>
 </resources>

@@ -49,5 +49,6 @@
     <string name="Points">Points</string>
     <string name="minHeight">Min height</string>
     <string name="maxHeight">Max height</string>
+    <string name="action_info">About workout</string>
 
 </resources>
