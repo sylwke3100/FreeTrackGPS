@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="SaveFalseInfo">Błąd zapisu treningu w</string>
-    <string name="NotificationLabel">Pokaż powiadomienia treninug</string>
+    <string name="NotificationLabel">Pokaż powiadomienia treningu</string>
     <string name="SaveTrueInfo">Zapis treningu w</string>
     <string name="aboutProgram">Prosta aplikacja do zapisu treningu do pliku GPX</string>
     <string name="action_about">O FreeTrackGPS</string>
@@ -42,4 +42,7 @@
     <string name="workoutsFilterByDate">Filtruj po dacie</string>
     <string name="workoutsFilterByName">Filtruj po nazwie</string>
     <string name="workoutsListLabel">Lista treningów</string>
+    <string name="Unnamend">Unnamed</string>
+    <string name="startTimeLabel">Start time</string>
+    <string name="endTimeLabel">End time</string>
 </resources>

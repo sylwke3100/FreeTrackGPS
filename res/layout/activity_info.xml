@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/nameWorkoutTextView" android:layout_x="146dp" android:layout_y="52dp"
+            android:text="@string/Unnamend"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/workoutDistanceLabel"
+            android:id="@+id/distanceLabel" android:layout_x="68dp" android:layout_y="105dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/distanceText" android:layout_x="164dp" android:layout_y="105dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startTimeLabel"
+            android:id="@+id/startTimeLabel" android:layout_x="68dp" android:layout_y="134dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="0" android:id="@+id/startTimeText" android:layout_x="164dp"
+              android:layout_y="134dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/endTimeLabel"
+            android:id="@+id/endTimeLabel" android:layout_x="68dp" android:layout_y="160dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="0" android:id="@+id/endTimeText" android:layout_x="164dp"
+              android:layout_y="160dp"/>
+</AbsoluteLayout>

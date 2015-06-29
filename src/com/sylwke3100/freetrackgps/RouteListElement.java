@@ -4,7 +4,7 @@ public class RouteListElement {
     int id;
     long startTime;
     double distance;
-    String name;
+    String name = "";
     public RouteListElement(int id,
                             long startTime,
                             double distance){

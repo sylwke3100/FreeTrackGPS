@@ -33,6 +33,7 @@
         <activity android:name="com.sylwke3100.freetrackgps.AboutActivity" android:label="@string/aboutProgram" android:screenOrientation="portrait"/>
         <activity android:name="com.sylwke3100.freetrackgps.WorkoutsPreviewActivity" android:label="@string/workoutsListLabel"/>
         <activity android:name="com.sylwke3100.freetrackgps.DateFilterActivity"/>
+        <activity android:name="com.sylwke3100.freetrackgps.InfoWorkoutActivity"/>
 
     </application>
 

@@ -11,23 +11,43 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class WorkoutsPreviewActivity extends Activity {
     private SimpleAdapter simpleAdapter;
     private WorkoutsPreviewOperations workoutsPreviewOperations;
     private ListView listWorkout;
     private Menu optionsMenu;
+    private ArrayList<HashMap<String,String>> routesList;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_views);
+        routesList = new ArrayList<HashMap<String,String>>();
         listWorkout = (ListView) this.findViewById(R.id.listWorkout);
         registerForContextMenu(listWorkout);
         workoutsPreviewOperations = new WorkoutsPreviewOperations(getBaseContext());
         onUpdateWorkoutsList();
+
+        listWorkout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            List<RouteListElement> objects = workoutsPreviewOperations.getUpdatedWorkoutsRawList();
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(WorkoutsPreviewActivity.this, InfoWorkoutActivity.class);
+                intent.putExtra("distanceInfo", objects.get(i).distance );
+                intent.putExtra("startTimeInfo", objects.get(i).startTime );
+                intent.putExtra("routeId", objects.get(i).id);
+                intent.putExtra("routeName", objects.get(i).name);
+                startActivity(intent);
+            }
+        });
     }
 
     private void onUpdateWorkoutsList() {
-        simpleAdapter = new SimpleAdapter(this, workoutsPreviewOperations.getUpdatedWorkoutsList(), R.layout.textview_row_lines, new String[]{"time", "distance"}, new int[]{R.id.line_time, R.id.line_distance});
+        routesList = workoutsPreviewOperations.getUpdatedWorkoutsList();
+        simpleAdapter = new SimpleAdapter(this, routesList, R.layout.textview_row_lines, new String[]{"time", "distance"}, new int[]{R.id.line_time, R.id.line_distance});
         listWorkout.setAdapter(simpleAdapter);
     }
 
@@ -65,7 +85,6 @@ public class WorkoutsPreviewActivity extends Activity {
             optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon(R.drawable.tick);
         else
             optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon((R.drawable.emptytick));
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

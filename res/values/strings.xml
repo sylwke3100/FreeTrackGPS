@@ -43,5 +43,8 @@
     <string name="changeWorkoutNameLabel">Change workout name</string>
     <string name="changeWorkoutNameFilterLabel">Change value filter by name</string>
     <string name="workoutsFilterByName">Filter by name</string>
+    <string name="Unnamend">Unnamed</string>
+    <string name="startTimeLabel">Start time</string>
+    <string name="endTimeLabel">End time</string>
 
 </resources>

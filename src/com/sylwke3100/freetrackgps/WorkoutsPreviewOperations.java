@@ -43,6 +43,10 @@ public class WorkoutsPreviewOperations {
         return list;
     }
 
+    public List<RouteListElement> getUpdatedWorkoutsRawList(){
+        return elements;
+    }
+
     public void deleteWorkout(int id){
         currentDataBase.deleteRoute(elements.get(id).id);
     }
