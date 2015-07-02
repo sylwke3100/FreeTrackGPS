@@ -20,9 +20,13 @@ public class InfoWorkoutActivity extends Activity {
             calculateRouteRroperties(bnd.getInt("routeId"));
             ((TextView) findViewById(R.id.distanceText)).setText( String.format("%.2f km", bnd.getDouble("distanceInfo")/1000 ) );
             ((TextView) findViewById(R.id.startTimeText)).setText( formatDate.format(bnd.getLong("startTimeInfo")) );
-            ((TextView) findViewById(R.id.endTimeText)).setText( formatDate.format(lastEndDate) );
+            if (lastEndDate!=0)
+                ((TextView) findViewById(R.id.endTimeText)).setText( formatDate.format(lastEndDate) );
+            else
+                ((TextView) findViewById(R.id.endTimeText)).setText( "- -" );
             if ( bnd.getString("routeName") != null)
-                ((TextView) findViewById(R.id.nameWorkoutTextView)).setText(bnd.getString("routeName"));
+                ((TextView) findViewById(R.id.nameWorkoutTextView)).setText(bnd.getString(
+                    "routeName"));
             else
                 ((TextView) findViewById(R.id.nameWorkoutTextView)).setText( getString(R.string.Unnamend));
             ((TextView) findViewById(R.id.pointsText)).setText(Integer.toString(pointCount));
