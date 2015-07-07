@@ -49,4 +49,6 @@
     <string name="maxHeight">Max. wysokość</string>
     <string name="minHeight">Min. wysokość</string>
     <string name="action_info">O treningu</string>
+    <string name="noLabel">Nie</string>
+    <string name="yesLabel">Tak</string>
 </resources>

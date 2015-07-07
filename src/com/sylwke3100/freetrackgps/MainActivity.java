@@ -134,17 +134,15 @@ public class MainActivity extends Activity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(getString(R.string.finishApp))
                 .setMessage(getString(R.string.finishAppInfo))
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (currentRoute.getStatus() != DefaultValues.routeStatus.stop)
-                            currentRoute.stop();
-                        finish();
-                        System.exit(0);
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
+                .setPositiveButton(
+                    this.getString(R.string.yesLabel), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (currentRoute.getStatus() != DefaultValues.routeStatus.stop)
+                                currentRoute.stop();
+                            finish();
+                            System.exit(0);
+                        }
+                    }).setNegativeButton(this.getString(R.string.noLabel), null).show();
     }
     protected void onDestroy(){
         super.onDestroy();

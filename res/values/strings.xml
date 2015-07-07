@@ -50,5 +50,7 @@
     <string name="minHeight">Min height</string>
     <string name="maxHeight">Max height</string>
     <string name="action_info">About workout</string>
+    <string name="yesLabel">Yes</string>
+    <string name="noLabel">No</string>
 
 </resources>
