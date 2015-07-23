@@ -67,6 +67,10 @@ public class MainActivity extends Activity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+            case R.id.action_ignorePoints:
+                Intent ignorePointsIntent = new Intent(this, IgnorePointsActivity.class);
+                startActivity(ignorePointsIntent);
+                break;
             case R.id.action_workout:
                 Intent workoutPreviewActivityIntent = new Intent(this, WorkoutsPreviewActivity.class);
                 startActivity(workoutPreviewActivityIntent);

@@ -52,5 +52,8 @@
     <string name="action_info">About workout</string>
     <string name="yesLabel">Yes</string>
     <string name="noLabel">No</string>
+    <string name="action_ignorePoints">Ignore points list</string>
+    <string name="action_ignorepoints_add">Add point</string>
+    <string name="errorValueInfo">Any of the value is empty</string>
 
 </resources>

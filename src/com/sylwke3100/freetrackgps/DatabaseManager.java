@@ -6,11 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseManager extends SQLiteOpenHelper{
-    private static final int databaseVersion = 2;
+    private static final int databaseVersion = 3;
 
     public DatabaseManager(Context context){
         super(context, DefaultValues.defaultDatabaseName, null, databaseVersion);
@@ -21,6 +23,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
         db.execSQL(query);
         query = "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)";
         db.execSQL(query);
+        db.execSQL(
+            "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
     }
 
     public long startWorkout(long timeStartWorkout){
@@ -48,6 +52,16 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.insert("workoutPoint", null, values);
         updatedValues.put("distance", distance);
         writableDatabase.update("workoutsList", updatedValues, "id=" + workoutId, null);
+        writableDatabase.close();
+    }
+
+    public void addIgnorePoint(double latitude, double longitude){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        ContentValues updatedValues = new ContentValues();
+        values.put("latitude", latitude);
+        values.put("longitude", longitude);
+        writableDatabase.insert("ignorePointsList", null, values);
         writableDatabase.close();
     }
 
@@ -89,6 +103,22 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.close();
     }
 
+    public List<HashMap<String, Double>> getIgnorePointsList(){
+        List<HashMap<String, Double>> currentList = new LinkedList<HashMap<String, Double>>();
+        SQLiteDatabase readableDatabase = this.getReadableDatabase();
+        Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM ignorePointsList", null);
+        if (currentCursor.moveToFirst()) {
+            do {
+                HashMap<String, Double> localMap = new HashMap<String, Double>();
+                localMap.put("lat", currentCursor.getDouble(1));
+                localMap.put("lon", currentCursor.getDouble(2));
+                currentList.add(localMap);
+            }
+            while (currentCursor.moveToNext());
+        }
+        readableDatabase.close();
+        return currentList;
+    }
     public List<RouteElement> getPointsInRoute(long id){
         List<RouteElement> currentList = new LinkedList<RouteElement>();
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
@@ -115,9 +145,12 @@ public class DatabaseManager extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion,
                           int newVersion){
-        if (oldVersion !=newVersion && newVersion == 2){
+        if (oldVersion !=newVersion && newVersion == 2)
             db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
-        } else
-            onCreate(db);
+        else
+            if (oldVersion !=newVersion && newVersion == 3)
+                db.execSQL("CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
+             else
+                onCreate(db);
     }
 }

@@ -34,6 +34,7 @@
         <activity android:name="com.sylwke3100.freetrackgps.WorkoutsPreviewActivity" android:label="@string/workoutsListLabel"/>
         <activity android:name="com.sylwke3100.freetrackgps.DateFilterActivity"/>
         <activity android:name="com.sylwke3100.freetrackgps.InfoWorkoutActivity" android:label="@string/action_info"/>
+        <activity android:name="com.sylwke3100.freetrackgps.IgnorePointsActivity" android:label="@string/action_ignorePoints"/>
 
     </application>
 
