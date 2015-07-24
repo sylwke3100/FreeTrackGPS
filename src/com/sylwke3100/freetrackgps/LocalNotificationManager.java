@@ -12,6 +12,7 @@ public class LocalNotificationManager {
     private SharedPreferences pref;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder globalNotification;
+    private Context context;
     public  LocalNotificationManager(Context currentContext,
                                      int smallIcon,
                                      String title){
@@ -28,9 +29,13 @@ public class LocalNotificationManager {
         PendingIntent pendingIntent = PendingIntent.getActivity(currentContext, 0, mainActivityIntent, 0);
         globalNotification.setContentIntent(pendingIntent);
         pref = currentContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        this.context = currentContext;
     }
     public void setContent(String content){
         globalNotification.setContentText(content);
+    }
+    public void setContent(int resurce){
+        globalNotification.setContentText(context.getString(resurce));
     }
     public void sendNotify(){
         if (pref.getBoolean("showNotificationWorkout", true))

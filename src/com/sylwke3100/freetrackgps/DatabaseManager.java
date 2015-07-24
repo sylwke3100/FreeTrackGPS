@@ -38,8 +38,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
     }
 
     public void addPoint(long workoutId,
-                         RouteElement point,
-                         double distance){
+        RouteElement point,
+        double distance){
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         ContentValues updatedValues = new ContentValues();
@@ -134,7 +134,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
     }
 
     public void updateNameWorkout(long idWorkout,
-                                  String name){
+        String name){
         SQLiteDatabase writableDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name", name);
@@ -143,14 +143,14 @@ public class DatabaseManager extends SQLiteOpenHelper{
     }
 
     public void onUpgrade(SQLiteDatabase db,
-                          int oldVersion,
-                          int newVersion){
+        int oldVersion,
+        int newVersion){
         if (oldVersion !=newVersion && newVersion == 2)
             db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
         else
-            if (oldVersion !=newVersion && newVersion == 3)
-                db.execSQL("CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
-             else
-                onCreate(db);
+        if (oldVersion !=newVersion && newVersion == 3)
+            db.execSQL("CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
+        else
+            onCreate(db);
     }
 }

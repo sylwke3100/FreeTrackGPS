@@ -55,5 +55,6 @@
     <string name="action_ignorePoints">Ignore points list</string>
     <string name="action_ignorepoints_add">Add point</string>
     <string name="errorValueInfo">Any of the value is empty</string>
+    <string name="ignorePointNotify">Ignore Point Area</string>
 
 </resources>
