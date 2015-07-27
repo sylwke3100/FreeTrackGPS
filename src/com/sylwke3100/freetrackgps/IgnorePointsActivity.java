@@ -25,10 +25,9 @@ public class IgnorePointsActivity extends Activity {
         onUpdateIgnoreList();
     }
     public void onUpdateIgnoreList(){
-        ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, R.layout.textview_ignore_points);
-        int counter =0;
+        ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, R.layout.textview_ignore_points, R.id.LineTextView);
         for(HashMap<String, Double> element: localInstanceDatabase.getIgnorePointsList()){
-            adapterList.add(String.valueOf(++counter)+"."+ Double.toString(element.get("lat")) + "-" + Double.toString(element.get("lon")));
+            adapterList.add(Double.toString(element.get("lat")) + "-" + Double.toString(element.get("lon")));
         }
         ignorePonitsList.setAdapter(adapterList);
     }

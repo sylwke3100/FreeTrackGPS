@@ -52,4 +52,8 @@
     <string name="noLabel">Nie</string>
     <string name="yesLabel">Tak</string>
     <string name="action_ignorePoints">Lista ignorowanych punktów</string>
+    <string name="ignorePointsInfo">Tutaj możesz modyfikować listę punktów które podczas treningu mają być pomijane</string>
+    <string name="action_ignorepoints_add">Dodaj punkt</string>
+    <string name="errorValueInfo">Któraś z wartości jest pusta</string>
+    <string name="ignorePointNotify">Obszar ignorowanych punktów</string>
 </resources>
