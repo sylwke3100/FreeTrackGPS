@@ -58,4 +58,5 @@
     <string name="ignorePointNotify">Obszar ignorowanych punktów</string>
     <string name="latitudeLabel">Szerokość geograficzna</string>
     <string name="longitudeLabel">Długość geograficzna</string>
+    <string name="ignorePointsExists">Punkt już istnieje</string>
 </resources>

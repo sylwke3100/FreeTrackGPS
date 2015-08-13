@@ -55,14 +55,22 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.close();
     }
 
-    public void addIgnorePoint(double latitude, double longitude){
-        SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        ContentValues updatedValues = new ContentValues();
-        values.put("latitude", latitude);
-        values.put("longitude", longitude);
-        writableDatabase.insert("ignorePointsList", null, values);
-        writableDatabase.close();
+    public boolean addIgnorePoint(double latitude, double longitude){
+        SQLiteDatabase readableDatabase = this.getReadableDatabase();
+        Cursor currentCursor = readableDatabase.rawQuery(
+            "SELECT * FROM ignorePointsList WHERE latitude=" + Double.toString(latitude)+ " AND longitude=" + Double.toString(longitude) , null);
+        if(currentCursor.getCount() == 0) {
+            SQLiteDatabase writableDatabase = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            ContentValues updatedValues = new ContentValues();
+            values.put("latitude", latitude);
+            values.put("longitude", longitude);
+            writableDatabase.insert("ignorePointsList", null, values);
+            writableDatabase.close();
+            return true;
+        }
+        else
+            return false;
     }
 
     private String getPreparedStringFilters(List<DatabaseFilter> filters){

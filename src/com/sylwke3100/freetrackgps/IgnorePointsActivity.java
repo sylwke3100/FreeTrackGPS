@@ -89,7 +89,8 @@ public class IgnorePointsActivity extends Activity {
                         Double varA = Double.parseDouble(inputLat.getText().toString());
                         Double varB = Double.parseDouble(inputLon.getText().toString());
                         if (varA != 0 && varB != 0)
-                            localInstanceDatabase.addIgnorePoint(varA, varB);
+                            if(localInstanceDatabase.addIgnorePoint(varA, varB) == false)
+                                Toast.makeText(getBaseContext(),R.string.ignorePointsExists, Toast.LENGTH_LONG).show();
                             onUpdateIgnoreList();
                     }else
                         onShowAlert();
