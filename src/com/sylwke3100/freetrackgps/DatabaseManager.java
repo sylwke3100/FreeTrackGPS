@@ -103,6 +103,13 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.close();
     }
 
+    public void deleteIgnorePoint(double lat, double lon){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.delete("ignorePointsList","latitude="+Double.toString(lat), null);
+        writableDatabase.delete("ignorePointsList","longitude="+Double.toString(lon), null);
+        writableDatabase.close();
+    }
+
     public List<HashMap<String, Double>> getIgnorePointsList(){
         List<HashMap<String, Double>> currentList = new LinkedList<HashMap<String, Double>>();
         SQLiteDatabase readableDatabase = this.getReadableDatabase();

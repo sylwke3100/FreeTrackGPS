@@ -5,34 +5,55 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import com.sylwke3100.freetrackgps.DatabaseManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class IgnorePointsActivity extends Activity {
     private  ListView ignorePonitsList;
     private DatabaseManager localInstanceDatabase;
+    List<HashMap<String, Double>> localListIgnore;
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ignorepoints);
         ignorePonitsList = (ListView) findViewById(R.id.listIgnorePointsView);
+        registerForContextMenu(ignorePonitsList);
         localInstanceDatabase = new DatabaseManager(getBaseContext());
         onUpdateIgnoreList();
     }
     public void onUpdateIgnoreList(){
         ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, R.layout.textview_ignore_points, R.id.LineTextView);
-        for(HashMap<String, Double> element: localInstanceDatabase.getIgnorePointsList()){
+        localListIgnore = localInstanceDatabase.getIgnorePointsList();
+        for(HashMap<String, Double> element: localListIgnore){
             adapterList.add(Double.toString(element.get("lat")) + "-" + Double.toString(element.get("lon")));
         }
         ignorePonitsList.setAdapter(adapterList);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_ignorepoints, menu);
+        return true;
+    }
+
+    public void onCreateContextMenu(ContextMenu menu,
+        View v,
+        ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_ignorepoints, menu);
+    }
+    
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.action_ignoreponts_delete:
+                onDeleteIgnorePoints(info.position);
+                onUpdateIgnoreList();
+                break;
+        }
         return true;
     }
 
@@ -47,6 +68,10 @@ public class IgnorePointsActivity extends Activity {
 
     public void onShowAlert(){
         Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.errorValueInfo),Toast.LENGTH_LONG).show();
+    }
+    public void onDeleteIgnorePoints(long position){
+        HashMap<String, Double> element = localListIgnore.get((int) position);
+        this.localInstanceDatabase.deleteIgnorePoint(element.get("lat"), element.get("lon"));
     }
 
     public void onAddIgnorePoints(){
