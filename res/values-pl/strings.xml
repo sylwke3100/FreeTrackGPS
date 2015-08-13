@@ -56,4 +56,6 @@
     <string name="action_ignorepoints_add">Dodaj punkt</string>
     <string name="errorValueInfo">Któraś z wartości jest pusta</string>
     <string name="ignorePointNotify">Obszar ignorowanych punktów</string>
+    <string name="latitudeLabel">Szerokość geograficzna</string>
+    <string name="longitudeLabel">Długość geograficzna</string>
 </resources>

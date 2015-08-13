@@ -7,7 +7,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Latitude"
+            android:text="@string/latitudeLabel"
             android:id="@+id/textView2"/>
     <EditText
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Longitude"
+            android:text="@string/longitudeLabel"
             android:id="@+id/textView4"/>
     <EditText
             android:layout_width="match_parent"
