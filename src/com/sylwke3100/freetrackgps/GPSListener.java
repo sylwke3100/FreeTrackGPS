@@ -28,9 +28,9 @@ public class GPSListener implements LocationListener  {
             this.operations.setWorkoutDistance(localRoute.getDistanceInKm());
             this.operations.setWorkoutSpeed(location.getSpeed());
             if(localRoute.getStatus() == DefaultValues.routeStatus.start) {
-                if(localRoute.getPointStatus() == RouteManager.STATUS_OK)
+                if(localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
                     notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km ", localRoute.getDistanceInKm()));
-                if(localRoute.getPointStatus() == RouteManager.STATUS_PROHIBITED)
+                if(localRoute.getPointStatus() == DefaultValues.areaStatus.prohibited)
                     notify.setContent(currentContext.getString(R.string.ignorePointNotify));
                 notify.sendNotify();
             }

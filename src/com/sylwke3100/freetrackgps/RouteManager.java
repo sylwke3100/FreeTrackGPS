@@ -3,7 +3,6 @@ package com.sylwke3100.freetrackgps;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -11,9 +10,7 @@ import java.util.List;
 
 
 public class RouteManager {
-    public static int STATUS_OK = 1;
-    public static int STATUS_PROHIBITED = 0;
-    private int currentStatus = 1;
+    private DefaultValues.areaStatus currentStatus;
     private Context context;
     private DefaultValues.routeStatus status;
     private long startTime;
@@ -29,9 +26,10 @@ public class RouteManager {
         status = DefaultValues.routeStatus.stop;
         currentDB = new DatabaseManager(C);
         globalList = currentDB.getIgnorePointsList();
+        currentStatus = DefaultValues.areaStatus.ok;
     }
 
-    public int getPointStatus(){
+    public DefaultValues.areaStatus getPointStatus(){
         return currentStatus;
     }
 
@@ -63,10 +61,10 @@ public class RouteManager {
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
                 currentDB.addPoint(currentId, routePoint, distance);
-                currentStatus = 1;
+                currentStatus = DefaultValues.areaStatus.prohibited;
             }
             else
-                currentStatus = 0;
+                currentStatus = DefaultValues.areaStatus.ok;
         }
         lastPosition = currentLocation;
     }
