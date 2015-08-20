@@ -25,7 +25,7 @@ public class DatabaseTimeFilter implements DatabaseFilter {
     }
 
     public void setViewFilter(long startTime,
-                              long endTime){
+        long endTime){
         startTimeFilter = startTime;
         endTimeFilter = endTime;
     }

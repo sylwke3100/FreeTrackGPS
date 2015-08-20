@@ -9,13 +9,13 @@ import java.io.FileNotFoundException;
 
 
 public class GPXWriter {
-	private Boolean isOpen = false;
+    private Boolean isOpen = false;
     private FileOutputStream gpxOutputStream;
     private XmlSerializer gpxSerializer;
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-	public GPXWriter(String fileName,
-                   long startTime,
-                   String nameWorkout) {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    public GPXWriter(String fileName,
+        long startTime,
+        String nameWorkout) {
         try {
             gpxOutputStream = new FileOutputStream(fileName);
             isOpen = true;
@@ -53,10 +53,10 @@ public class GPXWriter {
         if (name == null)
             return "GPS Workout";
         else
-            if(name.isEmpty())
-                return "GPS workout";
-            else
-                return name;
+        if(name.isEmpty())
+            return "GPS workout";
+        else
+            return name;
     }
 
     private void createMetadata(long startTime, String name) {
@@ -80,8 +80,8 @@ public class GPXWriter {
             }
     }
 
-	public void addPoint(RouteElement point){
-		if(isOpen)
+    public void addPoint(RouteElement point){
+        if(isOpen)
             try{
                 gpxSerializer.startTag("", "trkpt");
                 gpxSerializer.attribute("", "lat", Double.toString(point.latitude));
@@ -96,8 +96,8 @@ public class GPXWriter {
             }catch (IOException e){
                 isOpen = false;
             }
-	}
-	public Boolean save(){
+    }
+    public Boolean save(){
         if(isOpen)
             try {
                 gpxSerializer.endTag("", "trkseg");
@@ -110,6 +110,6 @@ public class GPXWriter {
             } catch (IOException e) {
                 isOpen = false;
             }
-		return isOpen;
+        return isOpen;
     }
 }

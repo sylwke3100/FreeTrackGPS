@@ -9,7 +9,7 @@ public class MainActivityGuiOperations {
     private TextView gpsWorkStatus, gpsPosition, workoutSpeed, workoutDistance;
     Context localContext;
     public MainActivityGuiOperations(Context mainContext,
-                                     List<TextView> textViewElements){
+        List<TextView> textViewElements){
         gpsWorkStatus = textViewElements.get(0);
         gpsPosition = textViewElements.get(1);
         workoutSpeed = textViewElements.get(2);
@@ -26,7 +26,7 @@ public class MainActivityGuiOperations {
     }
 
     public void setGpsPosition(double latitude,
-                               double longitude ){
+        double longitude ){
         String message = String.format( " %1$s %2$s",String.format( "%.2f", longitude), String.format( "%.2f", latitude));
         this.gpsPosition.setText(message);
     }

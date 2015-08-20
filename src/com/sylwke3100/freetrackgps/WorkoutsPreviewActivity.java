@@ -52,8 +52,8 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     public void onCreateContextMenu(ContextMenu menu,
-                                    View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
+        View v,
+        ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_workoutspreview, menu);
@@ -153,10 +153,10 @@ public class WorkoutsPreviewActivity extends Activity {
                 }
             })
             .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
         AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
     }

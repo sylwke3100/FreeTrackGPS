@@ -21,8 +21,8 @@ public class GPSConnectionManager {
         gpsCurrentStatus = new gpsStatus();
     }
     public void onCreateConnection(MainActivityGuiOperations operations,
-                                   LocationManager service,
-                                   RouteManager currentRoute){
+        LocationManager service,
+        RouteManager currentRoute){
         int[] time = mainContext.getResources().getIntArray(R.array.timeArray);
         int[] distance = mainContext.getResources().getIntArray(R.array.distanceArray);
         if (service != null){

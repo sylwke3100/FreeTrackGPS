@@ -19,12 +19,12 @@ public class DatabaseNameFilter implements DatabaseFilter {
         preferencesEditor.putString("filterName", name);
         preferencesEditor.commit();
     }
-    
+
     public void clearFilters(){
-         this.name = "";
+        this.name = "";
         setViewFilter(name);
     }
-    
+
     public boolean isActive(){
         if (!name.isEmpty())
             return true;

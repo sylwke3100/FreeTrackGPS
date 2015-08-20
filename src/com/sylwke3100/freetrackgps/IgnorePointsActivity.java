@@ -45,7 +45,7 @@ public class IgnorePointsActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_ignorepoints, menu);
     }
-    
+
     public boolean onContextItemSelected(MenuItem item){
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
@@ -91,17 +91,17 @@ public class IgnorePointsActivity extends Activity {
                         if (varA != 0 && varB != 0)
                             if(localInstanceDatabase.addIgnorePoint(varA, varB) == false)
                                 Toast.makeText(getBaseContext(),R.string.ignorePointsExists, Toast.LENGTH_LONG).show();
-                            onUpdateIgnoreList();
+                        onUpdateIgnoreList();
                     }else
                         onShowAlert();
                 }
-                 })
-                .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertD = alertDialogBuilder.create();
-                alertD.show();
-            }
+            })
+            .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
     }
+}

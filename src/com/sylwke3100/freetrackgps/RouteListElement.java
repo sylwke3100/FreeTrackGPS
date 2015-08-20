@@ -6,16 +6,16 @@ public class RouteListElement {
     double distance;
     String name = "";
     public RouteListElement(int id,
-                            long startTime,
-                            double distance){
+        long startTime,
+        double distance){
         this.id = id;
         this.startTime = startTime;
         this.distance = distance;
     }
     public RouteListElement(int id,
-                            long startTime,
-                            double distance,
-                            String name){
+        long startTime,
+        double distance,
+        String name){
         this.id = id;
         this.startTime = startTime;
         this.distance = distance;
@@ -25,9 +25,9 @@ public class RouteListElement {
         if (name == null)
             return "";
         else
-            if(name.isEmpty())
-                return "";
-            else
-                return " - " + name;
+        if(name.isEmpty())
+            return "";
+        else
+            return " - " + name;
     }
 }

@@ -14,8 +14,8 @@ public class LocalNotificationManager {
     private NotificationCompat.Builder globalNotification;
     private Context context;
     public  LocalNotificationManager(Context currentContext,
-                                     int smallIcon,
-                                     String title){
+        int smallIcon,
+        String title){
         globalNotification = new NotificationCompat.Builder(currentContext);
         globalNotification.setContentTitle(title);
         globalNotification.setSmallIcon(smallIcon);
