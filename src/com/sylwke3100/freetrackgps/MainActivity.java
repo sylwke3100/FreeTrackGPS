@@ -43,10 +43,10 @@ public class MainActivity extends Activity {
 		pauseButton = (Button)this.findViewById(R.id.pauseButton);
 		startButton = (Button)this.findViewById(R.id.startButton);
 		currentRoute = new RouteManager(this);
-		startButton.setOnClickListener(new View.OnClickListener() { 
+		startButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View V){ onStartRoute();}
 		});
-		pauseButton.setOnClickListener(new View.OnClickListener() { 
+		pauseButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View V){ onPauseRoute();}
 		});
     mainOperations = new MainActivityGuiOperations(getBaseContext(), textViewElements);
@@ -58,11 +58,22 @@ public class MainActivity extends Activity {
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-        if (currentRoute.getStatus() != DefaultValues.routeStatus.start) {
-            getMenuInflater().inflate(R.menu.options_main, menu);
-            return true;
+      getMenuInflater().inflate(R.menu.options_main, menu);
+      return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if (currentRoute.getStatus() == DefaultValues.routeStatus.start) {
+            menu.findItem(R.id.action_workout).setEnabled(false);
+            menu.findItem(R.id.action_ignorePoints).setEnabled(false);
+            menu.findItem(R.id.action_settings).setEnabled(false);
+        } else{
+            menu.findItem(R.id.action_workout).setEnabled(true);
+            menu.findItem(R.id.action_ignorePoints).setEnabled(true);
+            menu.findItem(R.id.action_settings).setEnabled(true);
         }
-        return  false;
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
