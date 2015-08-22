@@ -160,11 +160,15 @@ public class DatabaseManager extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db,
         int oldVersion,
         int newVersion){
-        if (oldVersion !=newVersion && newVersion == 2)
-            db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
-        else
-        if (oldVersion !=newVersion && newVersion == 3)
-            db.execSQL("CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
+        if (oldVersion != newVersion)
+            while(newVersion > oldVersion) {
+                oldVersion++;
+                if (oldVersion == 2)
+                    db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
+                if (oldVersion == 3)
+                    db.execSQL("CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
+
+            }
         else
             onCreate(db);
     }
