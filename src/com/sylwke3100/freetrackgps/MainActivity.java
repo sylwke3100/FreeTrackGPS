@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     private RouteManager currentRoute;
     private MainActivityGuiOperations mainOperations;
     private GPSConnectionManager gpsConnect;
+    private LocationSharing currentLocation;
     protected void onCreate(Bundle savedInstanceState) {
         sharedPrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
@@ -55,6 +56,8 @@ public class MainActivity extends Activity {
             setPreviewStatus(View.INVISIBLE);
         else
             setPreviewStatus(View.VISIBLE);
+        currentLocation = new LocationSharing(getBaseContext());
+        currentLocation.clearCurrentLocation();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

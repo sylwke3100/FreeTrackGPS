@@ -62,5 +62,5 @@
     <string name="latitudeLabel">Latitude</string>
     <string name="longitudeLabel">Longitude</string>
     <string name="ignorePointsExists">Points already exist</string>
-
+    <string name="action_ignorepoints_add_from_gps">Add point from GPS location</string>
 </resources>

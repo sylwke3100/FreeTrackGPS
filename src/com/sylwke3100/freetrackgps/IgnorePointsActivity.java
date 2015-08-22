@@ -3,19 +3,17 @@ package com.sylwke3100.freetrackgps;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import com.sylwke3100.freetrackgps.DatabaseManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class IgnorePointsActivity extends Activity {
     private  ListView ignorePonitsList;
     private DatabaseManager localInstanceDatabase;
+    private LocationSharing currentLocationSharing;
     List<HashMap<String, Double>> localListIgnore;
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +21,7 @@ public class IgnorePointsActivity extends Activity {
         ignorePonitsList = (ListView) findViewById(R.id.listIgnorePointsView);
         registerForContextMenu(ignorePonitsList);
         localInstanceDatabase = new DatabaseManager(getBaseContext());
+        currentLocationSharing = new LocationSharing(getBaseContext());
         onUpdateIgnoreList();
     }
     public void onUpdateIgnoreList(){
@@ -57,16 +56,36 @@ public class IgnorePointsActivity extends Activity {
         return true;
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu){
+        LocationSharing.LocationSharingResult result =  currentLocationSharing.getCurrentLocation();
+        if(result.status == 1)
+            menu.findItem(R.id.action_ignorepoints_add_from_location).setEnabled(true);
+        else
+            menu.findItem(R.id.action_ignorepoints_add_from_location).setEnabled(false);
+        return super.onPrepareOptionsMenu(menu);
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_ignorepoints_add:
-                onAddIgnorePoints();
+                onAddIgnorePointsAlertDialogShow();
+                break;
+            case R.id.action_ignorepoints_add_from_location:
+                onAddIgnorePointsFromLocation();
                 break;
         }
         return true;
     }
 
-    public void onShowAlert(){
+    public void onAddIgnorePointsFromLocation(){
+        LocationSharing.LocationSharingResult result =  currentLocationSharing.getCurrentLocation();
+        if(result.status == 1){
+            if(localInstanceDatabase.addIgnorePoint(result.latitude, result.longitude) == false)
+                Toast.makeText(getBaseContext(),R.string.ignorePointsExists, Toast.LENGTH_LONG).show();
+            onUpdateIgnoreList();
+        }
+    }
+
+    public void onEmptyErrorAlertShow(){
         Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.errorValueInfo),Toast.LENGTH_LONG).show();
     }
     public void onDeleteIgnorePoints(long position){
@@ -74,7 +93,7 @@ public class IgnorePointsActivity extends Activity {
         this.localInstanceDatabase.deleteIgnorePoint(element.get("lat"), element.get("lon"));
     }
 
-    public void onAddIgnorePoints(){
+    public void onAddIgnorePointsAlertDialogShow(){
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View promptView = layoutInflater.inflate(R.layout.prompt_ignorepoints_add, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -85,15 +104,7 @@ public class IgnorePointsActivity extends Activity {
             .setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if (!inputLat.getText().toString().isEmpty()&& !inputLon.getText().toString().isEmpty()) {
-                        Double varA = Double.parseDouble(inputLat.getText().toString());
-                        Double varB = Double.parseDouble(inputLon.getText().toString());
-                        if (varA != 0 && varB != 0)
-                            if(localInstanceDatabase.addIgnorePoint(varA, varB) == false)
-                                Toast.makeText(getBaseContext(),R.string.ignorePointsExists, Toast.LENGTH_LONG).show();
-                        onUpdateIgnoreList();
-                    }else
-                        onShowAlert();
+                    addIgnorePointsFromAlertDialog(inputLat, inputLat);
                 }
             })
             .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
@@ -103,5 +114,16 @@ public class IgnorePointsActivity extends Activity {
             });
         AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+    }
+    public void addIgnorePointsFromAlertDialog(EditText inputLat, EditText inputLon){
+        if (!inputLat.getText().toString().isEmpty()&& !inputLon.getText().toString().isEmpty()) {
+            Double varA = Double.parseDouble(inputLat.getText().toString());
+            Double varB = Double.parseDouble(inputLon.getText().toString());
+            if (varA != 0 && varB != 0)
+                if(localInstanceDatabase.addIgnorePoint(varA, varB) == false)
+                    Toast.makeText(getBaseContext(),R.string.ignorePointsExists, Toast.LENGTH_LONG).show();
+            onUpdateIgnoreList();
+        }else
+            onEmptyErrorAlertShow();
     }
 }

@@ -13,6 +13,7 @@ public class GPSListener implements LocationListener  {
     private MainActivityGuiOperations operations;
     private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
+    private LocationSharing currentLocation;
     public GPSListener(MainActivityGuiOperations listenerOperations, RouteManager Rt,
         GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext){
         this.operations = listenerOperations;
@@ -21,8 +22,11 @@ public class GPSListener implements LocationListener  {
         notify = new LocalNotificationManager(mainContext, R.drawable.icon, mainContext.getString(R.string.app_name));
         this.currentContext = mainContext;
         localRoute.setNotifyInstance(notify);
+        currentLocation = new LocationSharing(mainContext);
     }
     public void onLocationChanged(Location location) {
+        if (location != null)
+            currentLocation.setCurrentLocation(location.getLatitude(), location.getLongitude());
         if (localRoute != null && location != null && location.hasAltitude() == true ){
             localRoute.addPoint(location);
             this.operations.setWorkoutDistance(localRoute.getDistanceInKm());

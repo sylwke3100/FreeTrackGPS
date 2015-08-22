@@ -59,4 +59,5 @@
     <string name="latitudeLabel">Szerokość geograficzna</string>
     <string name="longitudeLabel">Długość geograficzna</string>
     <string name="ignorePointsExists">Punkt już istnieje</string>
+    <string name="action_ignorepoints_add_from_gps">Dodaj punkt z lokalizacji GPS</string>
 </resources>
