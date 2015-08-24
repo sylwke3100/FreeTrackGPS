@@ -19,13 +19,12 @@ public class RouteManager {
     private LocalNotificationManager localNotify;
     private DatabaseManager currentDB;
     private long currentId;
-    private List<HashMap<String, Double>> globalList;
+    private List<HashMap<String, Double>> globalIgnorePointsList;
 
     public RouteManager(Context C) {
         context = C;
         status = DefaultValues.routeStatus.stop;
         currentDB = new DatabaseManager(C);
-        globalList = currentDB.getIgnorePointsList();
         currentStatus = DefaultValues.areaStatus.ok;
     }
 
@@ -34,7 +33,7 @@ public class RouteManager {
     }
 
     public boolean findPointInIgnore(Location cLocation){
-        for(HashMap<String, Double> element: globalList) {
+        for(HashMap<String, Double> element: globalIgnorePointsList) {
             Location current = new Location(LocationManager.GPS_PROVIDER);
             current.setLatitude(element.get("lat"));
             current.setLongitude(element.get("lon"));
@@ -45,6 +44,7 @@ public class RouteManager {
         return false;
     }
     public void start(){
+        globalIgnorePointsList = currentDB.getIgnorePointsList();
         startTime = System.currentTimeMillis();
         currentId = currentDB.startWorkout(startTime);
         status = DefaultValues.routeStatus.start;
@@ -61,12 +61,12 @@ public class RouteManager {
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
                 currentDB.addPoint(currentId, routePoint, distance);
-                currentStatus = DefaultValues.areaStatus.prohibited;
+                currentStatus = DefaultValues.areaStatus.ok;
+                lastPosition = currentLocation;
             }
             else
-                currentStatus = DefaultValues.areaStatus.ok;
+                currentStatus = DefaultValues.areaStatus.prohibited;
         }
-        lastPosition = currentLocation;
     }
     public void pause(){
         status = DefaultValues.routeStatus.pause;
