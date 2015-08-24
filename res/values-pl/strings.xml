@@ -28,7 +28,6 @@
     <string name="settingDistanceBetweenPointLabel">Dystans pomiędzy punktami</string>
     <string name="settingGPSSpeedScan">Szybkość skanowania GPS</string>
     <string name="settingShowWorkoutInfoLabel">Pokaż informacje treningu jeśli wyłączony</string>
-    <string name="speedLabel">Szybkość</string>
     <string name="startLabel">Start</string>
     <string name="stopLabel">Stop</string>
     <string name="unPauseLabel">Wznów</string>

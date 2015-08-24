@@ -91,22 +91,6 @@
 
     <TableRow android:layout_marginTop="10dp" android:layout_marginBottom="20dp"
               android:visibility="invisible">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/speedLabel"
-                android:id="@+id/textSpeedLabel"
-                android:textSize="18dp"
-                android:layout_below="@+id/textDistanceLabel" android:layout_alignRight="@+id/textGPSPosition"
-                android:layout_alignEnd="@+id/textGPSPosition"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="- -"
-                android:id="@+id/textSpeedView"
-                android:layout_toEndOf="@+id/textGPSStatusLabel"
-                android:layout_alignBottom="@+id/textSpeedLabel" android:layout_alignLeft="@+id/textWorkOut"
-                android:layout_alignStart="@+id/textWorkOut" android:layout_column="6"/>
     </TableRow>
     <TableRow>
 

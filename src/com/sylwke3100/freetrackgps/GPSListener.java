@@ -30,7 +30,6 @@ public class GPSListener implements LocationListener  {
         if (localRoute != null && location != null && location.hasAltitude() == true ){
             localRoute.addPoint(location);
             this.operations.setWorkoutDistance(localRoute.getDistanceInKm());
-            this.operations.setWorkoutSpeed(location.getSpeed());
             if(localRoute.getStatus() == DefaultValues.routeStatus.start) {
                 if(localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
                     notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km ", localRoute.getDistanceInKm()));
