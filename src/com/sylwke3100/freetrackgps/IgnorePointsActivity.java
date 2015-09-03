@@ -77,16 +77,16 @@ public class IgnorePointsActivity extends Activity {
                 onAddIgnorePointsAlertDialogShow();
                 break;
             case R.id.action_ignorepoints_add_from_location:
-                onAddIgnorePointsFromLocation();
+                onSetIgnorePointsNameAlert();
                 break;
         }
         return true;
     }
 
-    public void onAddIgnorePointsFromLocation(){
+    public void onAddIgnorePointsFromLocation(String ignorePointName){
         LocationSharing.LocationSharingResult result =  currentLocationSharing.getCurrentLocation();
         if(result.status == 1){
-            if(localInstanceDatabase.addIgnorePoint(result.latitude, result.longitude, "GPS") == false)
+            if(localInstanceDatabase.addIgnorePoint(result.latitude, result.longitude, ignorePointName) == false)
                 Toast.makeText(getBaseContext(),R.string.ignorePointsExists, Toast.LENGTH_LONG).show();
             onUpdateIgnoreList();
         }
@@ -113,6 +113,28 @@ public class IgnorePointsActivity extends Activity {
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     addIgnorePointsFromAlertDialog(inputLat, inputLon, inputName);
+                }
+            })
+            .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+
+    public void onSetIgnorePointsNameAlert(){
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.prompt_ignore_points_from_location, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptView);
+        final EditText inputName = (EditText) promptView.findViewById(R.id.nameEdit);
+        alertDialogBuilder
+            .setCancelable(false)
+            .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    onAddIgnorePointsFromLocation(inputName.getText().toString());
                 }
             })
             .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
