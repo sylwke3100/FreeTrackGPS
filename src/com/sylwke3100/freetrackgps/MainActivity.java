@@ -111,7 +111,6 @@ public class MainActivity extends Activity {
             workoutStatus.setVisibility(status);
             ((TextView) this.findViewById(R.id.textDistanceLabel)).setVisibility(status);
             ((TextView) this.findViewById(R.id.textWorkoutStatusLabel)).setVisibility(status);
-            ((TextView) this.findViewById(R.id.textSpeedLabel)).setVisibility(status);
         }
     }
     public void onStartRoute() {

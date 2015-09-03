@@ -11,20 +11,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
 public class DatabaseManager extends SQLiteOpenHelper{
-    private static final int databaseVersion = 3;
+    private static final int databaseVersion = 4;
 
     public DatabaseManager(Context context){
         super(context, DefaultValues.defaultDatabaseName, null, databaseVersion);
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
     }
 
     public void onCreate(SQLiteDatabase db){
-        String query = "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String)";
-        db.execSQL(query);
-        query = "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)";
-        db.execSQL(query);
         db.execSQL(
-            "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
+            "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String)");
+        db.execSQL(
+            "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)");
+        db.execSQL(
+            "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER, name TEXT)");
     }
 
     public long startWorkout(long timeStartWorkout){
@@ -55,17 +57,18 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.close();
     }
 
-    public boolean addIgnorePoint(double latitude, double longitude){
+    public boolean addIgnorePoint(double latitude, double longitude, String name){
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
         Cursor currentCursor = readableDatabase.rawQuery(
             "SELECT * FROM ignorePointsList WHERE latitude=" + Double.toString(latitude)+ " AND longitude=" + Double.toString(longitude) , null);
         if(currentCursor.getCount() == 0) {
             SQLiteDatabase writableDatabase = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            ContentValues updatedValues = new ContentValues();
             values.put("latitude", latitude);
             values.put("longitude", longitude);
+            values.put("name", name);
             writableDatabase.insert("ignorePointsList", null, values);
+            System.out.print("FreeTrackGPS:  "+writableDatabase.toString());
             writableDatabase.close();
             return true;
         }
@@ -118,16 +121,15 @@ public class DatabaseManager extends SQLiteOpenHelper{
         writableDatabase.close();
     }
 
-    public List<HashMap<String, Double>> getIgnorePointsList(){
-        List<HashMap<String, Double>> currentList = new LinkedList<HashMap<String, Double>>();
+    public List<IgnorePointsListElement> getIgnorePointsList(){
+        List<IgnorePointsListElement> currentList = new LinkedList<IgnorePointsListElement>();
         SQLiteDatabase readableDatabase = this.getReadableDatabase();
         Cursor currentCursor = readableDatabase.rawQuery("SELECT * FROM ignorePointsList", null);
         if (currentCursor.moveToFirst()) {
             do {
-                HashMap<String, Double> localMap = new HashMap<String, Double>();
-                localMap.put("lat", currentCursor.getDouble(1));
-                localMap.put("lon", currentCursor.getDouble(2));
-                currentList.add(localMap);
+                IgnorePointsListElement element = new IgnorePointsListElement(currentCursor.getDouble(1), currentCursor.getDouble(2), currentCursor.getString(
+                    3));
+                currentList.add(element);
             }
             while (currentCursor.moveToNext());
         }
@@ -167,7 +169,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
                     db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
                 if (oldVersion == 3)
                     db.execSQL("CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
-
+                if (oldVersion == 4)
+                    db.execSQL("ALTER TABLE ignorePointsList ADD COLUMN name TEXT");
             }
         else
             onCreate(db);

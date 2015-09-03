@@ -19,7 +19,7 @@ public class RouteManager {
     private LocalNotificationManager localNotify;
     private DatabaseManager currentDB;
     private long currentId;
-    private List<HashMap<String, Double>> globalIgnorePointsList;
+    private List<IgnorePointsListElement> globalIgnorePointsList;
 
     public RouteManager(Context C) {
         context = C;
@@ -33,10 +33,10 @@ public class RouteManager {
     }
 
     public boolean findPointInIgnore(Location cLocation){
-        for(HashMap<String, Double> element: globalIgnorePointsList) {
+        for(IgnorePointsListElement element: globalIgnorePointsList) {
             Location current = new Location(LocationManager.GPS_PROVIDER);
-            current.setLatitude(element.get("lat"));
-            current.setLongitude(element.get("lon"));
+            current.setLatitude(element.latitude);
+            current.setLongitude(element.longitude);
             float distance = current.distanceTo(cLocation);
             if (distance < 100)
                 return true;
