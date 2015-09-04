@@ -3,57 +3,60 @@ package com.sylwke3100.freetrackgps;
 import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 
 public class GPXWriter {
     private Boolean isOpen = false;
     private FileOutputStream gpxOutputStream;
     private XmlSerializer gpxSerializer;
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-    public GPXWriter(String fileName,
-        long startTime,
-        String nameWorkout) {
+    private static final SimpleDateFormat dateFormat =
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+    public GPXWriter(String fileName, long startTime, String nameWorkout) {
         try {
             gpxOutputStream = new FileOutputStream(fileName);
             isOpen = true;
-        }catch (FileNotFoundException fnfe){
+        } catch (FileNotFoundException fnfe) {
             isOpen = false;
         }
         gpxSerializer = Xml.newSerializer();
-        try{
+        try {
             if (isOpen) {
                 gpxSerializer.setOutput(gpxOutputStream, "UTF-8");
-                gpxSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+                gpxSerializer
+                    .setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
                 gpxSerializer.startDocument("UTF-8", true);
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             isOpen = false;
         }
         createHeader();
         createMetadata(startTime, nameWorkout);
     }
 
-    private void createHeader(){
-        if(isOpen)
+    private void createHeader() {
+        if (isOpen)
             try {
                 gpxSerializer.startTag("", "gpx");
                 gpxSerializer.attribute("", "xmlns", "http://www.topografix.com/GPX/1/1");
                 gpxSerializer.attribute("", "version", "1.1");
-                gpxSerializer.attribute("", "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                gpxSerializer.attribute("", "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
+                gpxSerializer
+                    .attribute("", "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                gpxSerializer.attribute("", "xsi:schemaLocation",
+                    "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
             } catch (IOException e) {
                 isOpen = false;
             }
     }
 
-    private String generateName(String name){
+    private String generateName(String name) {
         if (name == null)
             return "GPS Workout";
-        else
-        if(name.isEmpty())
+        else if (name.isEmpty())
             return "GPS workout";
         else
             return name;
@@ -69,7 +72,7 @@ public class GPXWriter {
                 gpxSerializer.endTag("", "metadata");
                 gpxSerializer.startTag("", "trk");
                 gpxSerializer.startTag("", "name");
-                gpxSerializer.text( generateName(name) );
+                gpxSerializer.text(generateName(name));
                 gpxSerializer.endTag("", "name");
                 gpxSerializer.startTag("", "time");
                 gpxSerializer.text(dateFormat.format(startTime));
@@ -80,9 +83,9 @@ public class GPXWriter {
             }
     }
 
-    public void addPoint(RouteElement point){
-        if(isOpen)
-            try{
+    public void addPoint(RouteElement point) {
+        if (isOpen)
+            try {
                 gpxSerializer.startTag("", "trkpt");
                 gpxSerializer.attribute("", "lat", Double.toString(point.latitude));
                 gpxSerializer.attribute("", "lon", Double.toString(point.longitude));
@@ -93,12 +96,13 @@ public class GPXWriter {
                 gpxSerializer.text(dateFormat.format(point.time));
                 gpxSerializer.endTag("", "time");
                 gpxSerializer.endTag("", "trkpt");
-            }catch (IOException e){
+            } catch (IOException e) {
                 isOpen = false;
             }
     }
-    public Boolean save(){
-        if(isOpen)
+
+    public Boolean save() {
+        if (isOpen)
             try {
                 gpxSerializer.endTag("", "trkseg");
                 gpxSerializer.endTag("", "trk");

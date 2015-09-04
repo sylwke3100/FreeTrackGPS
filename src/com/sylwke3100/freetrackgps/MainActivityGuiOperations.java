@@ -8,29 +8,29 @@ import java.util.List;
 public class MainActivityGuiOperations {
     private TextView gpsWorkStatus, gpsPosition, workoutSpeed, workoutDistance;
     Context localContext;
-    public MainActivityGuiOperations(Context mainContext,
-        List<TextView> textViewElements){
+
+    public MainActivityGuiOperations(Context mainContext, List<TextView> textViewElements) {
         gpsWorkStatus = textViewElements.get(0);
         gpsPosition = textViewElements.get(1);
         workoutDistance = textViewElements.get(2);
         localContext = mainContext;
     }
 
-    public void setOnGPS(){
+    public void setOnGPS() {
         this.gpsWorkStatus.setText(this.localContext.getString(R.string.onLabel));
     }
 
-    public void setOffGPS(){
+    public void setOffGPS() {
         this.gpsWorkStatus.setText(this.localContext.getString(R.string.offLabel));
     }
 
-    public void setGpsPosition(double latitude,
-        double longitude ){
-        String message = String.format( " %1$s %2$s",String.format( "%.2f", longitude), String.format( "%.2f", latitude));
+    public void setGpsPosition(double latitude, double longitude) {
+        String message = String.format(" %1$s %2$s", String.format("%.2f", longitude),
+            String.format("%.2f", latitude));
         this.gpsPosition.setText(message);
     }
 
-    public void setWorkoutDistance(double distance){
+    public void setWorkoutDistance(double distance) {
         this.workoutDistance.setText(String.format("%.2f km", distance));
     }
 }

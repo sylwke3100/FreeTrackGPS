@@ -5,7 +5,6 @@ import android.location.Location;
 import android.location.LocationManager;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -21,19 +20,19 @@ public class RouteManager {
     private long currentId;
     private List<IgnorePointsListElement> globalIgnorePointsList;
 
-    public RouteManager(Context C) {
-        context = C;
+    public RouteManager(Context globalContext) {
+        context = globalContext;
         status = DefaultValues.routeStatus.stop;
-        currentDB = new DatabaseManager(C);
+        currentDB = new DatabaseManager(globalContext);
         currentStatus = DefaultValues.areaStatus.ok;
     }
 
-    public DefaultValues.areaStatus getPointStatus(){
+    public DefaultValues.areaStatus getPointStatus() {
         return currentStatus;
     }
 
-    public boolean findPointInIgnore(Location cLocation){
-        for(IgnorePointsListElement element: globalIgnorePointsList) {
+    public boolean findPointInIgnore(Location cLocation) {
+        for (IgnorePointsListElement element : globalIgnorePointsList) {
             Location current = new Location(LocationManager.GPS_PROVIDER);
             current.setLatitude(element.latitude);
             current.setLongitude(element.longitude);
@@ -43,51 +42,61 @@ public class RouteManager {
         }
         return false;
     }
-    public void start(){
+
+    public void start() {
         globalIgnorePointsList = currentDB.getIgnorePointsList();
         startTime = System.currentTimeMillis();
         currentId = currentDB.startWorkout(startTime);
         status = DefaultValues.routeStatus.start;
         distance = 0.0;
-        localNotify.setContent(context.getString(R.string.workoutDistanceLabel)+": " +  String.format("%.2f km", getDistanceInKm()));
+        localNotify.setContent(context.getString(R.string.workoutDistanceLabel) + ": " + String
+            .format("%.2f km", getDistanceInKm()));
         localNotify.sendNotify();
     }
-    public void addPoint(Location currentLocation){
-        Date D = new Date();
-        if (status == DefaultValues.routeStatus.start){
-            long currentTime = D.getTime();
+
+    public void addPoint(Location currentLocation) {
+        Date currentDate = new Date();
+        if (status == DefaultValues.routeStatus.start) {
+            long currentTime = currentDate.getTime();
             if (findPointInIgnore(currentLocation) == false) {
-                RouteElement routePoint = new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(), currentLocation.getAltitude(), currentTime);
+                RouteElement routePoint =
+                    new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(),
+                        currentLocation.getAltitude(), currentTime);
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
                 currentDB.addPoint(currentId, routePoint, distance);
                 currentStatus = DefaultValues.areaStatus.ok;
                 lastPosition = currentLocation;
-            }
-            else
+            } else
                 currentStatus = DefaultValues.areaStatus.prohibited;
         }
     }
-    public void pause(){
+
+    public void pause() {
         status = DefaultValues.routeStatus.pause;
     }
-    public void unPause(){
+
+    public void unPause() {
         status = DefaultValues.routeStatus.start;
     }
-    public double getDistanceInKm(){
-        return distance/1000;
+
+    public double getDistanceInKm() {
+        return distance / 1000;
     }
-    public DefaultValues.routeStatus getStatus(){
+
+    public DefaultValues.routeStatus getStatus() {
         return status;
     }
-    public void stop(){
+
+    public void stop() {
         status = DefaultValues.routeStatus.stop;
         distance = 0.0;
         lastPosition = null;
         localNotify.deleteNotify();
         currentId = -1;
     }
-    public void setNotifyInstance(LocalNotificationManager notify){
+
+    public void setNotifyInstance(LocalNotificationManager notify) {
         this.localNotify = notify;
     }
 }

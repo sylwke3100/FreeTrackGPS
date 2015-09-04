@@ -8,48 +8,50 @@ public class DatabaseTimeFilter implements DatabaseFilter {
     private long startTimeFilter, endTimeFilter;
     private SharedPreferences sharePrefs;
 
-    public DatabaseTimeFilter(Context context){
+    public DatabaseTimeFilter(Context context) {
         sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
         startTimeFilter = sharePrefs.getLong("filterOneTime", -1);
         endTimeFilter = 0;
     }
-    public void setViewFilter(long startTime){
+
+    public void setViewFilter(long startTime) {
         startTimeFilter = startTime;
         SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
         preferencesEditor.putLong("filterOneTime", startTime);
         preferencesEditor.commit();
     }
 
-    private void updateStatus(){
+    private void updateStatus() {
         startTimeFilter = sharePrefs.getLong("filterOneTime", -1);
     }
 
-    public void setViewFilter(long startTime,
-        long endTime){
+    public void setViewFilter(long startTime, long endTime) {
         startTimeFilter = startTime;
         endTimeFilter = endTime;
     }
 
-    public void clearFilters(){
+    public void clearFilters() {
         startTimeFilter = 0;
         endTimeFilter = 0;
     }
 
-    public String getGeneratedFilterString(){
+    public String getGeneratedFilterString() {
         updateStatus();
         if (startTimeFilter > 0 && endTimeFilter == 0)
             return "timeStart>= " + Long.toString(startTimeFilter);
-        else{
+        else {
             if (startTimeFilter > 0 && endTimeFilter > 0)
-                return "timeStart>= " + Long.toString(startTimeFilter) + "AND timeStart<= " + Long.toString(endTimeFilter);
+                return "timeStart>= " + Long.toString(startTimeFilter) + "AND timeStart<= " + Long
+                    .toString(endTimeFilter);
             else
                 return "";
         }
     }
 
-    public boolean isActive(){
+    public boolean isActive() {
         updateStatus();
-        if ((startTimeFilter > 0 && endTimeFilter == 0) || (startTimeFilter > 0 && endTimeFilter > 0))
+        if ((startTimeFilter > 0 && endTimeFilter == 0) || (startTimeFilter > 0
+            && endTimeFilter > 0))
             return true;
         else
             return false;

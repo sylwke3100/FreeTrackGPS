@@ -14,6 +14,7 @@ public class DateFilterActivity extends Activity {
     private Button okButton, cancelButton;
     private DatePicker localPickier;
     private SharedPreferences sharePrefs;
+
     @Override public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -37,30 +38,32 @@ public class DateFilterActivity extends Activity {
         setLocalPickier();
     }
 
-    @Override public void onBackPressed() {
+    public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
 
-    private void setLocalPickier(){
+    private void setLocalPickier() {
         long time = sharePrefs.getLong("filterOneTime", -1);
         Calendar calendar = Calendar.getInstance();
-        if (time!= -1)
+        if (time != -1)
             calendar.setTimeInMillis(time);
         else
             calendar.setTimeInMillis(System.currentTimeMillis());
-        localPickier.updateDate(calendar.get(calendar.YEAR), calendar.get(calendar.MONTH), calendar.get(calendar.DAY_OF_MONTH));
+        localPickier.updateDate(calendar.get(calendar.YEAR), calendar.get(calendar.MONTH),
+            calendar.get(calendar.DAY_OF_MONTH));
     }
 
-    private void saveFilter(){
+    private void saveFilter() {
         Calendar localCalendar = Calendar.getInstance();
-        localCalendar.set(localPickier.getYear(), localPickier.getMonth(), localPickier.getDayOfMonth());
+        localCalendar
+            .set(localPickier.getYear(), localPickier.getMonth(), localPickier.getDayOfMonth());
         SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
         preferencesEditor.putLong("filterOneTime", localCalendar.getTimeInMillis());
         preferencesEditor.commit();
     }
 
-    private void cancelFilter(){
+    private void cancelFilter() {
         SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
         preferencesEditor.putLong("filterOneTime", -1);
         preferencesEditor.commit();

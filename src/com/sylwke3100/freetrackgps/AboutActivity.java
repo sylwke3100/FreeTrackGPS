@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class AboutActivity extends Activity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         try {
-            PackageInfo manager= this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            ((TextView) this.findViewById(R.id.textWorkoutStatusLabel)).setText(manager.versionName);
+            PackageInfo manager = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            ((TextView) this.findViewById(R.id.textWorkoutStatusLabel))
+                .setText(manager.versionName);
         } catch (NameNotFoundException e) {
         }
     }

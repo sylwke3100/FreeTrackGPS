@@ -18,26 +18,27 @@ import java.util.List;
 public class WorkoutsPreviewActivity extends Activity {
     private SimpleAdapter simpleAdapter;
     private WorkoutsPreviewOperations workoutsPreviewOperations;
-    private ListView listWorkout;
+    private ListView workoutList;
     private Menu optionsMenu;
-    private ArrayList<HashMap<String,String>> routesList;
+    private ArrayList<HashMap<String, String>> routesList;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_views);
-        routesList = new ArrayList<HashMap<String,String>>();
-        listWorkout = (ListView) this.findViewById(R.id.listWorkout);
-        registerForContextMenu(listWorkout);
+        routesList = new ArrayList<HashMap<String, String>>();
+        workoutList = (ListView) this.findViewById(R.id.listWorkout);
+        registerForContextMenu(workoutList);
         workoutsPreviewOperations = new WorkoutsPreviewOperations(getBaseContext());
         onUpdateWorkoutsList();
 
-        listWorkout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             List<RouteListElement> objects = workoutsPreviewOperations.getUpdatedWorkoutsRawList();
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(WorkoutsPreviewActivity.this, InfoWorkoutActivity.class);
-                intent.putExtra("distanceInfo", objects.get(i).distance );
-                intent.putExtra("startTimeInfo", objects.get(i).startTime );
+                intent.putExtra("distanceInfo", objects.get(i).distance);
+                intent.putExtra("startTimeInfo", objects.get(i).startTime);
                 intent.putExtra("routeId", objects.get(i).id);
                 intent.putExtra("routeName", objects.get(i).name);
                 startActivity(intent);
@@ -47,12 +48,12 @@ public class WorkoutsPreviewActivity extends Activity {
 
     private void onUpdateWorkoutsList() {
         routesList = workoutsPreviewOperations.getUpdatedWorkoutsList();
-        simpleAdapter = new SimpleAdapter(this, routesList, R.layout.textview_row_lines, new String[]{"time", "distance"}, new int[]{R.id.line_time, R.id.line_distance});
-        listWorkout.setAdapter(simpleAdapter);
+        simpleAdapter = new SimpleAdapter(this, routesList, R.layout.textview_row_lines,
+            new String[] {"time", "distance"}, new int[] {R.id.line_time, R.id.line_distance});
+        workoutList.setAdapter(simpleAdapter);
     }
 
-    public void onCreateContextMenu(ContextMenu menu,
-        View v,
+    public void onCreateContextMenu(ContextMenu menu, View v,
         ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
@@ -60,7 +61,8 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info =
+            (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.action_workout_delete:
                 workoutsPreviewOperations.deleteWorkout(info.position);
@@ -76,15 +78,19 @@ public class WorkoutsPreviewActivity extends Activity {
         }
     }
 
-    public void updateIconOptionMenu(){
+    public void updateIconOptionMenu() {
         if (workoutsPreviewOperations.getStatusTimeFilter())
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon(R.drawable.tick);
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
+                .findItem(R.id.action_filter_by_date).setIcon(R.drawable.tick);
         else
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon((R.drawable.emptytick));
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
+                .findItem(R.id.action_filter_by_date).setIcon((R.drawable.emptytick));
         if (workoutsPreviewOperations.getStatusNameFilter())
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon(R.drawable.tick);
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
+                .findItem(R.id.action_filter_by_name).setIcon(R.drawable.tick);
         else
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon((R.drawable.emptytick));
+            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
+                .findItem(R.id.action_filter_by_name).setIcon((R.drawable.emptytick));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -94,7 +100,7 @@ public class WorkoutsPreviewActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public boolean onPrepareOptionsMenu(Menu menu){
+    public boolean onPrepareOptionsMenu(Menu menu) {
         updateIconOptionMenu();
         return super.onPrepareOptionsMenu(menu);
     }
@@ -113,55 +119,52 @@ public class WorkoutsPreviewActivity extends Activity {
         return true;
     }
 
-    public void onUpdateNameFilter(){
+    public void onUpdateNameFilter() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View promptView = layoutInflater.inflate(R.layout.prompt_workout_name_filer, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptView);
         final EditText input = (EditText) promptView.findViewById(R.id.nameFilter);
         input.setText(workoutsPreviewOperations.getFilterName());
-        alertDialogBuilder
-            .setCancelable(false)
+        alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     workoutsPreviewOperations.setNameFilter(input.getText().toString());
                     onUpdateWorkoutsList();
                 }
-            })
-            .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+            }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
         AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
     }
 
-    public void onUpdateNameWorkout(final int idWorkout){
+    public void onUpdateNameWorkout(final int idWorkout) {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View promptView = layoutInflater.inflate(R.layout.prompt_workout_name_edit, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptView);
         final EditText input = (EditText) promptView.findViewById(R.id.nameWorkout);
         input.setText(workoutsPreviewOperations.getWorkoutName(idWorkout));
-        alertDialogBuilder
-            .setCancelable(false)
+        alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    workoutsPreviewOperations.updateWorkoutName(idWorkout, input.getText().toString());
+                    workoutsPreviewOperations
+                        .updateWorkoutName(idWorkout, input.getText().toString());
                     onUpdateWorkoutsList();
                 }
-            })
-            .setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+            }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
         AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         onUpdateWorkoutsList();
     }

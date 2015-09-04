@@ -7,43 +7,47 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 
 
-public class GPSListener implements LocationListener  {
+public class GPSListener implements LocationListener {
     private LocalNotificationManager notify;
     private Context currentContext;
     private MainActivityGuiOperations operations;
     private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
     private LocationSharing currentLocation;
-    public GPSListener(MainActivityGuiOperations listenerOperations, RouteManager Rt,
-        GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext){
+
+    public GPSListener(MainActivityGuiOperations listenerOperations, RouteManager route,
+        GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext) {
         this.operations = listenerOperations;
-        localRoute = Rt;
-        this.gpsCurrentStatus  = gpsCurrentStatus;
-        notify = new LocalNotificationManager(mainContext, R.drawable.icon, mainContext.getString(R.string.app_name));
+        localRoute = route;
+        this.gpsCurrentStatus = gpsCurrentStatus;
+        notify = new LocalNotificationManager(mainContext, R.drawable.icon,
+            mainContext.getString(R.string.app_name));
         this.currentContext = mainContext;
         localRoute.setNotifyInstance(notify);
         currentLocation = new LocationSharing(mainContext);
     }
+
     public void onLocationChanged(Location location) {
         if (location != null)
             currentLocation.setCurrentLocation(location.getLatitude(), location.getLongitude());
-        if (localRoute != null && location != null && location.hasAltitude() == true ){
+        if (localRoute != null && location != null && location.hasAltitude() == true) {
             localRoute.addPoint(location);
             this.operations.setWorkoutDistance(localRoute.getDistanceInKm());
-            if(localRoute.getStatus() == DefaultValues.routeStatus.start) {
-                if(localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
-                    notify.setContent(currentContext.getString(R.string.workoutDistanceLabel) + ": " + String.format("%.2f km ", localRoute.getDistanceInKm()));
-                if(localRoute.getPointStatus() == DefaultValues.areaStatus.prohibited)
+            if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
+                if (localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
+                    notify.setContent(
+                        currentContext.getString(R.string.workoutDistanceLabel) + ": " + String
+                            .format("%.2f km ", localRoute.getDistanceInKm()));
+                if (localRoute.getPointStatus() == DefaultValues.areaStatus.prohibited)
                     notify.setContent(currentContext.getString(R.string.ignorePointNotify));
                 notify.sendNotify();
             }
         }
         this.operations.setGpsPosition(location.getLatitude(), location.getLongitude());
     }
-    public void onStatusChanged(String s,
-        int i,
-        Bundle b) {
-        switch(i){
+
+    public void onStatusChanged(String s, int i, Bundle b) {
+        switch (i) {
             case LocationProvider.AVAILABLE:
                 this.operations.setOnGPS();
                 gpsCurrentStatus.status = true;
@@ -64,12 +68,14 @@ public class GPSListener implements LocationListener  {
                 break;
         }
     }
+
     public void onProviderDisabled(String s) {
         this.operations.setOffGPS();
         gpsCurrentStatus.status = false;
         if (localRoute.getStatus() == DefaultValues.routeStatus.start)
             localRoute.pause();
     }
+
     public void onProviderEnabled(String s) {
         this.operations.setOnGPS();
         gpsCurrentStatus.status = true;
