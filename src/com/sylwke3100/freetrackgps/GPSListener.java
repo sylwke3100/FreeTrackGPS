@@ -10,14 +10,14 @@ import android.os.Bundle;
 public class GPSListener implements LocationListener {
     private LocalNotificationManager notify;
     private Context currentContext;
-    private MainActivityGuiOperations operations;
+    private MainActivityGuiOperations guiOperations;
     private RouteManager localRoute;
     private GPSConnectionManager.gpsStatus gpsCurrentStatus;
     private LocationSharing currentLocation;
 
     public GPSListener(MainActivityGuiOperations listenerOperations, RouteManager route,
         GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext) {
-        this.operations = listenerOperations;
+        this.guiOperations = listenerOperations;
         localRoute = route;
         this.gpsCurrentStatus = gpsCurrentStatus;
         notify = new LocalNotificationManager(mainContext, R.drawable.icon,
@@ -32,7 +32,7 @@ public class GPSListener implements LocationListener {
             currentLocation.setCurrentLocation(location.getLatitude(), location.getLongitude());
         if (localRoute != null && location != null && location.hasAltitude() == true) {
             localRoute.addPoint(location);
-            this.operations.setWorkoutDistance(localRoute.getDistanceInKm());
+            this.guiOperations.setWorkoutDistance(localRoute.getDistanceInKm());
             if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                 if (localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
                     notify.setContent(
@@ -43,44 +43,54 @@ public class GPSListener implements LocationListener {
                 notify.sendNotify();
             }
         }
-        this.operations.setGpsPosition(location.getLatitude(), location.getLongitude());
+        this.guiOperations.setGpsPosition(location.getLatitude(), location.getLongitude());
     }
 
     public void onStatusChanged(String s, int i, Bundle b) {
         switch (i) {
             case LocationProvider.AVAILABLE:
-                this.operations.setOnGPS();
+                this.guiOperations.setOnGPS();
                 gpsCurrentStatus.status = true;
-                if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
+                if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
                     localRoute.unPause();
+                    guiOperations.setWorkoutActive();
+                }
                 break;
             case LocationProvider.OUT_OF_SERVICE:
-                this.operations.setOffGPS();
+                this.guiOperations.setOffGPS();
                 gpsCurrentStatus.status = false;
-                if (localRoute.getStatus() == DefaultValues.routeStatus.start)
+                if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
+                    guiOperations.setWorkoutPause();
+                }
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                this.operations.setOffGPS();
+                this.guiOperations.setOffGPS();
                 gpsCurrentStatus.status = false;
-                if (localRoute.getStatus() == DefaultValues.routeStatus.start)
+                if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
+                    guiOperations.setWorkoutPause();
+                }
                 break;
         }
     }
 
     public void onProviderDisabled(String s) {
-        this.operations.setOffGPS();
+        this.guiOperations.setOffGPS();
         gpsCurrentStatus.status = false;
-        if (localRoute.getStatus() == DefaultValues.routeStatus.start)
+        if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
             localRoute.pause();
+            guiOperations.setWorkoutPause();
+        }
     }
 
     public void onProviderEnabled(String s) {
-        this.operations.setOnGPS();
+        this.guiOperations.setOnGPS();
         gpsCurrentStatus.status = true;
-        if (localRoute.getStatus() == DefaultValues.routeStatus.pause)
+        if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
             localRoute.unPause();
+            guiOperations.setWorkoutActive();
+        }
     }
 }
     

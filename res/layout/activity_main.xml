@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/workoutPauseLabel"
                 android:layout_alignStart="@+id/textGPSStatus" android:layout_column="8"
-                />
+                android:visibility="invisible"/>
     </TableRow>
 
 

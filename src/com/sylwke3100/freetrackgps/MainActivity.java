@@ -21,8 +21,6 @@ import java.util.List;
 public class MainActivity extends Activity {
     private LocationManager service;
     private TextView gpsStatus, gpsPosition, workoutStatus, workoutDistance;
-    private String provider;
-    private List<TextView> textViewElements;
     private Button pauseButton, startButton;
     private SharedPreferences sharedPrefs;
     private RouteManager currentRoute;
@@ -40,10 +38,11 @@ public class MainActivity extends Activity {
         gpsPosition = (TextView) this.findViewById(R.id.textPosition);
         workoutStatus = (TextView) this.findViewById(R.id.textWorkoutStatus);
         workoutDistance = (TextView) this.findViewById(R.id.textWorkOut);
-        ;
-        textViewElements = Arrays.asList(gpsStatus, gpsPosition, workoutDistance);
+        List<TextView> textViewElements =
+            Arrays.asList(gpsStatus, gpsPosition, workoutDistance, workoutStatus);
         pauseButton = (Button) this.findViewById(R.id.pauseButton);
         startButton = (Button) this.findViewById(R.id.startButton);
+        List<Button> buttonsList = Arrays.asList(startButton, pauseButton);
         currentRoute = new RouteManager(this);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View V) {
@@ -55,17 +54,14 @@ public class MainActivity extends Activity {
                 onPauseRoute();
             }
         });
-        mainOperations = new MainActivityGuiOperations(getBaseContext(), textViewElements);
+        mainOperations =
+            new MainActivityGuiOperations(getBaseContext(), textViewElements, buttonsList);
         gpsConnect.onCreateConnection(mainOperations, service, currentRoute);
-        if (currentRoute.getStatus() != DefaultValues.routeStatus.start)
-            setPreviewStatus(View.INVISIBLE);
-        else
-            setPreviewStatus(View.VISIBLE);
         currentLocation = new LocationSharing(getBaseContext());
         currentLocation.clearCurrentLocation();
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -126,14 +122,12 @@ public class MainActivity extends Activity {
         if (currentRoute.getStatus() == DefaultValues.routeStatus.stop
             && gpsConnect.getStatus() == true) {
             currentRoute.start();
-            workoutStatus.setText(getString(R.string.activeLabel));
-            startButton.setText(getString(R.string.stopLabel));
+            mainOperations.setWorkoutActive();
             setPreviewStatus(View.VISIBLE);
         } else {
             if (currentRoute.getStatus() != DefaultValues.routeStatus.stop) {
                 currentRoute.stop();
-                workoutStatus.setText("--");
-                startButton.setText(getString(R.string.startLabel));
+                mainOperations.setWorkoutInactive();
                 setPreviewStatus(View.INVISIBLE);
             } else {
                 Toast.makeText(getBaseContext(), getString(R.string.errorGPSConnectionInfo),
@@ -145,12 +139,10 @@ public class MainActivity extends Activity {
     public void onPauseRoute() {
         if (currentRoute.getStatus() == DefaultValues.routeStatus.start) {
             currentRoute.pause();
-            workoutStatus.setText(getString(R.string.pauseLabel));
-            pauseButton.setText(getString(R.string.unPauseLabel));
+            mainOperations.setWorkoutPause();
         } else if (currentRoute.getStatus() == DefaultValues.routeStatus.pause) {
             currentRoute.unPause();
-            workoutStatus.setText(getString(R.string.activeLabel));
-            pauseButton.setText(getString(R.string.pauseLabel));
+            mainOperations.setWorkoutActive();
         }
     }
 
