@@ -74,11 +74,11 @@ public class MainActivity extends Activity {
 
         if (currentRoute.getStatus() == DefaultValues.routeStatus.start) {
             menu.findItem(R.id.action_workout).setEnabled(false);
-            menu.findItem(R.id.action_ignorePoints).setEnabled(false);
+            menu.findItem(R.id.action_ignorepoints).setEnabled(false);
             menu.findItem(R.id.action_settings).setEnabled(false);
         } else {
             menu.findItem(R.id.action_workout).setEnabled(true);
-            menu.findItem(R.id.action_ignorePoints).setEnabled(true);
+            menu.findItem(R.id.action_ignorepoints).setEnabled(true);
             menu.findItem(R.id.action_settings).setEnabled(true);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ignorePoints:
+            case R.id.action_ignorepoints:
                 Intent ignorePointsIntent = new Intent(this, IgnorePointsActivity.class);
                 startActivity(ignorePointsIntent);
                 break;
@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
                 Intent settingActivityIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingActivityIntent);
                 break;
-            case R.id.gpsSetting:
+            case R.id.action_gpssettings:
                 Intent locationSettingsIntent =
                     new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 locationSettingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
