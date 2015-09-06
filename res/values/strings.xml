@@ -51,12 +51,11 @@
     <string name="action_info">About workout</string>
     <string name="yesLabel">Yes</string>
     <string name="noLabel">No</string>
-    <string name="action_ignorePoints">Ignore points list</string>
+    <string name="action_ignorePoints">Ignore points</string>
     <string name="action_ignorepoints_add">Add point</string>
     <string name="errorValueInfo">Any of the value is empty</string>
-    <string name="ignorePointNotify">Ignore Point Area</string>
-    <string name="ignorePointsInfo">Here you can modify the list of points that while training to be
-        skipped
+    <string name="ignorePointNotify">Ignore Points Area</string>
+    <string name="ignorePointsInfo">Here you can modify the list of points that while training to be skipped.
     </string>
     <string name="latitudeLabel">Latitude</string>
     <string name="longitudeLabel">Longitude</string>

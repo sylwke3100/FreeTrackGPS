@@ -50,14 +50,15 @@
     <string name="action_info">O treningu</string>
     <string name="noLabel">Nie</string>
     <string name="yesLabel">Tak</string>
-    <string name="action_ignorePoints">Lista ignorowanych punktów</string>
-    <string name="ignorePointsInfo">Tutaj możesz modyfikować listę punktów które podczas treningu mają być pomijane</string>
+    <string name="action_ignorePoints">Ignorowane punkty</string>
+    <string name="ignorePointsInfo">Tutaj możesz modyfikować listę punktów które podczas treningu
+        mają być pomijane.</string>
     <string name="action_ignorepoints_add">Dodaj punkt</string>
     <string name="errorValueInfo">Któraś z wartości jest pusta</string>
     <string name="ignorePointNotify">Obszar ignorowanych punktów</string>
     <string name="latitudeLabel">Szerokość geograficzna</string>
     <string name="longitudeLabel">Długość geograficzna</string>
-    <string name="ignorePointsExists">Punkt już istnieje</string>
+    <string name="ignorePointsExists">Punkty już istnieją</string>
     <string name="action_ignorepoints_add_from_gps">Dodaj punkt z lokalizacji GPS</string>
     <string name="nameLabel">Nazwa</string>
 </resources>
