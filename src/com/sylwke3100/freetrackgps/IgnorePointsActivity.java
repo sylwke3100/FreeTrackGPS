@@ -32,11 +32,7 @@ public class IgnorePointsActivity extends Activity {
         ArrayList<HashMap<String, String>> baseList = new ArrayList<HashMap<String, String>>();
         localListIgnore = localInstanceDatabase.getIgnorePointsList();
         for (IgnorePointsListElement element : localListIgnore) {
-            HashMap<String, String> singleElement = new HashMap<String, String>();
-            singleElement.put("points",
-                Double.toString(element.latitude) + "-" + Double.toString(element.longitude));
-            singleElement.put("name", element.name);
-            baseList.add(singleElement);
+            baseList.add(element.getPreparedHashMapToView());
         }
         simpleAdapter = new SimpleAdapter(this, baseList, R.layout.textview_ignore_points,
             new String[] {"name", "points"}, new int[] {R.id.NameTextView, R.id.PointsTextView});
@@ -91,8 +87,8 @@ public class IgnorePointsActivity extends Activity {
     public void onAddIgnorePointsFromLocation(String ignorePointName) {
         LocationSharing.LocationSharingResult result = currentLocationSharing.getCurrentLocation();
         if (result.status == 1) {
-            if (localInstanceDatabase
-                .addIgnorePoint(result.latitude, result.longitude, ignorePointName) == false)
+            if (!localInstanceDatabase
+                .addIgnorePoint(result.latitude, result.longitude, ignorePointName))
                 Toast.makeText(getBaseContext(), R.string.ignorePointsExists, Toast.LENGTH_LONG)
                     .show();
             onUpdateIgnoreList();

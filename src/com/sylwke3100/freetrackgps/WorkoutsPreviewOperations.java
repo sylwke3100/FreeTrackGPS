@@ -15,7 +15,6 @@ public class WorkoutsPreviewOperations {
     private DatabaseManager currentDataBase;
     private List<RouteListElement> rawWorkoutsList;
     private Context localContext;
-    private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
     private DatabaseTimeFilter timeFilter;
     private DatabaseNameFilter nameFilter;
@@ -34,12 +33,8 @@ public class WorkoutsPreviewOperations {
         filtersList.add(nameFilter);
         rawWorkoutsList = currentDataBase.getRoutesList(filtersList);
         ArrayList<HashMap<String, String>> workoutsList = new ArrayList<HashMap<String, String>>();
-        for (RouteListElement element : rawWorkoutsList) {
-            HashMap<String, String> singleWorkout = new HashMap<String, String>();
-            singleWorkout
-                .put("time", formatDate.format(element.startTime) + element.getPreparedName());
-            singleWorkout.put("distance", String.format("%.2f km", element.distance / 1000));
-            workoutsList.add(singleWorkout);
+        for (RouteListElement workout : rawWorkoutsList) {
+            workoutsList.add(workout.getPreparedHashMapToView());
         }
         return workoutsList;
     }
