@@ -20,7 +20,6 @@ import java.util.List;
 
 public class MainActivity extends Activity {
     private LocationManager service;
-    private TextView gpsStatus, gpsPosition, workoutStatus, workoutDistance;
     private Button pauseButton, startButton;
     private SharedPreferences sharedPrefs;
     private RouteManager currentRoute;
@@ -34,12 +33,11 @@ public class MainActivity extends Activity {
         gpsConnect = new GPSConnectionManager(this);
         setContentView(R.layout.activity_main);
         service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        gpsStatus = (TextView) this.findViewById(R.id.textGPSStatus);
-        gpsPosition = (TextView) this.findViewById(R.id.textPosition);
-        workoutStatus = (TextView) this.findViewById(R.id.textWorkoutStatus);
-        workoutDistance = (TextView) this.findViewById(R.id.textWorkOut);
-        List<TextView> textViewElements =
-            Arrays.asList(gpsStatus, gpsPosition, workoutDistance, workoutStatus);
+        List<TextView> textViewElements = Arrays
+            .asList((TextView) this.findViewById(R.id.textGPSStatus),
+                (TextView) this.findViewById(R.id.textPosition),
+                (TextView) this.findViewById(R.id.textWorkoutDistance),
+                (TextView) this.findViewById(R.id.textWorkoutStatus));
         pauseButton = (Button) this.findViewById(R.id.pauseButton);
         startButton = (Button) this.findViewById(R.id.startButton);
         List<Button> buttonsList = Arrays.asList(startButton, pauseButton);
@@ -110,11 +108,11 @@ public class MainActivity extends Activity {
     }
 
     public void setPreviewStatus(int status) {
-        if (sharedPrefs.getBoolean("showWorkoutInfo", false) == false) {
-            workoutDistance.setVisibility(status);
-            workoutStatus.setVisibility(status);
-            ((TextView) this.findViewById(R.id.textDistanceLabel)).setVisibility(status);
-            ((TextView) this.findViewById(R.id.textWorkoutStatusLabel)).setVisibility(status);
+        if (!sharedPrefs.getBoolean("showWorkoutInfo", false)) {
+            (this.findViewById(R.id.textWorkoutDistance)).setVisibility(status);
+            (this.findViewById(R.id.textWorkoutStatus)).setVisibility(status);
+            (this.findViewById(R.id.textDistanceLabel)).setVisibility(status);
+            (this.findViewById(R.id.textWorkoutStatusLabel)).setVisibility(status);
         }
     }
 

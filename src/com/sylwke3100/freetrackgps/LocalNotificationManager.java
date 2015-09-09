@@ -37,8 +37,8 @@ public class LocalNotificationManager {
         globalNotification.setContentText(content);
     }
 
-    public void setContent(int resurce) {
-        globalNotification.setContentText(context.getString(resurce));
+    public void setContent(int resource) {
+        globalNotification.setContentText(context.getString(resource));
     }
 
     public void sendNotify() {
