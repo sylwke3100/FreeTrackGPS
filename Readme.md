@@ -3,23 +3,23 @@ FreeTrackGPS
 
 Simple application for saving  points gps workout to GPX file for Android 
 
-current version: 0.5
+current version: 0.6
 
 Features
 
 - Save Personal workout to Database
 - Export workout to GPX file
-- Notifications with distance
+- Notifications with distance (in notification bar and vibrate)
 - Some setting to change: Speed scan gps, distance speed
 - Attributed to a name workout
 - Workouts filtering by name and start time
 - Preview route info (distance start and end time, min and max height)
-- Ignoring points in workout
+- Add Ignoring points in workout(from gps location and manually)
 
 ScreenShots
 
 ![Alt Main window](http://i.imgur.com/nqOC40o.png)
-![Alt Workouts list](http://i.imgur.com/wVKaHCQ.png)
-![Alt Settings window](http://i.imgur.com/0ARMJhO.png)
+![Alt Workouts list](http://i.imgur.com/GPgJZGq.png)
+![Alt Settings window](http://i.imgur.com/ZDRnvn6.png)
 ![Alt about route window](http://i.imgur.com/VD5jt29.png)
-![Alt ignore points window](http://i.imgur.com/YDyUjvq.png)
+![Alt ignore points window](http://i.imgur.com/uqLsIo6.png)
