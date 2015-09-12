@@ -20,11 +20,14 @@ public class RouteManager {
     private long currentId;
     private List<IgnorePointsListElement> globalIgnorePointsList;
 
+    private VibrateNotificationManager vibrateNotificationManager;
+
     public RouteManager(Context globalContext) {
         context = globalContext;
         status = DefaultValues.routeStatus.stop;
         currentDB = new DatabaseManager(globalContext);
         currentStatus = DefaultValues.areaStatus.ok;
+        vibrateNotificationManager = new VibrateNotificationManager(globalContext);
     }
 
     public DefaultValues.areaStatus getPointStatus() {
@@ -64,6 +67,7 @@ public class RouteManager {
                         currentLocation.getAltitude(), currentTime);
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
+                vibrateNotificationManager.proccesNotify(currentLocation);
                 currentDB.addPoint(currentId, routePoint, distance);
                 currentStatus = DefaultValues.areaStatus.ok;
                 lastPosition = currentLocation;
@@ -94,6 +98,7 @@ public class RouteManager {
         lastPosition = null;
         localNotify.deleteNotify();
         currentId = -1;
+        vibrateNotificationManager.clear();
     }
 
     public void setNotifyInstance(LocalNotificationManager notify) {
