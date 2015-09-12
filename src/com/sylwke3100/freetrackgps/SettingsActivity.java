@@ -9,7 +9,7 @@ import android.widget.*;
 public class SettingsActivity extends Activity {
 
     private Spinner timeSetting, distanceSetting;
-    private ToggleButton viewWorkoutStatusSetting, showNotificationSetting;
+    private ToggleButton viewWorkoutStatusSetting, showNotificationSetting, vibrateNotificationSetting;
     private SharedPreferences sharePrefs;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,10 +20,12 @@ public class SettingsActivity extends Activity {
         distanceSetting = (Spinner) this.findViewById(R.id.spinner2);
         viewWorkoutStatusSetting = (ToggleButton) this.findViewById(R.id.toggleButton);
         showNotificationSetting = (ToggleButton) this.findViewById(R.id.toggleButton2);
+        vibrateNotificationSetting = (ToggleButton) this.findViewById(R.id.vibraTogglebutton);
         timeSetting.setSelection(sharePrefs.getInt("time", DefaultValues.defaultMinSpeedIndex));
         distanceSetting.setSelection(sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
         viewWorkoutStatusSetting.setChecked(sharePrefs.getBoolean("showWorkoutInfo", false));
         showNotificationSetting.setChecked(sharePrefs.getBoolean("showNotificationWorkout", true));
+        vibrateNotificationSetting.setChecked(sharePrefs.getBoolean("vibrateNotification", false));
         timeSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -31,9 +33,10 @@ public class SettingsActivity extends Activity {
                 preferencesEditor.putInt("time", position);
                 preferencesEditor.commit();
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                timeSetting.setSelection(sharePrefs.getInt("time", DefaultValues.defaultMinSpeedIndex));
+
+            @Override public void onNothingSelected(AdapterView<?> parent) {
+                timeSetting
+                    .setSelection(sharePrefs.getInt("time", DefaultValues.defaultMinSpeedIndex));
             }
         });
         distanceSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -48,19 +51,27 @@ public class SettingsActivity extends Activity {
                 distanceSetting.setSelection(sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
             }
         });
-        viewWorkoutStatusSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
-                preferencesEditor.putBoolean("showWorkoutInfo", isChecked);
-                preferencesEditor.commit();
-            }
-        });
+        viewWorkoutStatusSetting.setOnCheckedChangeListener(
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
+                    preferencesEditor.putBoolean("showWorkoutInfo", isChecked);
+                    preferencesEditor.commit();
+                }
+            });
         showNotificationSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
                 preferencesEditor.putBoolean("showNotificationWorkout", isChecked);
+                preferencesEditor.commit();
+            }
+        });
+        vibrateNotificationSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
+                preferencesEditor.putBoolean("vibrateNotification", isChecked);
                 preferencesEditor.commit();
             }
         });

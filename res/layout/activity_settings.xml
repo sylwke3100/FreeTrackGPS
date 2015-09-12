@@ -23,33 +23,33 @@
             android:id="@+id/textGPSPosition"
             android:layout_below="@+id/spinner" android:layout_alignLeft="@+id/textSpeedLabel"
             android:layout_alignStart="@+id/textSpeedLabel" android:layout_marginTop="42dp" android:textSize="14dp"
-            android:layout_x="10dp" android:layout_y="165dp"/>
+            android:layout_x="10dp" android:layout_y="281dp"/>
     <Spinner
             android:layout_width="202dp"
             android:layout_height="35dp"
             android:id="@+id/spinner"
             android:spinnerMode="dropdown" android:layout_alignTop="@+id/textSpeedLabel"
             android:layout_toRightOf="@+id/textGPSPosition" android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" android:layout_x="171dp" android:layout_y="214dp"
+            android:layout_alignParentEnd="true" android:layout_x="171dp" android:layout_y="226dp"
             android:entries="@array/viewTimeSetting"/>
     <Spinner
-            android:layout_width="195dp"
+            android:layout_width="179dp"
             android:layout_height="34dp"
             android:id="@+id/spinner2" android:layout_alignTop="@+id/textGPSPosition"
             android:layout_alignLeft="@+id/spinner"
             android:layout_alignStart="@+id/spinner" android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" android:layout_x="171dp" android:layout_y="160dp"
+            android:layout_alignParentRight="true" android:layout_x="171dp" android:layout_y="281dp"
             android:entries="@array/viewDistanceSetting"/>
     <TextView
             android:layout_width="143dp"
-            android:layout_height="45dp"
+            android:layout_height="52dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/settingShowWorkoutInfoLabel"
             android:id="@+id/textWorkoutStatusLabel"
             android:textSize="14dp"
             android:layout_toStartOf="@+id/toggleButton"
             android:layout_below="@+id/spinner2" android:layout_alignLeft="@+id/textGPSPosition"
-            android:layout_alignStart="@+id/textGPSPosition" android:layout_marginTop="72dp" android:layout_x="11dp"
+            android:layout_alignStart="@+id/textGPSPosition" android:layout_marginTop="72dp" android:layout_x="10dp"
             android:layout_y="99dp" android:textAlignment="center"/>
     <ToggleButton
             android:layout_width="76dp"
@@ -58,11 +58,11 @@
             android:id="@+id/toggleButton"
             android:checked="false"
             android:layout_alignTop="@+id/textWorkoutStatusLabel" android:layout_alignLeft="@+id/spinner2"
-            android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="186dp"
-            android:layout_y="104dp" android:textOn="@string/onLabel"/>
+            android:layout_alignStart="@+id/spinner2" android:textOff="@string/offLabel" android:layout_x="188dp"
+            android:layout_y="99dp" android:textOn="@string/onLabel"/>
     <TextView
             android:layout_width="147dp"
-            android:layout_height="43dp"
+            android:layout_height="48dp"
             android:text="@string/NotificationLabel"
             android:id="@+id/textView3" android:layout_x="13dp" android:layout_y="45dp" android:textSize="14dp"
             android:textAlignment="center" android:singleLine="false"/>
@@ -72,4 +72,16 @@
             android:text="New ToggleButton"
             android:id="@+id/toggleButton2" android:layout_x="188dp" android:layout_y="41dp" android:checked="false"
             android:textOff="@string/offLabel" android:textOn="@string/onLabel"/>
+        <TextView
+                android:layout_width="99dp"
+                android:layout_height="48dp"
+                android:text="@string/vibraNotifylabel"
+                android:id="@+id/textVibraNotify" android:layout_x="10dp" android:layout_y="163dp"
+                android:textSize="14dp"/>
+        <ToggleButton
+                android:layout_width="76dp"
+                android:layout_height="36dp"
+                android:text="@string/offLabel"
+                android:id="@+id/vibraTogglebutton" android:layout_x="188dp" android:layout_y="163dp"
+                android:textOff="@string/offLabel" android:textOn="@string/onLabel"/>
 </AbsoluteLayout>

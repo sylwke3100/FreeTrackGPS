@@ -61,4 +61,5 @@
     <string name="ignorePointsExists">Punkty już istnieją</string>
     <string name="action_ignorepoints_add_from_gps">Dodaj punkt z lokalizacji GPS</string>
     <string name="nameLabel">Nazwa</string>
+    <string name="vibraNotifylabel">Powiadomienia wibracyjne</string>
 </resources>

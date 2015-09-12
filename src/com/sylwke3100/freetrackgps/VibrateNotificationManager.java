@@ -21,7 +21,7 @@ public class VibrateNotificationManager {
     }
 
     private boolean getStatusSetting() {
-        return sharePrefs.getBoolean("vibrateNotification", true);
+        return sharePrefs.getBoolean("vibrateNotification", false);
     }
 
     public void run() {

@@ -62,4 +62,5 @@
     <string name="ignorePointsExists">Points already exist</string>
     <string name="action_ignorepoints_add_from_gps">Add point from GPS location</string>
     <string name="nameLabel">Name</string>
+    <string name="vibraNotifylabel">Vibration notifications</string>
 </resources>
