@@ -6,7 +6,7 @@
     <string name="action_about">About FreeTrackGPS</string>
     <string name="gpsSetting">Location Settings</string>
     <string name="gpsStatusLabel">GPS Status</string>
-    <string name="gpsPositionLabel">Position</string>
+    <string name="gpsPositionLabel">Position GPS</string>
     <string name="workoutStatusLabel">Workout status</string>
     <string name="workoutDistanceLabel">Distance</string>
     <string name="workoutStartLabel">Start</string>
@@ -63,4 +63,5 @@
     <string name="action_ignorepoints_add_from_gps">Add point from GPS location</string>
     <string name="nameLabel">Name</string>
     <string name="vibraNotifylabel">Vibration notifications</string>
+    <string name="workout">Workout</string>
 </resources>

@@ -16,7 +16,7 @@
     <string name="errorGPSConnectionInfo">Błąd startu treningu - sprawdź połączenie GPS</string>
     <string name="finishApp">Zamknij FreeTrackGPS</string>
     <string name="finishAppInfo">Chcesz zamknąć aplikacje?</string>
-    <string name="gpsPositionLabel">Pozycja</string>
+    <string name="gpsPositionLabel">Pozycja GPS</string>
     <string name="gpsSetting">Ustawienia Lokalizacji</string>
     <string name="gpsStatusLabel">Status GPS</string>
     <string name="menu">Menu</string>
@@ -62,4 +62,5 @@
     <string name="action_ignorepoints_add_from_gps">Dodaj punkt z lokalizacji GPS</string>
     <string name="nameLabel">Nazwa</string>
     <string name="vibraNotifylabel">Powiadomienia wibracyjne</string>
+    <string name="workout">Trening</string>
 </resources>

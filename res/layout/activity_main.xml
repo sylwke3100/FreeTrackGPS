@@ -3,12 +3,12 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent" android:paddingLeft="20dp">
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_gravity="center" android:gravity="center">
-        <TextView android:text="@string/app_name" android:textSize="20dp" android:textAlignment="gravity"
+                  android:layout_gravity="center" android:gravity="center" android:weightSum="1">
+        <TextView android:text="@string/workout" android:textSize="20dp" android:textAlignment="center"
                   android:layout_column="0"
                   android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" android:textStyle="bold"
-                  android:layout_marginTop="10dp"/>
+                  android:layout_height="37dp" android:textStyle="bold"
+                  android:layout_marginTop="10dp" android:layout_weight="0.09"/>
     </LinearLayout>
     <TableRow android:layout_marginTop="20dp">
 
@@ -38,7 +38,8 @@
                 android:layout_alignRight="@+id/startButton"
                 android:layout_below="@+id/textGPSStatusLabel"
                 android:text="@string/gpsPositionLabel"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_span="4"/>
 
 
         <TextView
