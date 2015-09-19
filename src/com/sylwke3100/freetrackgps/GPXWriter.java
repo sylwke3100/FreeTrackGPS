@@ -87,13 +87,13 @@ public class GPXWriter {
         if (isOpen)
             try {
                 gpxSerializer.startTag("", "trkpt");
-                gpxSerializer.attribute("", "lat", Double.toString(point.latitude));
-                gpxSerializer.attribute("", "lon", Double.toString(point.longitude));
+                gpxSerializer.attribute("", "lat", point.getLatitude());
+                gpxSerializer.attribute("", "lon", point.getLongitude());
                 gpxSerializer.startTag("", "ele");
-                gpxSerializer.text(Double.toString(point.altitude));
+                gpxSerializer.text(point.getAltitude());
                 gpxSerializer.endTag("", "ele");
                 gpxSerializer.startTag("", "time");
-                gpxSerializer.text(dateFormat.format(point.time));
+                gpxSerializer.text(point.getPointTime());
                 gpxSerializer.endTag("", "time");
                 gpxSerializer.endTag("", "trkpt");
             } catch (IOException e) {
