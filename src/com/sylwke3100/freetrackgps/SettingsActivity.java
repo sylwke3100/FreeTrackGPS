@@ -9,7 +9,7 @@ import android.widget.*;
 public class SettingsActivity extends Activity {
 
     private Spinner timeSetting, distanceSetting;
-    private ToggleButton viewWorkoutStatusSetting, showNotificationSetting, vibrateNotificationSetting;
+    private ToggleButton viewWorkoutStatusSetting, showNotificationSetting, vibrateNotificationSetting, exitAlertSetting;
     private SharedPreferences sharePrefs;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,11 +21,13 @@ public class SettingsActivity extends Activity {
         viewWorkoutStatusSetting = (ToggleButton) this.findViewById(R.id.toggleButton);
         showNotificationSetting = (ToggleButton) this.findViewById(R.id.toggleButton2);
         vibrateNotificationSetting = (ToggleButton) this.findViewById(R.id.vibraTogglebutton);
+        exitAlertSetting = (ToggleButton) this.findViewById(R.id.toggleButton3);
         timeSetting.setSelection(sharePrefs.getInt("time", DefaultValues.defaultMinSpeedIndex));
         distanceSetting.setSelection(sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
         viewWorkoutStatusSetting.setChecked(sharePrefs.getBoolean("showWorkoutInfo", false));
         showNotificationSetting.setChecked(sharePrefs.getBoolean("showNotificationWorkout", true));
         vibrateNotificationSetting.setChecked(sharePrefs.getBoolean("vibrateNotification", false));
+        exitAlertSetting.setChecked(sharePrefs.getBoolean("exitAlert", true));
         timeSetting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -48,7 +50,8 @@ public class SettingsActivity extends Activity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                distanceSetting.setSelection(sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
+                distanceSetting.setSelection(
+                    sharePrefs.getInt("distance", DefaultValues.defaultMinDistanceIndex));
             }
         });
         viewWorkoutStatusSetting.setOnCheckedChangeListener(
@@ -72,6 +75,13 @@ public class SettingsActivity extends Activity {
             @Override public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
                 preferencesEditor.putBoolean("vibrateNotification", isChecked);
+                preferencesEditor.commit();
+            }
+        });
+        exitAlertSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SharedPreferences.Editor preferencesEditor = sharePrefs.edit();
+                preferencesEditor.putBoolean("exitAlert", isChecked);
                 preferencesEditor.commit();
             }
         });

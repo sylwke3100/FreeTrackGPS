@@ -145,18 +145,25 @@ public class MainActivity extends Activity {
     }
 
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle(getString(R.string.finishApp)).setMessage(getString(R.string.finishAppInfo))
-            .setPositiveButton(this.getString(R.string.yesLabel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (currentRoute.getStatus() != DefaultValues.routeStatus.stop)
-                            currentRoute.stop();
-                        finish();
-                        System.exit(0);
-                    }
-                }).setNegativeButton(this.getString(R.string.noLabel), null).show();
+        if (sharedPrefs.getBoolean("exitAlert", true))
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getString(R.string.finishApp))
+                .setMessage(getString(R.string.finishAppInfo))
+                .setPositiveButton(this.getString(R.string.yesLabel),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (currentRoute.getStatus() != DefaultValues.routeStatus.stop)
+                                currentRoute.stop();
+                            finish();
+                            System.exit(0);
+                        }
+                    }).setNegativeButton(this.getString(R.string.noLabel), null).show();
+        else {
+            finish();
+            System.exit(0);
+        }
     }
+
 
     protected void onDestroy() {
         super.onDestroy();
