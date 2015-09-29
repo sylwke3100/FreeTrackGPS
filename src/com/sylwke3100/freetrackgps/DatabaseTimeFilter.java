@@ -25,11 +25,6 @@ public class DatabaseTimeFilter implements DatabaseFilter {
         startTimeFilter = sharePrefs.getLong("filterOneTime", -1);
     }
 
-    public void setViewFilter(long startTime, long endTime) {
-        startTimeFilter = startTime;
-        endTimeFilter = endTime;
-    }
-
     public void clearFilters() {
         startTimeFilter = 0;
         endTimeFilter = 0;

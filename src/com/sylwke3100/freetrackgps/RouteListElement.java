@@ -12,12 +12,6 @@ public class RouteListElement {
     public double distance;
     public String name = "";
 
-    public RouteListElement(int id, long startTime, double distance) {
-        this.id = id;
-        this.startTime = startTime;
-        this.distance = distance;
-    }
-
     public RouteListElement(int id, long startTime, double distance, String name) {
         this.id = id;
         this.startTime = startTime;

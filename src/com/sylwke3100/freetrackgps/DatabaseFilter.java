@@ -2,9 +2,9 @@ package com.sylwke3100.freetrackgps;
 
 
 public interface DatabaseFilter {
-    public abstract void clearFilters();
+    void clearFilters();
 
-    public boolean isActive();
+    boolean isActive();
 
-    public abstract String getGeneratedFilterString();
+    String getGeneratedFilterString();
 }
