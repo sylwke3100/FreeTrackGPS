@@ -66,7 +66,8 @@ public class MainActivity extends Activity {
 
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if (currentRoute.getStatus() == DefaultValues.routeStatus.start) {
+        if (currentRoute.getStatus() == DefaultValues.routeStatus.start
+            || currentRoute.getStatus() == DefaultValues.routeStatus.pause) {
             menu.findItem(R.id.action_workout).setEnabled(false);
             menu.findItem(R.id.action_ignorepoints).setEnabled(false);
             menu.findItem(R.id.action_settings).setEnabled(false);
