@@ -25,7 +25,7 @@
     <string name="aboutProgram">Simple application for saving gps workout to GPX file</string>
     <string name="versionLabel">version</string>
     <string name="SaveTrueInfo">Save workout in</string>
-    <string name="SaveFalseInfo">Error workout in</string>
+    <string name="SaveFalseInfo">Error save workout in</string>
     <string name="closeSettingsInfo">Restart application for apply changes</string>
     <string name="finishApp">Close FreeTrackGPS</string>
     <string name="finishAppInfo">Do you want close application?</string>

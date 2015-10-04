@@ -98,7 +98,7 @@ public class RouteManager {
         lastPosition = null;
         localNotify.deleteNotify();
         currentId = -1;
-        vibrateNotificationManager.clear();
+        vibrateNotificationManager.clear(true);
     }
 
     public void setNotifyInstance(LocalNotificationManager notify) {

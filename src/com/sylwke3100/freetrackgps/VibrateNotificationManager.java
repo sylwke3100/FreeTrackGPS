@@ -37,7 +37,7 @@ public class VibrateNotificationManager {
                 lastDistance = currentDistance;
             } else {
                 run();
-                clear();
+                clear(false);
             }
         } else {
             lastPoint = current;
@@ -45,9 +45,10 @@ public class VibrateNotificationManager {
         }
     }
 
-    public void clear() {
+    public void clear(boolean clearPermanently) {
         distanceToNotification = 0;
-        lastDistance = 0;
+        if (clearPermanently)
+            lastDistance = 0;
         isPoint = false;
     }
 }
