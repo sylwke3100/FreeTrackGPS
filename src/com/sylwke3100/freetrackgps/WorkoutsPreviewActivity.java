@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import com.sylwke3100.freetrackgps.WorkoutInfoActivity;
 
 public class WorkoutsPreviewActivity extends Activity {
     private SimpleAdapter simpleAdapter;
@@ -36,7 +37,7 @@ public class WorkoutsPreviewActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(WorkoutsPreviewActivity.this, InfoWorkoutActivity.class);
+                Intent intent = new Intent(WorkoutInfoActivity.this , WorkoutInfoActivity.class);
                 intent.putExtra("distanceInfo", objects.get(i).distance);
                 intent.putExtra("startTimeInfo", objects.get(i).startTime);
                 intent.putExtra("routeId", objects.get(i).id);
