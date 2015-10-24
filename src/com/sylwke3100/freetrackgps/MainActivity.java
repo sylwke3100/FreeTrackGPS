@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
                 break;
             case R.id.action_workout:
                 Intent workoutPreviewActivityIntent =
-                    new Intent(this, WorkoutsPreviewActivity.class);
+                    new Intent(this, WorkoutsListActivity.class);
                 startActivity(workoutPreviewActivityIntent);
                 break;
             case R.id.action_settings:

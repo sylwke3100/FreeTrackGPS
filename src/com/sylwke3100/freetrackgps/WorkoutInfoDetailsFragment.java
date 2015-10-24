@@ -21,11 +21,11 @@ public class WorkoutInfoDetailsFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
-        View myInflate = inflater.inflate(R.layout.activity_info, container, false);
+        View myInflate = inflater.inflate(R.layout.activity_workout_info, container, false);
         context = myInflate.getContext();
         Bundle localBundle = getArguments();
         if (localBundle != null) {
-            calculateRouteRroperties(localBundle.getInt("routeId"));
+            calculateRouteProperties(localBundle.getInt("routeId"));
             ((TextView) myInflate.findViewById(R.id.distanceText))
                 .setText(String.format("%.2f km", localBundle.getDouble("distanceInfo") / 1000));
             ((TextView) myInflate.findViewById(R.id.startTimeText))
@@ -50,7 +50,7 @@ public class WorkoutInfoDetailsFragment extends Fragment {
         return myInflate;
     }
 
-    private void calculateRouteRroperties(int id) {
+    private void calculateRouteProperties(int id) {
         DatabaseManager baseLocal = new DatabaseManager(context);
         List<RouteElement> route = baseLocal.getPointsInRoute(id);
         for (RouteElement element : route) {

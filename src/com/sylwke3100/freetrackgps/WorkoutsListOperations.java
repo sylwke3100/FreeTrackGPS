@@ -10,7 +10,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class WorkoutsPreviewOperations {
+public class WorkoutsListOperations {
     private SharedPreferences sharePrefs;
     private DatabaseManager currentDataBase;
     private List<RouteListElement> rawWorkoutsList;
@@ -19,7 +19,7 @@ public class WorkoutsPreviewOperations {
     private DatabaseTimeFilter timeFilter;
     private DatabaseNameFilter nameFilter;
 
-    WorkoutsPreviewOperations(Context context) {
+    WorkoutsListOperations(Context context) {
         currentDataBase = new DatabaseManager(context);
         localContext = context;
         sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);

@@ -15,28 +15,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class WorkoutsPreviewActivity extends Activity {
+public class WorkoutsListActivity extends Activity {
     private SimpleAdapter simpleAdapter;
-    private WorkoutsPreviewOperations workoutsPreviewOperations;
+    private WorkoutsListOperations workoutsListOperations;
     private ListView workoutList;
     private Menu optionsMenu;
     private ArrayList<HashMap<String, String>> routesList;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_workout_views);
+        setContentView(R.layout.activity_workouts_list);
         routesList = new ArrayList<HashMap<String, String>>();
         workoutList = (ListView) this.findViewById(R.id.listWorkout);
         registerForContextMenu(workoutList);
-        workoutsPreviewOperations = new WorkoutsPreviewOperations(getBaseContext());
+        workoutsListOperations = new WorkoutsListOperations(getBaseContext());
         onUpdateWorkoutsList();
 
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            List<RouteListElement> objects = workoutsPreviewOperations.getUpdatedWorkoutsRawList();
+            List<RouteListElement> objects = workoutsListOperations.getUpdatedWorkoutsRawList();
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(WorkoutsPreviewActivity.this, WorkoutInfoActivity.class);
+                Intent intent = new Intent(WorkoutsListActivity.this, WorkoutInfoActivity.class);
                 intent.putExtra("distanceInfo", objects.get(i).distance);
                 intent.putExtra("startTimeInfo", objects.get(i).startTime);
                 intent.putExtra("routeId", objects.get(i).id);
@@ -47,7 +47,7 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     private void onUpdateWorkoutsList() {
-        routesList = workoutsPreviewOperations.getUpdatedWorkoutsList();
+        routesList = workoutsListOperations.getUpdatedWorkoutsList();
         simpleAdapter = new SimpleAdapter(this, routesList, R.layout.textview_row_lines,
             new String[] {"time", "distance"}, new int[] {R.id.line_time, R.id.line_distance});
         workoutList.setAdapter(simpleAdapter);
@@ -65,11 +65,11 @@ public class WorkoutsPreviewActivity extends Activity {
             (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.action_workout_delete:
-                workoutsPreviewOperations.deleteWorkout(info.position);
+                workoutsListOperations.deleteWorkout(info.position);
                 this.onUpdateWorkoutsList();
                 return true;
             case R.id.action_workout_export:
-                workoutsPreviewOperations.exportWorkout(info.position);
+                workoutsListOperations.exportWorkout(info.position);
                 return true;
             case R.id.action_workout_change:
                 onUpdateNameWorkout(info.position);
@@ -79,13 +79,13 @@ public class WorkoutsPreviewActivity extends Activity {
     }
 
     public void updateIconOptionMenu() {
-        if (workoutsPreviewOperations.getStatusTimeFilter())
+        if (workoutsListOperations.getStatusTimeFilter())
             optionsMenu.findItem(R.id.action_overflow).getSubMenu()
                 .findItem(R.id.action_filter_by_date).setIcon(R.drawable.tick);
         else
             optionsMenu.findItem(R.id.action_overflow).getSubMenu()
                 .findItem(R.id.action_filter_by_date).setIcon((R.drawable.emptytick));
-        if (workoutsPreviewOperations.getStatusNameFilter())
+        if (workoutsListOperations.getStatusNameFilter())
             optionsMenu.findItem(R.id.action_overflow).getSubMenu()
                 .findItem(R.id.action_filter_by_name).setIcon(R.drawable.tick);
         else
@@ -125,11 +125,11 @@ public class WorkoutsPreviewActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptView);
         final EditText input = (EditText) promptView.findViewById(R.id.nameFilter);
-        input.setText(workoutsPreviewOperations.getFilterName());
+        input.setText(workoutsListOperations.getFilterName());
         alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    workoutsPreviewOperations.setNameFilter(input.getText().toString());
+                    workoutsListOperations.setNameFilter(input.getText().toString());
                     onUpdateWorkoutsList();
                 }
             }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
@@ -147,11 +147,11 @@ public class WorkoutsPreviewActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptView);
         final EditText input = (EditText) promptView.findViewById(R.id.nameWorkout);
-        input.setText(workoutsPreviewOperations.getWorkoutName(idWorkout));
+        input.setText(workoutsListOperations.getWorkoutName(idWorkout));
         alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    workoutsPreviewOperations
+                    workoutsListOperations
                         .updateWorkoutName(idWorkout, input.getText().toString());
                     onUpdateWorkoutsList();
                 }
