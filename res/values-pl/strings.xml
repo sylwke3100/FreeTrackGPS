@@ -64,4 +64,5 @@
     <string name="vibraNotifylabel">Powiadomienia wibracyjne</string>
     <string name="workout">Trening</string>
     <string name="exitAlertLabel">Ostrzeżenie przed wyjściem</string>
+    <string name="workoutInfoDetailsLabel">Szczegóły</string>
 </resources>

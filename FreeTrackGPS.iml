@@ -22,5 +22,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="android-support-v4" level="project" />
   </component>
 </module>

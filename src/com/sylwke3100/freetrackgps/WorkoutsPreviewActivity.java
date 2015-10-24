@@ -36,7 +36,7 @@ public class WorkoutsPreviewActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(WorkoutsPreviewActivity.this, InfoWorkoutActivity.class);
+                Intent intent = new Intent(WorkoutsPreviewActivity.this, WorkoutInfoActivity.class);
                 intent.putExtra("distanceInfo", objects.get(i).distance);
                 intent.putExtra("startTimeInfo", objects.get(i).startTime);
                 intent.putExtra("routeId", objects.get(i).id);
