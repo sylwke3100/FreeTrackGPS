@@ -32,12 +32,15 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         if (mFragment == null) {
             mFragment = Fragment.instantiate(mActivity, mClass.getName());
-            if (globalValues != null)
-                mFragment.setArguments(globalValues);
-            ft.add(android.R.id.content, mFragment, mTag);
+            if (!mFragment.isAdded()) {
+                if (globalValues != null)
+                    mFragment.setArguments(globalValues);
+                ft.add(android.R.id.content, mFragment, mTag);
+            }
         } else {
-            if (globalValues != null)
-                mFragment.setArguments(globalValues);
+            if (!mFragment.isDetached())
+                if (globalValues != null)
+                    mFragment.setArguments(globalValues);
             ft.attach(mFragment);
         }
     }
@@ -49,5 +52,8 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
     }
 
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        if (mFragment != null) {
+            ft.attach(mFragment);
+        }
     }
 }

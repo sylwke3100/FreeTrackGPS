@@ -22,6 +22,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="android-support-v4" level="project" />
+    <orderEntry type="library" exported="" name="osmdroid-android-4.2-javadoc" level="project" />
+    <orderEntry type="library" name="slf4j-android-1.6.1-RC1" level="project" />
   </component>
 </module>

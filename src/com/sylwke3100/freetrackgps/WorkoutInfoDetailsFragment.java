@@ -41,7 +41,8 @@ public class WorkoutInfoDetailsFragment extends Fragment {
             else
                 ((TextView) myInflate.findViewById(R.id.nameWorkoutTextView))
                     .setText(getString(R.string.Unnamend));
-            ((TextView) myInflate.findViewById(R.id.pointsText)).setText(Integer.toString(pointCount));
+            ((TextView) myInflate.findViewById(R.id.pointsText))
+                .setText(Integer.toString(pointCount));
             ((TextView) myInflate.findViewById(R.id.maxHeightText))
                 .setText(String.format("%.2f m", maxHeight));
             ((TextView) myInflate.findViewById(R.id.minHeightText))

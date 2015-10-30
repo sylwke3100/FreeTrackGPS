@@ -65,4 +65,5 @@
     <string name="workout">Trening</string>
     <string name="exitAlertLabel">Ostrzeżenie przed wyjściem</string>
     <string name="workoutInfoDetailsLabel">Szczegóły</string>
+    <string name="workoutInfoMapLabel">Mapa</string>
 </resources>

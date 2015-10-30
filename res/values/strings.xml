@@ -66,4 +66,5 @@
     <string name="workout">Workout</string>
     <string name="exitAlertLabel">Warning before leaving</string>
     <string name="workoutInfoDetailsLabel">Details</string>
+    <string name="workoutInfoMapLabel">Map</string>
 </resources>
