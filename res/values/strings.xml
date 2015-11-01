@@ -67,4 +67,6 @@
     <string name="exitAlertLabel">Warning before leaving</string>
     <string name="workoutInfoDetailsLabel">Details</string>
     <string name="workoutInfoMapLabel">Map</string>
+    <string name="startPointLabel">Start</string>
+    <string name="endPointLabel">End</string>
 </resources>
