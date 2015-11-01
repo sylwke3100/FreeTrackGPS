@@ -1,6 +1,7 @@
 package com.sylwke3100.freetrackgps;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,30 +17,36 @@ import java.util.List;
 
 public class WorkoutInfoMapFragment extends Fragment {
     private MapView mMapView;
+    private DatabaseManager workoutDatabase;
+    private GeoPoint centerRoutePoint = new GeoPoint(0, 0);
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
-        DatabaseManager workoutDatabase = new DatabaseManager(inflater.getContext());
+        workoutDatabase = new DatabaseManager(inflater.getContext());
         Bundle localBundle = getArguments();
         mMapView = new MapView(inflater.getContext(), 256);
-        List<RouteElement> pointsList =
-            workoutDatabase.getPointsInRoute(localBundle.getInt("routeId"));
-        GeoPoint startPoint = new GeoPoint(0, 0);
-        int counter = 0;
-        PathOverlay routeMapPath = new PathOverlay(Color.RED, inflater.getContext());
-        for (RouteElement routePoint : pointsList) {
-            counter++;
-            if (counter == (pointsList.size() / 2))
-                startPoint = new GeoPoint(routePoint.latitude, routePoint.longitude );
-            GeoPoint point = new GeoPoint(routePoint.latitude, routePoint.longitude);
-            routeMapPath.addPoint(point);
-        }
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
         IMapController mapController = mMapView.getController();
+        mMapView.getOverlays()
+            .add(getRoutePath(localBundle.getInt("routeId"), inflater.getContext()));
         mapController.setZoom(13);
-        mapController.setCenter(startPoint);
-        mMapView.getOverlays().add(routeMapPath);
+        mapController.setCenter(centerRoutePoint);
         return mMapView;
+    }
+
+    private PathOverlay getRoutePath(Integer routeId, Context localContext) {
+        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(routeId);
+        int pointCounter = 0;
+        PathOverlay routeMapPath = new PathOverlay(Color.BLUE, localContext);
+        for (RouteElement routePoint : pointsList) {
+            pointCounter++;
+            if (pointCounter == (pointsList.size() / 2))
+                centerRoutePoint = new GeoPoint(routePoint.latitude, routePoint.longitude);
+            GeoPoint point = new GeoPoint(routePoint.latitude, routePoint.longitude);
+            routeMapPath.addPoint(point);
+        }
+        return routeMapPath;
     }
 }
