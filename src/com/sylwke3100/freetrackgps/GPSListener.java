@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 
 public class GPSListener implements LocationListener {
-    private LocalNotificationManager notify;
+    private AreaNotificationManager notify;
     private Context currentContext;
     private MainActivityGuiOperations guiOperations;
     private RouteManager localRoute;
@@ -20,10 +20,10 @@ public class GPSListener implements LocationListener {
         this.guiOperations = listenerOperations;
         localRoute = route;
         this.gpsCurrentStatus = gpsCurrentStatus;
-        notify = new LocalNotificationManager(mainContext, R.drawable.icon,
+        notify = new AreaNotificationManager(mainContext, R.drawable.icon,
             mainContext.getString(R.string.app_name));
         this.currentContext = mainContext;
-        localRoute.setNotifyInstance(notify);
+        localRoute.setAreaNotifyInstance(notify);
         currentLocation = new LocationSharing(mainContext);
     }
 

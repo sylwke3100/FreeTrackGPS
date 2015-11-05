@@ -8,13 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.NotificationCompat;
 
-public class LocalNotificationManager {
+public class AreaNotificationManager {
     private SharedPreferences pref;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder globalNotification;
     private Context context;
 
-    public LocalNotificationManager(Context currentContext, int smallIcon, String title) {
+    public AreaNotificationManager(Context currentContext, int smallIcon, String title) {
         globalNotification = new NotificationCompat.Builder(currentContext);
         globalNotification.setContentTitle(title);
         globalNotification.setSmallIcon(smallIcon);

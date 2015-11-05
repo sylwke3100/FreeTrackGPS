@@ -15,7 +15,7 @@ public class RouteManager {
     private long startTime;
     private Location lastPosition;
     private double distance;
-    private LocalNotificationManager localNotify;
+    private AreaNotificationManager areaNotification;
     private DatabaseManager currentDB;
     private long currentId;
     private List<IgnorePointsListElement> globalIgnorePointsList;
@@ -52,9 +52,10 @@ public class RouteManager {
         currentId = currentDB.startWorkout(startTime);
         status = DefaultValues.routeStatus.start;
         distance = 0.0;
-        localNotify.setContent(context.getString(R.string.workoutDistanceLabel) + ": " + String
-            .format("%.2f km", getDistanceInKm()));
-        localNotify.sendNotify();
+        areaNotification.setContent(
+            context.getString(R.string.workoutDistanceLabel) + ": " + String
+                .format("%.2f km", getDistanceInKm()));
+        areaNotification.sendNotify();
     }
 
     public void addPoint(Location currentLocation) {
@@ -96,12 +97,12 @@ public class RouteManager {
         status = DefaultValues.routeStatus.stop;
         distance = 0.0;
         lastPosition = null;
-        localNotify.deleteNotify();
+        areaNotification.deleteNotify();
         currentId = -1;
         vibrateNotificationManager.clear(true);
     }
 
-    public void setNotifyInstance(LocalNotificationManager notify) {
-        this.localNotify = notify;
+    public void setAreaNotifyInstance(AreaNotificationManager notify) {
+        this.areaNotification = notify;
     }
 }
