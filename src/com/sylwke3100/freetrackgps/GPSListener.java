@@ -1,6 +1,7 @@
 package com.sylwke3100.freetrackgps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationProvider;
@@ -10,16 +11,11 @@ import android.os.Bundle;
 public class GPSListener implements LocationListener {
     private AreaNotificationManager notify;
     private Context currentContext;
-    private MainActivityGuiOperations guiOperations;
     private RouteManager localRoute;
-    private GPSConnectionManager.gpsStatus gpsCurrentStatus;
     private LocationSharing currentLocation;
 
-    public GPSListener(MainActivityGuiOperations listenerOperations, RouteManager route,
-        GPSConnectionManager.gpsStatus gpsCurrentStatus, Context mainContext) {
-        this.guiOperations = listenerOperations;
+    public GPSListener(RouteManager route, Context mainContext) {
         localRoute = route;
-        this.gpsCurrentStatus = gpsCurrentStatus;
         notify = new AreaNotificationManager(mainContext, R.drawable.icon,
             mainContext.getString(R.string.app_name));
         this.currentContext = mainContext;
@@ -32,7 +28,11 @@ public class GPSListener implements LocationListener {
             currentLocation.setCurrentLocation(location.getLatitude(), location.getLongitude());
         if (localRoute != null && location != null && location.hasAltitude() == true) {
             localRoute.addPoint(location);
-            this.guiOperations.setWorkoutDistance(localRoute.getDistanceInKm());
+            Intent message = new Intent();
+            message.putExtra("command", "workoutDistance");
+            message.putExtra("dist", localRoute.getDistanceInKm());
+            message.setAction(MainActivity.MAINACTIVITY_ACTION);
+            currentContext.sendBroadcast(message);
             if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                 if (localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
                     notify.setContent(
@@ -43,53 +43,83 @@ public class GPSListener implements LocationListener {
                 notify.sendNotify();
             }
         }
-        this.guiOperations.setGpsPosition(location.getLatitude(), location.getLongitude());
+        Intent message = new Intent();
+        message.putExtra("command", "gpsPos");
+        message.putExtra("lat", location.getLatitude());
+        message.putExtra("lon", location.getLongitude());
+        message.setAction(MainActivity.MAINACTIVITY_ACTION);
+        currentContext.sendBroadcast(message);
     }
 
     public void onStatusChanged(String s, int i, Bundle b) {
         switch (i) {
             case LocationProvider.AVAILABLE:
-                this.guiOperations.setOnGPS();
-                gpsCurrentStatus.status = true;
+                Intent message = new Intent();
+                message.putExtra("command", "gpsOn");
+                message.setAction(MainActivity.MAINACTIVITY_ACTION);
+                currentContext.sendBroadcast(message);
                 if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
                     localRoute.unPause();
-                    guiOperations.setWorkoutActive();
+                    Intent messageIntent = new Intent();
+                    messageIntent.putExtra("command", "workoutActive");
+                    messageIntent.setAction(MainActivity.MAINACTIVITY_ACTION);
+                    currentContext.sendBroadcast(messageIntent);
                 }
                 break;
             case LocationProvider.OUT_OF_SERVICE:
-                this.guiOperations.setOffGPS();
-                gpsCurrentStatus.status = false;
+                Intent outOfServiceMessage = new Intent();
+                outOfServiceMessage.putExtra("command", "gpsOff");
+                outOfServiceMessage.setAction(MainActivity.MAINACTIVITY_ACTION);
+                currentContext.sendBroadcast(outOfServiceMessage);
                 if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
-                    guiOperations.setWorkoutPause();
+                    Intent messageIntent = new Intent();
+                    messageIntent.putExtra("command", "workoutPause");
+                    messageIntent.setAction(MainActivity.MAINACTIVITY_ACTION);
+                    currentContext.sendBroadcast(messageIntent);
                 }
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                this.guiOperations.setOffGPS();
-                gpsCurrentStatus.status = false;
+                Intent temporarilyUnavaiablemessage = new Intent();
+                temporarilyUnavaiablemessage.putExtra("command", "gpsOff");
+                temporarilyUnavaiablemessage.setAction(MainActivity.MAINACTIVITY_ACTION);
+                currentContext.sendBroadcast(temporarilyUnavaiablemessage);
                 if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
-                    guiOperations.setWorkoutPause();
+                    Intent messageIntent = new Intent();
+                    messageIntent.putExtra("command", "workoutPause");
+                    messageIntent.setAction(MainActivity.MAINACTIVITY_ACTION);
+                    currentContext.sendBroadcast(messageIntent);
                 }
                 break;
         }
     }
 
     public void onProviderDisabled(String s) {
-        this.guiOperations.setOffGPS();
-        gpsCurrentStatus.status = false;
+        Intent onProviderDisabledMessage = new Intent();
+        onProviderDisabledMessage.putExtra("command", "gpsOff");
+        onProviderDisabledMessage.setAction(MainActivity.MAINACTIVITY_ACTION);
+        currentContext.sendBroadcast(onProviderDisabledMessage);
         if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
             localRoute.pause();
-            guiOperations.setWorkoutPause();
+            Intent messageIntent = new Intent();
+            messageIntent.putExtra("command", "workoutPause");
+            messageIntent.setAction(MainActivity.MAINACTIVITY_ACTION);
+            currentContext.sendBroadcast(messageIntent);
         }
     }
 
     public void onProviderEnabled(String s) {
-        this.guiOperations.setOnGPS();
-        gpsCurrentStatus.status = true;
+        Intent onProviderEnabledMessage = new Intent();
+        onProviderEnabledMessage.putExtra("command", "gpsOn");
+        onProviderEnabledMessage.setAction(MainActivity.MAINACTIVITY_ACTION);
+        currentContext.sendBroadcast(onProviderEnabledMessage);
         if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
             localRoute.unPause();
-            guiOperations.setWorkoutActive();
+            Intent messageIntent = new Intent();
+            messageIntent.putExtra("command", "workoutActive");
+            messageIntent.setAction(MainActivity.MAINACTIVITY_ACTION);
+            currentContext.sendBroadcast(messageIntent);
         }
     }
 }

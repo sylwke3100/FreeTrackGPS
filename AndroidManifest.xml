@@ -39,6 +39,9 @@
         <activity android:name="com.sylwke3100.freetrackgps.DateFilterActivity"/>
         <activity android:name=".WorkoutInfoActivity" android:label="@string/action_info"/>
         <activity android:name="com.sylwke3100.freetrackgps.IgnorePointsActivity" android:label="@string/action_ignorePoints"/>
+        <service
+                android:name=".GPSRunnerService"
+                android:enabled="true" />
 
     </application>
 
