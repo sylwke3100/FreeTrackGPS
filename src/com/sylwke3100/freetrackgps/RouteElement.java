@@ -3,10 +3,10 @@ package com.sylwke3100.freetrackgps;
 import java.text.SimpleDateFormat;
 
 public class RouteElement {
-    public double latitude, longitude, altitude;
-    public long time;
     private static final SimpleDateFormat dateFormat =
         new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    public double latitude, longitude, altitude;
+    public long time;
 
     public RouteElement(double latitude, double longitude, double altitude, long time) {
         this.latitude = latitude;
@@ -15,19 +15,19 @@ public class RouteElement {
         this.time = time;
     }
 
-    public String getLatitude(){
+    public String getLatitude() {
         return Double.toString(latitude);
     }
 
-    public String getLongitude(){
+    public String getLongitude() {
         return Double.toString(longitude);
     }
 
-    public String getAltitude(){
+    public String getAltitude() {
         return Double.toString(altitude);
     }
 
-    public String getPointTime(){
+    public String getPointTime() {
         return dateFormat.format(time);
     }
 }

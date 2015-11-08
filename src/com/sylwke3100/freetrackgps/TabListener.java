@@ -10,10 +10,10 @@ import android.os.Bundle;
 
 
 public class TabListener<T extends Fragment> implements ActionBar.TabListener {
-    private Fragment mFragment;
     private final Activity mActivity;
     private final String mTag;
     private final Class<T> mClass;
+    private Fragment mFragment;
     private Bundle globalValues;
 
     public TabListener(Activity activity, String tag, Class<T> clz, Bundle bundleValues) {

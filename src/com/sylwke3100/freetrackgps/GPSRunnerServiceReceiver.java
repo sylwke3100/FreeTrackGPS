@@ -21,26 +21,24 @@ public class GPSRunnerServiceReceiver extends BroadcastReceiver {
         switch (command) {
             case GPSRunnerService.SERVICE_ACTION.START_ACTION:
                 currentRoute.start();
-                sendRouteStatus();
                 break;
             case GPSRunnerService.SERVICE_ACTION.PAUSE_ACTION:
                 currentRoute.pause();
-                sendRouteStatus();
                 break;
             case GPSRunnerService.SERVICE_ACTION.STOP_ACTION:
                 currentRoute.stop();
-                sendRouteStatus();
                 break;
             case GPSRunnerService.SERVICE_ACTION.UNPAUSE_ACTION:
                 currentRoute.unPause();
-                sendRouteStatus();
                 break;
             case GPSRunnerService.SERVICE_ACTION.STATUS_ACTION:
                 sendRouteStatus();
+                break;
             default:
                 currentRoute.stop();
                 break;
         }
+        sendRouteStatus();
     }
 
     public void sendRouteStatus() {

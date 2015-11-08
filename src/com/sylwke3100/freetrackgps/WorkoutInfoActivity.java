@@ -18,8 +18,9 @@ public class WorkoutInfoActivity extends Activity {
                 WorkoutInfoDetailsFragment.class, this.getIntent().getExtras()));
         actionBar.addTab(detailsTab);
         ActionBar.Tab mapTab = actionBar.newTab().setText(R.string.workoutInfoMapLabel)
-            .setTabListener(new TabListener<WorkoutInfoMapFragment>(this, "map",
-                WorkoutInfoMapFragment.class, this.getIntent().getExtras()));
+            .setTabListener(
+                new TabListener<WorkoutInfoMapFragment>(this, "map", WorkoutInfoMapFragment.class,
+                    this.getIntent().getExtras()));
         actionBar.addTab(mapTab);
 
     }

@@ -19,25 +19,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends Activity {
+    public static final String MAINACTIVITY_ACTION = "MainActivityAction";
+    StatusWorkout workoutStatus;
     private LocationManager service;
     private Button pauseButton, startButton;
     private SharedPreferences sharedPrefs;
     private MainActivityGuiOperations mainOperations;
-
-
-    public class StatusWorkout {
-        public DefaultValues.routeStatus status;
-    }
-
-
-    StatusWorkout workoutStatus;
     private LocationSharing currentLocation;
-    public static final String MAINACTIVITY_ACTION = "MainActivityAction";
 
     protected void onCreate(Bundle savedInstanceState) {
         workoutStatus = new StatusWorkout();
         sharedPrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
-        //workoutStatus = DefaultValues.routeStatus.stop;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         List<TextView> textViewElements = Arrays
@@ -67,6 +59,7 @@ public class MainActivity extends Activity {
         registerReceiver(new MainActivityReceiver(mainOperations, workoutStatus), mainFiler);
         startService(new Intent(this, GPSRunnerService.class));
         checkWorkoutStatus();
+        this.mainOperations.setWorkoutInactive();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,9 +126,9 @@ public class MainActivity extends Activity {
         sendBroadcast(message);
     }
 
-    public void sendActiontoService(Integer action) {
+    public void sendMessageToService(Integer messageAction) {
         Intent message = new Intent();
-        message.putExtra("command", action);
+        message.putExtra("command", messageAction);
         message.setAction(GPSRunnerService.ACTION);
         sendBroadcast(message);
     }
@@ -145,10 +138,10 @@ public class MainActivity extends Activity {
         if (workoutStatus.status == DefaultValues.routeStatus.stop) {
             mainOperations.setWorkoutActive();
             setPreviewStatus(View.VISIBLE);
-            sendActiontoService(GPSRunnerService.SERVICE_ACTION.START_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.START_ACTION);
         } else {
             if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-                sendActiontoService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
+                sendMessageToService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
                 mainOperations.setWorkoutInactive();
                 setPreviewStatus(View.INVISIBLE);
             } else {
@@ -161,10 +154,10 @@ public class MainActivity extends Activity {
     public void onPauseRoute() {
         checkWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start) {
-            sendActiontoService(GPSRunnerService.SERVICE_ACTION.PAUSE_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.PAUSE_ACTION);
             mainOperations.setWorkoutPause();
         } else if (workoutStatus.status == DefaultValues.routeStatus.pause) {
-            sendActiontoService(GPSRunnerService.SERVICE_ACTION.UNPAUSE_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.UNPAUSE_ACTION);
             mainOperations.setWorkoutActive();
         }
     }
@@ -179,7 +172,7 @@ public class MainActivity extends Activity {
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-                                sendActiontoService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
+                                sendMessageToService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
                             }
                             finish();
                             System.exit(0);
@@ -191,12 +184,16 @@ public class MainActivity extends Activity {
         }
     }
 
-
     protected void onDestroy() {
         super.onDestroy();
         checkWorkoutStatus();
         if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-            sendActiontoService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
         }
+    }
+
+
+    public class StatusWorkout {
+        public DefaultValues.routeStatus status;
     }
 }

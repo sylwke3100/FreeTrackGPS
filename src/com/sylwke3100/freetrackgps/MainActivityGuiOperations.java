@@ -8,12 +8,13 @@ import android.widget.TextView;
 import java.util.List;
 
 public class MainActivityGuiOperations {
+    Context localContext;
     private TextView gpsWorkStatus, gpsPosition, workoutStatus, workoutDistance;
     private Button startButton, pauseButton;
     private boolean pauseButtonStatus = false;
-    Context localContext;
 
-    public MainActivityGuiOperations(Context mainContext, List<TextView> textViewElements, List<Button> buttonsList) {
+    public MainActivityGuiOperations(Context mainContext, List<TextView> textViewElements,
+        List<Button> buttonsList) {
         gpsWorkStatus = textViewElements.get(0);
         gpsPosition = textViewElements.get(1);
         workoutDistance = textViewElements.get(2);
@@ -41,21 +42,22 @@ public class MainActivityGuiOperations {
         this.workoutDistance.setText(String.format("%.2f km", distance));
     }
 
-    public void setWorkoutActive(){
+    public void setWorkoutActive() {
         this.workoutStatus.setText(this.localContext.getString(R.string.activeLabel));
         this.startButton.setText(this.localContext.getString(R.string.stopLabel));
         this.pauseButton.setText(this.localContext.getString(R.string.pauseLabel));
         this.pauseButton.setVisibility(View.VISIBLE);
     }
 
-    public void setWorkoutPause(){
+    public void setWorkoutPause() {
         this.workoutStatus.setText(this.localContext.getString(R.string.pauseLabel));
         this.pauseButton.setText(this.localContext.getString(R.string.unPauseLabel));
     }
 
-    public void setWorkoutInactive(){
+    public void setWorkoutInactive() {
         this.workoutStatus.setText("--");
         this.startButton.setText(this.localContext.getString(R.string.startLabel));
+        this.setWorkoutDistance(0);
         this.pauseButton.setVisibility(View.INVISIBLE);
     }
 }

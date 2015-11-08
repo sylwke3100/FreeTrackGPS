@@ -12,11 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class IgnorePointsActivity extends Activity {
+    List<IgnorePointsListElement> localListIgnore;
     private ListView ignorePonitsList;
     private SimpleAdapter simpleAdapter;
     private DatabaseManager localInstanceDatabase;
     private LocationSharing currentLocationSharing;
-    List<IgnorePointsListElement> localListIgnore;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

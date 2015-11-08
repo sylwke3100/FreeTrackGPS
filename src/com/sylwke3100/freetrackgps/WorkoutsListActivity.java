@@ -151,8 +151,7 @@ public class WorkoutsListActivity extends Activity {
         alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    workoutsListOperations
-                        .updateWorkoutName(idWorkout, input.getText().toString());
+                    workoutsListOperations.updateWorkoutName(idWorkout, input.getText().toString());
                     onUpdateWorkoutsList();
                 }
             }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {

@@ -28,25 +28,20 @@ public class GPSRunnerService extends Service {
                 timeSettingArray[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))],
                 distanceSettingArray[(sharedPrefs.getInt("distance", 1))],
                 new GPSListener(currentRoute, this));
-            Intent gpsIntent = new Intent();
-            gpsIntent.putExtra("command", "gpsOn");
-            sendMessageToUi(gpsIntent);
+            sendMessageToUi("gpsOn", new Intent());
             Location lastLocation =
                 (Location) service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             gpsCurrentStatus = true;
             if (lastLocation != null) {
                 if (currentRoute.getStatus() != DefaultValues.routeStatus.stop) {
                     Intent gpsPosIntent = new Intent();
-                    gpsPosIntent.putExtra("command", "gpsPos");
                     gpsPosIntent.putExtra("lat", lastLocation.getLatitude());
                     gpsPosIntent.putExtra("lon", lastLocation.getLongitude());
-                    sendMessageToUi(gpsPosIntent);
+                    sendMessageToUi("gpsPos", gpsPosIntent);
                 }
             }
         } else {
-            Intent gpsIntent = new Intent();
-            gpsIntent.putExtra("command", "gpsOff");
-            sendMessageToUi(gpsIntent);
+            sendMessageToUi("gpsOff", new Intent());
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 timeSettingArray[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))],
                 distanceSettingArray[(sharedPrefs.getInt("distance", 1))],
@@ -80,9 +75,10 @@ public class GPSRunnerService extends Service {
         super.onDestroy();
     }
 
-    public void sendMessageToUi(Intent messageIntent) {
-        messageIntent.setAction(MainActivity.MAINACTIVITY_ACTION);
-        sendBroadcast(messageIntent);
+    private void sendMessageToUi(String command, Intent intent) {
+        intent.putExtra("command", command);
+        intent.setAction(MainActivity.MAINACTIVITY_ACTION);
+        sendBroadcast(intent);
     }
 
     public IBinder onBind(Intent intent) {

@@ -52,8 +52,7 @@ public class RouteManager {
         currentId = currentDB.startWorkout(startTime);
         status = DefaultValues.routeStatus.start;
         distance = 0.0;
-        areaNotification.setContent(
-            context.getString(R.string.workoutDistanceLabel) + ": " + String
+        areaNotification.setContent(context.getString(R.string.workoutDistanceLabel) + ": " + String
                 .format("%.2f km", getDistanceInKm()));
         areaNotification.sendNotify();
     }

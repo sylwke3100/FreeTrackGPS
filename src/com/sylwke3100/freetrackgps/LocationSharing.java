@@ -6,14 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class LocationSharing {
-    public class LocationSharingResult {
-        public int status = 0;
-        public double latitude;
-        public double longitude;
-    }
-
-
     private SharedPreferences sharedPrefs;
+
 
     public LocationSharing(Context activityContext) {
         sharedPrefs = activityContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
@@ -41,6 +35,13 @@ public class LocationSharing {
         preferencesEditor.putLong("currentLocationLat", Double.doubleToRawLongBits(latitude));
         preferencesEditor.putLong("currentLocationLon", Double.doubleToRawLongBits(longitude));
         preferencesEditor.commit();
+    }
+
+
+    public class LocationSharingResult {
+        public int status = 0;
+        public double latitude;
+        public double longitude;
     }
 
 }

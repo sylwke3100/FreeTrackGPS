@@ -10,11 +10,11 @@ import java.text.SimpleDateFormat;
 
 
 public class GPXWriter {
+    private static final SimpleDateFormat dateFormat =
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     private Boolean isOpen = false;
     private FileOutputStream gpxOutputStream;
     private XmlSerializer gpxSerializer;
-    private static final SimpleDateFormat dateFormat =
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     public GPXWriter(String fileName, long startTime, String nameWorkout) {
         try {
