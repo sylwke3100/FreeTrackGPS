@@ -87,11 +87,11 @@ public class GPSRunnerService extends Service {
 
 
     public static class SERVICE_ACTION {
-        public static final int START_ACTION = 1;
-        public static final int STOP_ACTION = 0;
-        public static final int PAUSE_ACTION = 2;
-        public static final int STATUS_ACTION = 3;
-        public static final int UNPAUSE_ACTION = 4;
+        public static final int WORKOUT_STOP = 0;
+        public static final int WORKOUT_START = 1;
+        public static final int WORKOUT_PAUSE = 2;
+        public static final int WORKOUT_STATUS = 3;
+        public static final int WORKOUT_UNPAUSE = 4;
     }
 
 

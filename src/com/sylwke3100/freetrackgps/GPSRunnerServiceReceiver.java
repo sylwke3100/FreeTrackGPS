@@ -19,19 +19,19 @@ public class GPSRunnerServiceReceiver extends BroadcastReceiver {
         Integer command = intent.getIntExtra("command", 0);
         Log.i("GPSRunnerService", Integer.toString(command));
         switch (command) {
-            case GPSRunnerService.SERVICE_ACTION.START_ACTION:
+            case GPSRunnerService.SERVICE_ACTION.WORKOUT_START:
                 currentRoute.start();
                 break;
-            case GPSRunnerService.SERVICE_ACTION.PAUSE_ACTION:
+            case GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE:
                 currentRoute.pause();
                 break;
-            case GPSRunnerService.SERVICE_ACTION.STOP_ACTION:
+            case GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP:
                 currentRoute.stop();
                 break;
-            case GPSRunnerService.SERVICE_ACTION.UNPAUSE_ACTION:
+            case GPSRunnerService.SERVICE_ACTION.WORKOUT_UNPAUSE:
                 currentRoute.unPause();
                 break;
-            case GPSRunnerService.SERVICE_ACTION.STATUS_ACTION:
+            case GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS:
                 sendRouteStatus();
                 break;
             default:

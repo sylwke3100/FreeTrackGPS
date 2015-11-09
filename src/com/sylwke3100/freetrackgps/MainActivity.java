@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
 
     public void checkWorkoutStatus() {
         Intent message = new Intent();
-        message.putExtra("command", GPSRunnerService.SERVICE_ACTION.STATUS_ACTION);
+        message.putExtra("command", GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
         message.setAction(GPSRunnerService.ACTION);
         sendBroadcast(message);
     }
@@ -138,10 +138,10 @@ public class MainActivity extends Activity {
         if (workoutStatus.status == DefaultValues.routeStatus.stop) {
             mainOperations.setWorkoutActive();
             setPreviewStatus(View.VISIBLE);
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.START_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_START);
         } else {
             if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-                sendMessageToService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
+                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
                 mainOperations.setWorkoutInactive();
                 setPreviewStatus(View.INVISIBLE);
             } else {
@@ -154,10 +154,10 @@ public class MainActivity extends Activity {
     public void onPauseRoute() {
         checkWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.PAUSE_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE);
             mainOperations.setWorkoutPause();
         } else if (workoutStatus.status == DefaultValues.routeStatus.pause) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.UNPAUSE_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_UNPAUSE);
             mainOperations.setWorkoutActive();
         }
     }
@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-                                sendMessageToService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
+                                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
                             }
                             finish();
                             System.exit(0);
@@ -188,7 +188,7 @@ public class MainActivity extends Activity {
         super.onDestroy();
         checkWorkoutStatus();
         if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.STOP_ACTION);
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
         }
     }
 
