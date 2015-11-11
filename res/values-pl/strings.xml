@@ -68,4 +68,6 @@
     <string name="workoutInfoMapLabel">Mapa</string>
     <string name="endPointLabel">Koniec</string>
     <string name="startPointLabel">Początek</string>
+    <string name="deleteWorkoutTextAlert">Czy chcesz usunąć trening?</string>
+    <string name="deleteWorkoutTitleAlert">Usuwanie treningu</string>
 </resources>

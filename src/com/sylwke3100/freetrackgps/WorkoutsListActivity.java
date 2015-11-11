@@ -65,8 +65,7 @@ public class WorkoutsListActivity extends Activity {
             (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.action_workout_delete:
-                workoutsListOperations.deleteWorkout(info.position);
-                this.onUpdateWorkoutsList();
+                onDeleteWorkoutAlert(info.position);
                 return true;
             case R.id.action_workout_export:
                 workoutsListOperations.exportWorkout(info.position);
@@ -76,6 +75,20 @@ public class WorkoutsListActivity extends Activity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    public void onDeleteWorkoutAlert(final int id){
+        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(getString(R.string.deleteWorkoutTitleAlert))
+            .setMessage(getString(R.string.deleteWorkoutTextAlert))
+            .setPositiveButton(this.getString(R.string.yesLabel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        workoutsListOperations.deleteWorkout(id);
+                        onUpdateWorkoutsList();
+                    }
+                }).setNegativeButton(this.getString(R.string.noLabel), null).show();
+
     }
 
     public void updateIconOptionMenu() {
