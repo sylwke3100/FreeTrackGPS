@@ -5,12 +5,15 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -40,10 +43,29 @@ public class WorkoutInfoMapFragment extends Fragment {
         IMapController mapController = mMapView.getController();
         mMapView.getOverlays().add(getRoutePath(localBundle.getInt("routeId")));
         mMapView.getOverlays().add(getStartEndMarkers(localBundle.getInt("routeId")));
-        mapController.setZoom(13);
-        mapController.setCenter(centerRoutePoint);
-        mMapView.invalidate();
         return mMapView;
+    }
+
+    public void onResume() {
+        final Bundle localBundle = getArguments();
+        mMapView.setTilesScaledToDpi(true);
+        if (mMapView.getScreenRect(null).height() > 0)
+            mMapView.zoomToBoundingBox(getLimitedAreaPath(localBundle.getInt("routeId")));
+        else {
+            ViewTreeObserver observer = mMapView.getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override public void onGlobalLayout() {
+                    mMapView.zoomToBoundingBox(getLimitedAreaPath(localBundle.getInt("routeId")));
+                    mMapView.getController().setZoom(mMapView.getZoomLevel() + 4);
+                    ViewTreeObserver copyLayoutObserver = mMapView.getViewTreeObserver();
+                    if (Build.VERSION.SDK_INT < 16)
+                        copyLayoutObserver.removeGlobalOnLayoutListener(this);
+                    else
+                        copyLayoutObserver.removeOnGlobalLayoutListener(this);
+                }
+            });
+        }
+        super.onResume();
     }
 
     private PathOverlay getRoutePath(Integer routeId) {
@@ -98,6 +120,25 @@ public class WorkoutInfoMapFragment extends Fragment {
                     return true;
                 }
             });
+    }
+
+    private BoundingBoxE6 getLimitedAreaPath(Integer routeId) {
+        double minLatitude = Double.MAX_VALUE, maxLatitude = Double.MIN_VALUE, minLongitude =
+            Double.MAX_VALUE, maxLongitude = Double.MIN_VALUE;
+        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(routeId);
+        minLatitude = pointsList.get(0).latitude;
+        minLongitude = pointsList.get(0).longitude;
+        for (RouteElement point : pointsList) {
+            if (point.latitude > maxLatitude)
+                maxLatitude = point.latitude;
+            if (point.latitude < minLatitude)
+                minLatitude = point.latitude;
+            if (point.longitude > maxLongitude)
+                maxLongitude = point.longitude;
+            if (point.longitude < minLongitude)
+                minLongitude = point.longitude;
+        }
+        return new BoundingBoxE6(minLatitude, maxLongitude, maxLatitude, minLongitude);
     }
 
 }
