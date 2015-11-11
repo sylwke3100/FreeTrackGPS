@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -92,18 +93,17 @@ public class WorkoutsListActivity extends Activity {
     }
 
     public void updateIconOptionMenu() {
+        Integer dateFilterIcon, nameFilterIcon;
         if (workoutsListOperations.getStatusTimeFilter())
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
-                .findItem(R.id.action_filter_by_date).setIcon(R.drawable.tick);
+            dateFilterIcon = R.drawable.tick;
         else
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
-                .findItem(R.id.action_filter_by_date).setIcon((R.drawable.emptytick));
+            dateFilterIcon = R.drawable.emptytick;
         if (workoutsListOperations.getStatusNameFilter())
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
-                .findItem(R.id.action_filter_by_name).setIcon(R.drawable.tick);
+           nameFilterIcon = R.drawable.tick;
         else
-            optionsMenu.findItem(R.id.action_overflow).getSubMenu()
-                .findItem(R.id.action_filter_by_name).setIcon((R.drawable.emptytick));
+            nameFilterIcon = R.drawable.emptytick;
+        optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon(dateFilterIcon);
+        optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_name).setIcon(nameFilterIcon);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
