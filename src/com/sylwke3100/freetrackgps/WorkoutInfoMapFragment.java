@@ -126,8 +126,10 @@ public class WorkoutInfoMapFragment extends Fragment {
         double minLatitude = Double.MAX_VALUE, maxLatitude = Double.MIN_VALUE, minLongitude =
             Double.MAX_VALUE, maxLongitude = Double.MIN_VALUE;
         List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(routeId);
-        minLatitude = pointsList.get(0).latitude;
-        minLongitude = pointsList.get(0).longitude;
+        if (pointsList.size() > 0) {
+            minLatitude = pointsList.get(0).latitude;
+            minLongitude = pointsList.get(0).longitude;
+        }
         for (RouteElement point : pointsList) {
             if (point.latitude > maxLatitude)
                 maxLatitude = point.latitude;
