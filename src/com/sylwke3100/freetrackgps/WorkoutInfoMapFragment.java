@@ -7,12 +7,10 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
@@ -31,32 +29,37 @@ public class WorkoutInfoMapFragment extends Fragment {
     private DatabaseManager workoutDatabase;
     private GeoPoint centerRoutePoint = new GeoPoint(0, 0);
     private Context globalContext;
+    private List<RouteElement> pointsList;
+
+    public void onCreate(Bundle savedInstanceState) {
+        globalContext = getActivity().getBaseContext();
+        workoutDatabase = new DatabaseManager(globalContext);
+        Bundle localBundle = getArguments();
+        Integer routeId = localBundle.getInt("routeId");
+        pointsList = workoutDatabase.getPointsInRoute(routeId);
+        super.onCreate(savedInstanceState);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
-        workoutDatabase = new DatabaseManager(inflater.getContext());
-        Bundle localBundle = getArguments();
-        globalContext = inflater.getContext();
         mMapView = new MapView(globalContext, 256);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
-        IMapController mapController = mMapView.getController();
-        mMapView.getOverlays().add(getRoutePath(localBundle.getInt("routeId")));
-        mMapView.getOverlays().add(getStartEndMarkers(localBundle.getInt("routeId")));
+        mMapView.getOverlays().add(getRoutePath());
+        mMapView.getOverlays().add(getStartEndMarkers());
         return mMapView;
     }
 
     public void onResume() {
-        final Bundle localBundle = getArguments();
         mMapView.setTilesScaledToDpi(true);
         if (mMapView.getScreenRect(null).height() > 0)
-            mMapView.zoomToBoundingBox(getLimitedAreaPath(localBundle.getInt("routeId")));
+            mMapView.zoomToBoundingBox(getLimitedAreaPath());
         else {
             ViewTreeObserver observer = mMapView.getViewTreeObserver();
             observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override public void onGlobalLayout() {
-                    mMapView.zoomToBoundingBox(getLimitedAreaPath(localBundle.getInt("routeId")));
+                    mMapView.zoomToBoundingBox(getLimitedAreaPath());
                     if (mMapView.getZoomLevel() <= 12)
                         mMapView.getController().setZoom(mMapView.getZoomLevel() + 4);
                     ViewTreeObserver copyLayoutObserver = mMapView.getViewTreeObserver();
@@ -70,22 +73,16 @@ public class WorkoutInfoMapFragment extends Fragment {
         super.onResume();
     }
 
-    private PathOverlay getRoutePath(Integer routeId) {
-        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(routeId);
-        int pointCounter = 0;
+    private PathOverlay getRoutePath() {
         PathOverlay routeMapPath = new PathOverlay(Color.BLUE, globalContext);
         for (RouteElement routePoint : pointsList) {
-            pointCounter++;
-            if (pointCounter == (pointsList.size() / 2))
-                centerRoutePoint = new GeoPoint(routePoint.latitude, routePoint.longitude);
             GeoPoint point = new GeoPoint(routePoint.latitude, routePoint.longitude);
             routeMapPath.addPoint(point);
         }
         return routeMapPath;
     }
 
-    private ItemizedIconOverlay<OverlayItem> getStartEndMarkers(Integer routeId) {
-        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(routeId);
+    private ItemizedIconOverlay<OverlayItem> getStartEndMarkers() {
         final List<OverlayItem> routeMarkersArray = new ArrayList<OverlayItem>();
         if (pointsList.size() >= 2) {
             RouteElement startPoint = pointsList.get(0);
@@ -124,10 +121,9 @@ public class WorkoutInfoMapFragment extends Fragment {
             });
     }
 
-    private BoundingBoxE6 getLimitedAreaPath(Integer routeId) {
+    private BoundingBoxE6 getLimitedAreaPath() {
         double minLatitude = Double.MAX_VALUE, maxLatitude = Double.MIN_VALUE, minLongitude =
             Double.MAX_VALUE, maxLongitude = Double.MIN_VALUE;
-        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(routeId);
         if (pointsList.size() > 0) {
             minLatitude = pointsList.get(0).latitude;
             minLongitude = pointsList.get(0).longitude;
