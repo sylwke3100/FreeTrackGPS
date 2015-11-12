@@ -18,7 +18,6 @@
     <string name="onLabel">On</string>
     <string name="pauseLabel">Pause</string>
     <string name="unPauseLabel">UnPause</string>
-    <string name="errorGPSConnectionInfo">Error Start workout - check GPS connection</string>
     <string name="startLabel">Start</string>
     <string name="stopLabel">Stop</string>
     <string name="activeLabel">Active</string>

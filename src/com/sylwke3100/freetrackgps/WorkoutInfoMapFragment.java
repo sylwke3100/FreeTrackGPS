@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,8 @@ public class WorkoutInfoMapFragment extends Fragment {
             observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override public void onGlobalLayout() {
                     mMapView.zoomToBoundingBox(getLimitedAreaPath(localBundle.getInt("routeId")));
-                    mMapView.getController().setZoom(mMapView.getZoomLevel() + 4);
+                    if (mMapView.getZoomLevel() <= 12)
+                        mMapView.getController().setZoom(mMapView.getZoomLevel() + 4);
                     ViewTreeObserver copyLayoutObserver = mMapView.getViewTreeObserver();
                     if (Build.VERSION.SDK_INT < 16)
                         copyLayoutObserver.removeGlobalOnLayoutListener(this);

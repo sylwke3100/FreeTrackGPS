@@ -13,7 +13,6 @@
     <string name="changeWorkoutNameFilterLabel">Zmień wartość filtru nazwy</string>
     <string name="changeWorkoutNameLabel">Zmień nazwę treningu</string>
     <string name="closeSettingsInfo">Uruchom ponownie aplikacje dla zastosowania zmian</string>
-    <string name="errorGPSConnectionInfo">Błąd startu treningu - sprawdź połączenie GPS</string>
     <string name="finishApp">Zamknij FreeTrackGPS</string>
     <string name="finishAppInfo">Chcesz zamknąć aplikacje?</string>
     <string name="gpsPositionLabel">Pozycja GPS</string>

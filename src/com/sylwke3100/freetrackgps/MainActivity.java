@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -139,15 +138,10 @@ public class MainActivity extends Activity {
             mainOperations.setWorkoutActive();
             setPreviewStatus(View.VISIBLE);
             sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_START);
-        } else {
-            if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
-                mainOperations.setWorkoutInactive();
-                setPreviewStatus(View.INVISIBLE);
-            } else {
-                Toast.makeText(getBaseContext(), getString(R.string.errorGPSConnectionInfo),
-                    Toast.LENGTH_LONG).show();
-            }
+        } else if (workoutStatus.status != DefaultValues.routeStatus.stop) {
+            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
+            mainOperations.setWorkoutInactive();
+            setPreviewStatus(View.INVISIBLE);
         }
     }
 
