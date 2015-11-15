@@ -47,7 +47,7 @@ public class WorkoutInfoMapFragment extends Fragment {
         mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
         mMapView.getOverlays().add(getRoutePath());
-        mMapView.getOverlays().add(getStartEndMarkers());
+        mMapView.getOverlays().add(getStartEndMarkers(inflater.getContext()));
         return mMapView;
     }
 
@@ -82,7 +82,7 @@ public class WorkoutInfoMapFragment extends Fragment {
         return routeMapPath;
     }
 
-    private ItemizedIconOverlay<OverlayItem> getStartEndMarkers() {
+    private ItemizedIconOverlay<OverlayItem> getStartEndMarkers(final Context inflanterContext) {
         final List<OverlayItem> routeMarkersArray = new ArrayList<OverlayItem>();
         if (pointsList.size() >= 2) {
             RouteElement startPoint = pointsList.get(0);
@@ -104,7 +104,7 @@ public class WorkoutInfoMapFragment extends Fragment {
         return new ItemizedIconOverlay<OverlayItem>(globalContext, routeMarkersArray,
             new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                 @Override public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(globalContext);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(inflanterContext);
                     dialog.setTitle(item.getTitle());
                     dialog.setMessage(item.getSnippet());
                     if (index == 0)
