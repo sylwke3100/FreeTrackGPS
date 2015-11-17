@@ -103,7 +103,7 @@ public class WorkoutInfoMapFragment extends Fragment {
         }
         return new ItemizedIconOverlay<OverlayItem>(globalContext, routeMarkersArray,
             new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                @Override public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                 public boolean onItemSingleTapUp(int index, OverlayItem item) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(inflanterContext);
                     dialog.setTitle(item.getTitle());
                     dialog.setMessage(item.getSnippet());

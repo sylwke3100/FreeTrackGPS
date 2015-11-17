@@ -70,4 +70,9 @@
     <string name="endPointLabel">End</string>
     <string name="deleteWorkoutTitleAlert">Deleting workout</string>
     <string name="deleteWorkoutTextAlert">Do you want delete workout?</string>
+    <string name="centerToLocationMap">Center to current Location</string>
+    <string name="addIgnorePointDesciption">Here you can add ignored point from map. Click on any
+        point on the map to mark
+    </string>
+    <string name="doneLabel">Done</string>
 </resources>
