@@ -34,7 +34,6 @@ public class WorkoutsListActivity extends Activity {
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             List<RouteListElement> objects = workoutsListOperations.getUpdatedWorkoutsRawList();
 
-            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(WorkoutsListActivity.this, WorkoutInfoActivity.class);
                 intent.putExtra("distanceInfo", objects.get(i).distance);

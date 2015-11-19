@@ -6,7 +6,7 @@
             android:showAsAction="never"
             android:title="@string/action_ignorepoints_list" android:menuCategory="system"/>
     <item
-            android:id="@+id/action_workout"
+            android:id="@+id/action_workouts_list"
             android:orderInCategory="99"
             android:showAsAction="never"
             android:title="@string/workoutsListLabel" android:menuCategory="system"/>

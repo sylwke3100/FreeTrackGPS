@@ -70,11 +70,11 @@ public class MainActivity extends Activity {
         checkWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start
             || workoutStatus.status == DefaultValues.routeStatus.pause) {
-            menu.findItem(R.id.action_workout).setEnabled(false);
+            menu.findItem(R.id.action_workouts_list).setEnabled(false);
             menu.findItem(R.id.action_ignorepoints_list).setEnabled(false);
             menu.findItem(R.id.action_settings).setEnabled(false);
         } else {
-            menu.findItem(R.id.action_workout).setEnabled(true);
+            menu.findItem(R.id.action_workouts_list).setEnabled(true);
             menu.findItem(R.id.action_ignorepoints_list).setEnabled(true);
             menu.findItem(R.id.action_settings).setEnabled(true);
         }
@@ -84,16 +84,13 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ignorepoints_list:
-                Intent ignorePointsIntent = new Intent(this, IgnorePointsListActivity.class);
-                startActivity(ignorePointsIntent);
+                startActivity(new Intent(this, IgnorePointsListActivity.class));
                 break;
-            case R.id.action_workout:
-                Intent workoutPreviewActivityIntent = new Intent(this, WorkoutsListActivity.class);
-                startActivity(workoutPreviewActivityIntent);
+            case R.id.action_workouts_list:
+                startActivity(new Intent(this, WorkoutsListActivity.class));
                 break;
             case R.id.action_settings:
-                Intent settingActivityIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingActivityIntent);
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             case R.id.action_gpssettings:
                 Intent locationSettingsIntent =
@@ -102,8 +99,7 @@ public class MainActivity extends Activity {
                 startActivity(locationSettingsIntent);
                 break;
             case R.id.action_about:
-                Intent AboutActivityIntent = new Intent(this, AboutActivity.class);
-                startActivity(AboutActivityIntent);
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
         return true;
