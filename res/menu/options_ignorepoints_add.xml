@@ -6,8 +6,7 @@
           android:showAsAction="never"
     />
     <item android:id="@+id/action_ignorepoints_add_done"
-          android:orderInCategory="100"
+          android:orderInCategory="200"
           android:title="@string/doneLabel"
-          android:showAsAction="never"
     />
 </menu>

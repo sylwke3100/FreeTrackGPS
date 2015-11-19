@@ -38,8 +38,8 @@
         <activity android:name=".WorkoutsListActivity" android:label="@string/workoutsListLabel"/>
         <activity android:name=".DateFilterActivity"/>
         <activity android:name=".WorkoutInfoActivity" android:label="@string/action_info"/>
-        <activity android:name="com.sylwke3100.freetrackgps.IgnorePointsActivity" android:label="@string/action_ignorePoints"/>
-        <activity android:name=".IgnorePointsAddActivity" android:label="@string/action_ignorepoints_add"  android:exported="true" />
+        <activity android:name=".IgnorePointsListActivity" android:label="@string/action_ignorepoints_list"/>
+        <activity android:name=".IgnorePointsAddFromMapActivity" android:label="@string/action_ignorepoints_add_from_map" android:exported="true" />
         <service
                 android:name=".GPSRunnerService"
                 android:enabled="true" />

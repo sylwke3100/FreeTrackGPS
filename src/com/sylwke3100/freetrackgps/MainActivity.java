@@ -71,11 +71,11 @@ public class MainActivity extends Activity {
         if (workoutStatus.status == DefaultValues.routeStatus.start
             || workoutStatus.status == DefaultValues.routeStatus.pause) {
             menu.findItem(R.id.action_workout).setEnabled(false);
-            menu.findItem(R.id.action_ignorepoints).setEnabled(false);
+            menu.findItem(R.id.action_ignorepoints_list).setEnabled(false);
             menu.findItem(R.id.action_settings).setEnabled(false);
         } else {
             menu.findItem(R.id.action_workout).setEnabled(true);
-            menu.findItem(R.id.action_ignorepoints).setEnabled(true);
+            menu.findItem(R.id.action_ignorepoints_list).setEnabled(true);
             menu.findItem(R.id.action_settings).setEnabled(true);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -83,8 +83,8 @@ public class MainActivity extends Activity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ignorepoints:
-                Intent ignorePointsIntent = new Intent(this, IgnorePointsActivity.class);
+            case R.id.action_ignorepoints_list:
+                Intent ignorePointsIntent = new Intent(this, IgnorePointsListActivity.class);
                 startActivity(ignorePointsIntent);
                 break;
             case R.id.action_workout:

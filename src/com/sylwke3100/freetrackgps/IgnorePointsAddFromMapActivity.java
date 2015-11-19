@@ -2,10 +2,16 @@ package com.sylwke3100.freetrackgps;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 import org.osmdroid.bonuspack.overlays.MapEventsOverlay;
 import org.osmdroid.bonuspack.overlays.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -17,9 +23,11 @@ import org.osmdroid.views.overlay.OverlayItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IgnorePointsAddActivity extends Activity {
+public class IgnorePointsAddFromMapActivity extends Activity {
     private MapView mMapView;
     private LocationSharing sharedLocation;
+    private GeoPoint ignorePoint;
+    private DatabaseManager localInstanceDatabase;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,7 @@ public class IgnorePointsAddActivity extends Activity {
         mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
         mMapView.setTilesScaledToDpi(true);
+        mMapView.getController().setZoom(1);
         MapEventsOverlay eventsOverlay =
             new MapEventsOverlay(mMapView.getContext(), new MapEventsReceiver() {
                 public boolean singleTapConfirmedHelper(GeoPoint geoPoint) {
@@ -46,6 +55,7 @@ public class IgnorePointsAddActivity extends Activity {
                 }
             });
         mMapView.getOverlays().add(0, eventsOverlay);
+        localInstanceDatabase = new DatabaseManager(getApplicationContext());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,14 +72,29 @@ public class IgnorePointsAddActivity extends Activity {
                     .setCenter(new GeoPoint(location.latitude, location.longitude));
                 mMapView.invalidate();
                 break;
+            case R.id.action_ignorepoints_add_done:
+                if (ignorePoint != null) {
+                    onSetIgnorePointsNameAlert();
+                }
+                break;
         }
         return true;
     }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(ignorePoint == null)
+            menu.findItem(R.id.action_ignorepoints_add_done).setEnabled(false);
+        else
+            menu.findItem(R.id.action_ignorepoints_add_done).setEnabled(true);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 
     private ItemizedIconOverlay<OverlayItem> createOverlayFromGeoPoint(Context mapContext,
         GeoPoint point) {
         OverlayItem overlayItem =
             new OverlayItem("Ignored Point", "This point has been ignored", point);
+        ignorePoint = point;
         final List<OverlayItem> items = new ArrayList<OverlayItem>();
         items.add(overlayItem);
         return new ItemizedIconOverlay<OverlayItem>(mapContext, items,
@@ -83,4 +108,37 @@ public class IgnorePointsAddActivity extends Activity {
                 }
             });
     }
+
+    public void onAddIgnorePointsFromLocation(String ignorePointName) {
+        if (ignorePoint != null) {
+            if (!localInstanceDatabase
+                .addIgnorePoint(ignorePoint.getLatitude(), ignorePoint.getLongitude(),
+                    ignorePointName))
+                Toast.makeText(getBaseContext(), R.string.ignorePointsExists, Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    public void onSetIgnorePointsNameAlert() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.prompt_ignore_points_from_location, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptView);
+        final EditText inputName = (EditText) promptView.findViewById(R.id.nameEdit);
+        alertDialogBuilder.setCancelable(false)
+            .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    onAddIgnorePointsFromLocation(inputName.getText().toString());
+                    finish();
+                }
+            }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                finish();
+            }
+        });
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+
 }
