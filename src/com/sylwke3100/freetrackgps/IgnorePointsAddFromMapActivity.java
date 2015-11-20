@@ -86,6 +86,10 @@ public class IgnorePointsAddFromMapActivity extends Activity {
             menu.findItem(R.id.action_ignorepoints_add_done).setEnabled(false);
         else
             menu.findItem(R.id.action_ignorepoints_add_done).setEnabled(true);
+        if (sharedLocation.getCurrentLocation().status == 1)
+            menu.findItem(R.id.action_ignorepoints_add_centermap).setEnabled(true);
+        else
+            menu.findItem(R.id.action_ignorepoints_add_centermap).setEnabled(false);
         return super.onPrepareOptionsMenu(menu);
     }
 
