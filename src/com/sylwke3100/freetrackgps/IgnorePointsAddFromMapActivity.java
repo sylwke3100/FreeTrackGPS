@@ -27,7 +27,7 @@ public class IgnorePointsAddFromMapActivity extends Activity {
     private MapView mMapView;
     private LocationSharing sharedLocation;
     private GeoPoint ignorePoint;
-    private DatabaseManager localInstanceDatabase;
+    private IgnorePointsManager ignorePointsManager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,7 @@ public class IgnorePointsAddFromMapActivity extends Activity {
                 }
             });
         mMapView.getOverlays().add(0, eventsOverlay);
-        localInstanceDatabase = new DatabaseManager(getApplicationContext());
+        ignorePointsManager = new IgnorePointsManager(getApplicationContext());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,7 +115,7 @@ public class IgnorePointsAddFromMapActivity extends Activity {
 
     public void onAddIgnorePointsFromLocation(String ignorePointName) {
         if (ignorePoint != null) {
-            if (!localInstanceDatabase
+            if (!ignorePointsManager
                 .addIgnorePoint(ignorePoint.getLatitude(), ignorePoint.getLongitude(),
                     ignorePointName))
                 Toast.makeText(getBaseContext(), R.string.ignorePointsExists, Toast.LENGTH_LONG)

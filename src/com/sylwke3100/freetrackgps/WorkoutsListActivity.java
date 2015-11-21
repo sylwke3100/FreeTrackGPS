@@ -17,7 +17,7 @@ import java.util.List;
 
 public class WorkoutsListActivity extends Activity {
     private SimpleAdapter simpleAdapter;
-    private WorkoutsListOperations workoutsListOperations;
+    private WorkoutsListManager workoutsListManager;
     private ListView workoutList;
     private Menu optionsMenu;
     private ArrayList<HashMap<String, String>> routesList;
@@ -28,11 +28,11 @@ public class WorkoutsListActivity extends Activity {
         routesList = new ArrayList<HashMap<String, String>>();
         workoutList = (ListView) this.findViewById(R.id.listWorkout);
         registerForContextMenu(workoutList);
-        workoutsListOperations = new WorkoutsListOperations(getBaseContext());
+        workoutsListManager = new WorkoutsListManager(getBaseContext());
         onUpdateWorkoutsList();
 
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            List<RouteListElement> objects = workoutsListOperations.getUpdatedWorkoutsRawList();
+            List<RouteListElement> objects = workoutsListManager.getUpdatedWorkoutsRawList();
 
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(WorkoutsListActivity.this, WorkoutInfoActivity.class);
@@ -46,7 +46,7 @@ public class WorkoutsListActivity extends Activity {
     }
 
     private void onUpdateWorkoutsList() {
-        routesList = workoutsListOperations.getUpdatedWorkoutsList();
+        routesList = workoutsListManager.getUpdatedWorkoutsList();
         simpleAdapter = new SimpleAdapter(this, routesList, R.layout.textview_row_lines,
             new String[] {"time", "distance"}, new int[] {R.id.line_time, R.id.line_distance});
         workoutList.setAdapter(simpleAdapter);
@@ -67,7 +67,7 @@ public class WorkoutsListActivity extends Activity {
                 onDeleteWorkoutAlert(info.position);
                 return true;
             case R.id.action_workout_export:
-                workoutsListOperations.exportWorkout(info.position);
+                workoutsListManager.exportWorkout(info.position);
                 return true;
             case R.id.action_workout_change:
                 onUpdateNameWorkout(info.position);
@@ -83,7 +83,7 @@ public class WorkoutsListActivity extends Activity {
             .setPositiveButton(this.getString(R.string.yesLabel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        workoutsListOperations.deleteWorkout(id);
+                        workoutsListManager.deleteWorkout(id);
                         onUpdateWorkoutsList();
                     }
                 }).setNegativeButton(this.getString(R.string.noLabel), null).show();
@@ -92,11 +92,11 @@ public class WorkoutsListActivity extends Activity {
 
     public void updateIconOptionMenu() {
         Integer dateFilterIcon, nameFilterIcon;
-        if (workoutsListOperations.getStatusTimeFilter())
+        if (workoutsListManager.getStatusTimeFilter())
             dateFilterIcon = R.drawable.tick;
         else
             dateFilterIcon = R.drawable.emptytick;
-        if (workoutsListOperations.getStatusNameFilter())
+        if (workoutsListManager.getStatusNameFilter())
            nameFilterIcon = R.drawable.tick;
         else
             nameFilterIcon = R.drawable.emptytick;
@@ -136,11 +136,11 @@ public class WorkoutsListActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptView);
         final EditText input = (EditText) promptView.findViewById(R.id.nameFilter);
-        input.setText(workoutsListOperations.getFilterName());
+        input.setText(workoutsListManager.getFilterName());
         alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    workoutsListOperations.setNameFilter(input.getText().toString());
+                    workoutsListManager.setNameFilter(input.getText().toString());
                     onUpdateWorkoutsList();
                 }
             }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
@@ -158,11 +158,11 @@ public class WorkoutsListActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptView);
         final EditText input = (EditText) promptView.findViewById(R.id.nameWorkout);
-        input.setText(workoutsListOperations.getWorkoutName(idWorkout));
+        input.setText(workoutsListManager.getWorkoutName(idWorkout));
         alertDialogBuilder.setCancelable(false)
             .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    workoutsListOperations.updateWorkoutName(idWorkout, input.getText().toString());
+                    workoutsListManager.updateWorkoutName(idWorkout, input.getText().toString());
                     onUpdateWorkoutsList();
                 }
             }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {

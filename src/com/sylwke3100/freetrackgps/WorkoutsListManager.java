@@ -3,23 +3,22 @@ package com.sylwke3100.freetrackgps;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.widget.Toast;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
-public class WorkoutsListOperations {
+public class WorkoutsListManager {
     private SharedPreferences sharePrefs;
     private DatabaseManager currentDataBase;
     private List<RouteListElement> rawWorkoutsList;
     private Context localContext;
-    private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
     private DatabaseTimeFilter timeFilter;
     private DatabaseNameFilter nameFilter;
 
-    WorkoutsListOperations(Context context) {
+    WorkoutsListManager(Context context) {
         currentDataBase = new DatabaseManager(context);
         localContext = context;
         sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
@@ -50,25 +49,17 @@ public class WorkoutsListOperations {
     public void exportWorkout(int id) {
         RouteListElement object = rawWorkoutsList.get(id);
         List<RouteElement> pointsWorkout = currentDataBase.getPointsInRoute(object.id);
-        StringBuffer fileNameBuffer = new StringBuffer();
-        File dir = new File(
-            Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
-        if (!(dir.exists() && dir.isDirectory()))
-            dir.mkdir();
-        fileNameBuffer.append(
-            Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
-        fileNameBuffer.append(fileGpxFormat.format(new Date(object.startTime)) + "."
-            + DefaultValues.defaultFileFormat);
-        GPXWriter gpx = new GPXWriter(fileNameBuffer.toString(), object.startTime, object.name);
+        GPXWriter gpx = new GPXWriter(object.startTime, object.name);
         for (RouteElement point : pointsWorkout) {
             gpx.addPoint(point);
         }
         if (gpx.save())
             Toast.makeText(localContext,
-                localContext.getString(R.string.SaveTrueInfo) + " " + fileNameBuffer.toString(),
+                localContext.getString(R.string.SaveTrueInfo) + " " + gpx.getFilename(),
                 Toast.LENGTH_LONG).show();
         else
-            Toast.makeText(localContext, localContext.getString(R.string.SaveFalseInfo),
+            Toast.makeText(localContext,
+                localContext.getString(R.string.SaveFalseInfo) + " " + gpx.getFilename(),
                 Toast.LENGTH_LONG).show();
     }
 

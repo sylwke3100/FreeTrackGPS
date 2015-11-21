@@ -1,24 +1,31 @@
 package com.sylwke3100.freetrackgps;
 
+import android.os.Environment;
 import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 
 public class GPXWriter {
     private static final SimpleDateFormat dateFormat =
         new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private SimpleDateFormat fileGpxFormat = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss");
     private Boolean isOpen = false;
     private FileOutputStream gpxOutputStream;
     private XmlSerializer gpxSerializer;
+    private StringBuffer fileNameBuffer;
 
-    public GPXWriter(String fileName, long startTime, String nameWorkout) {
+    public GPXWriter(long startTime, String nameWorkout) {
+        String preparedFilename = prepareFilename(startTime);
         try {
-            gpxOutputStream = new FileOutputStream(fileName);
+            gpxOutputStream = new FileOutputStream(preparedFilename);
             isOpen = true;
         } catch (FileNotFoundException fnfe) {
             isOpen = false;
@@ -37,6 +44,24 @@ public class GPXWriter {
         createHeader();
         createMetadata(startTime, nameWorkout);
     }
+
+    private String prepareFilename(long startTime){
+        fileNameBuffer = new StringBuffer();
+        File dir = new File(
+            Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
+        if (!(dir.exists() && dir.isDirectory()))
+            dir.mkdir();
+        fileNameBuffer.append(
+            Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
+        fileNameBuffer.append(fileGpxFormat.format(new Date(startTime)) + "."
+            + DefaultValues.defaultFileFormat);
+        return fileNameBuffer.toString();
+    }
+
+    public String getFilename(){
+        return fileNameBuffer.toString();
+    }
+
 
     private void createHeader() {
         if (isOpen)

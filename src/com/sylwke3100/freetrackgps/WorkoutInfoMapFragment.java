@@ -27,7 +27,6 @@ public class WorkoutInfoMapFragment extends Fragment {
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");
     private MapView mMapView;
     private DatabaseManager workoutDatabase;
-    private GeoPoint centerRoutePoint = new GeoPoint(0, 0);
     private Context globalContext;
     private List<RouteElement> pointsList;
 
@@ -115,7 +114,7 @@ public class WorkoutInfoMapFragment extends Fragment {
                     return true;
                 }
 
-                @Override public boolean onItemLongPress(int index, OverlayItem item) {
+                 public boolean onItemLongPress(int index, OverlayItem item) {
                     return true;
                 }
             });
