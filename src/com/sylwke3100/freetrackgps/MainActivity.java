@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
         registerReceiver(new MainActivityReceiver(mainOperations, workoutStatus), mainFiler);
         startService(new Intent(this, GPSRunnerService.class));
         checkWorkoutStatus();
+        setPreviewStatus(View.INVISIBLE);
         this.mainOperations.setWorkoutInactive();
     }
 

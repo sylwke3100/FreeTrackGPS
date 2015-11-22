@@ -14,7 +14,8 @@
     <PreferenceCategory
             android:title="@string/otherSettingsLabel">
         <CheckBoxPreference
-                android:title="@string/settingShowWorkoutInfoLabel"
+                android:title="@string/settingShwoWorkoutInfoTitle"
+                android:summary="@string/settingShowWorkoutInfoLabel"
                 android:defaultValue="false"
                 android:key="showWorkoutInfo"/>
         <CheckBoxPreference

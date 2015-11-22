@@ -76,4 +76,5 @@
     <string name="doneLabel">Done</string>
     <string name="notificationsGroupLabel">Notifications</string>
     <string name="otherSettingsLabel">Others</string>
+    <string name="settingShwoWorkoutInfoTitle">Show workout info</string>
 </resources>

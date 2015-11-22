@@ -75,4 +75,5 @@
         jakiś punkt na mapie aby go oznaczyć</string>
     <string name="otherSettingsLabel">Inne</string>
     <string name="notificationsGroupLabel">Powiadomienia</string>
+    <string name="settingShwoWorkoutInfoTitle">Pokaż informacje treningu</string>
 </resources>
