@@ -73,4 +73,6 @@
     <string name="centerToLocationMap">Centruj do obecnej lokalizacji</string>
     <string name="addIgnorePointDesciption">Tutaj możesz dodać ignorowany punkt z mapy. Kliknij w
         jakiś punkt na mapie aby go oznaczyć</string>
+    <string name="otherSettingsLabel">Inne</string>
+    <string name="notificationsGroupLabel">Powiadomienia</string>
 </resources>

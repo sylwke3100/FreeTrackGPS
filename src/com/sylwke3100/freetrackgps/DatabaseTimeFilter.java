@@ -9,7 +9,7 @@ public class DatabaseTimeFilter implements DatabaseFilter {
     private SharedPreferences sharePrefs;
 
     public DatabaseTimeFilter(Context context) {
-        sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharePrefs = context.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         startTimeFilter = sharePrefs.getLong("filterOneTime", -1);
         endTimeFilter = 0;
     }

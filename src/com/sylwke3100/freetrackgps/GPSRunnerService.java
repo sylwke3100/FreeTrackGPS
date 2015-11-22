@@ -21,12 +21,11 @@ public class GPSRunnerService extends Service {
     private LocationManager service;
 
     private void onCreateGPSConnection() {
-        int[] timeSettingArray = this.getResources().getIntArray(R.array.timeArray);
-        int[] distanceSettingArray = this.getResources().getIntArray(R.array.distanceArray);
         if (service != null) {
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                timeSettingArray[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))],
-                distanceSettingArray[(sharedPrefs.getInt("distance", 1))],
+                Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
+                Integer.valueOf(
+                    sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
                 new GPSListener(currentRoute, this));
             sendMessageToUi("gpsOn", new Intent());
             Location lastLocation =
@@ -43,8 +42,9 @@ public class GPSRunnerService extends Service {
         } else {
             sendMessageToUi("gpsOff", new Intent());
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                timeSettingArray[(sharedPrefs.getInt("time", DefaultValues.defaultMinSpeedIndex))],
-                distanceSettingArray[(sharedPrefs.getInt("distance", 1))],
+                Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
+                Integer.valueOf(
+                    sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
                 new GPSListener(currentRoute, this));
         }
     }
@@ -52,7 +52,7 @@ public class GPSRunnerService extends Service {
     public void onCreate() {
         currentRoute = new RouteManager(this);
         service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        sharedPrefs = this.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharedPrefs = this.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION);
         registerReceiver(new GPSRunnerServiceReceiver(currentRoute, this), intentFilter);

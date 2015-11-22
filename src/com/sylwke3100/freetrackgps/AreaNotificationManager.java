@@ -29,7 +29,7 @@ public class AreaNotificationManager {
         PendingIntent pendingIntent =
             PendingIntent.getActivity(currentContext, 0, mainActivityIntent, 0);
         globalNotification.setContentIntent(pendingIntent);
-        pref = currentContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        pref = currentContext.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         this.context = currentContext;
     }
 

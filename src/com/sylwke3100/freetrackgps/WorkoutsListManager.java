@@ -21,7 +21,7 @@ public class WorkoutsListManager {
     WorkoutsListManager(Context context) {
         currentDataBase = new DatabaseManager(context);
         localContext = context;
-        sharePrefs = context.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharePrefs = context.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         timeFilter = new DatabaseTimeFilter(context);
         nameFilter = new DatabaseNameFilter(context);
     }

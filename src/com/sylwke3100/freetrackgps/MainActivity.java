@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         workoutStatus = new StatusWorkout();
-        sharedPrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharedPrefs = getSharedPreferences("com.sylwke3100.freetrackgps_preferences", Activity.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         List<TextView> textViewElements = Arrays

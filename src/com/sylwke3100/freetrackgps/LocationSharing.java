@@ -10,7 +10,7 @@ public class LocationSharing {
 
 
     public LocationSharing(Context activityContext) {
-        sharedPrefs = activityContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharedPrefs = activityContext.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
     }
 
     public void clearCurrentLocation() {

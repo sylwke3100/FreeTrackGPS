@@ -19,7 +19,7 @@ public class DateFilterActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_filter);
-        sharePrefs = getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharePrefs = getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         okButton = (Button) findViewById(R.id.okButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         localPickier = (DatePicker) findViewById(R.id.datePicker);

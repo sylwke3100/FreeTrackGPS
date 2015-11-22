@@ -16,7 +16,7 @@ public class VibrateNotificationManager {
 
     public VibrateNotificationManager(Context mainContext) {
         notificationService = (Vibrator) mainContext.getSystemService(Context.VIBRATOR_SERVICE);
-        sharePrefs = mainContext.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        sharePrefs = mainContext.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         lastPoint = new Location(LocationManager.GPS_PROVIDER);
     }
 

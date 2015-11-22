@@ -10,7 +10,7 @@ public class DatabaseNameFilter implements DatabaseFilter {
 
     public DatabaseNameFilter(Context local) {
         name = new String();
-        prefs = local.getSharedPreferences("Pref", Activity.MODE_PRIVATE);
+        prefs = local.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         name = prefs.getString("filterName", "");
     }
 
