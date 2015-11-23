@@ -76,4 +76,5 @@
     <string name="otherSettingsLabel">Inne</string>
     <string name="notificationsGroupLabel">Powiadomienia</string>
     <string name="settingShwoWorkoutInfoTitle">Pokaż informacje treningu</string>
+    <string name="gpsWorkoutSettingsLabel">Ustawienia GPS</string>
 </resources>

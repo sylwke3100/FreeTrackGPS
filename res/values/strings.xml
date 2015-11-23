@@ -77,4 +77,5 @@
     <string name="notificationsGroupLabel">Notifications</string>
     <string name="otherSettingsLabel">Others</string>
     <string name="settingShwoWorkoutInfoTitle">Show workout info</string>
+    <string name="gpsWorkoutSettingsLabel">GPS settings</string>
 </resources>

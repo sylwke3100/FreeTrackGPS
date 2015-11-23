@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="@string/gpsWorkoutSettingsLabel">
+        <ListPreference
+                android:key="distance"
+                android:title="@string/settingDistanceBetweenPointLabel"
+                android:entries="@array/viewDistanceSetting"
+                android:entryValues="@array/distanceArray"
+                android:defaultValue="@string/distanceArrayDefault"
+        />
+
+        <ListPreference
+                android:key="time"
+                android:title="@string/settingGPSSpeedScan"
+                android:entries="@array/viewTimeSetting"
+                android:entryValues="@array/timeArray"
+                android:defaultValue="@string/timeArrayDefault"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -11,8 +11,21 @@
                 android:defaultValue="false"
                 android:key="vibrateNotification"/>
     </PreferenceCategory>
-    <PreferenceCategory
-            android:title="@string/otherSettingsLabel">
+    <Preference
+            android:title="@string/gpsWorkoutSettingsLabel"
+    >
+
+        <intent
+                android:action=" android.intent.action.VIEW"
+                android:targetPackage="com.sylwke3100.freetrackgps"
+                android:targetClass="com.sylwke3100.freetrackgps.SettingsActivity">
+            <extra android:name="gpsWorkoutSettings"
+                   android:value="true"/>
+        </intent>
+
+    </Preference>
+
+    <PreferenceCategory android:title="@string/otherSettingsLabel">
         <CheckBoxPreference
                 android:title="@string/settingShwoWorkoutInfoTitle"
                 android:summary="@string/settingShowWorkoutInfoLabel"
@@ -22,21 +35,5 @@
                 android:title="@string/exitAlertLabel"
                 android:defaultValue="true"
                 android:key="exitAlert"/>
-        <ListPreference
-                android:key="distance"
-                android:title="@string/settingDistanceBetweenPointLabel"
-                android:entries="@array/viewDistanceSetting"
-                android:entryValues="@array/distanceArray"
-                android:defaultValue="@string/distanceArrayDefault"
-        />
-
-        <ListPreference
-                android:key="time"
-                android:title="@string/settingGPSSpeedScan"
-                android:entries="@array/viewTimeSetting"
-                android:entryValues="@array/timeArray"
-                android:defaultValue="@string/timeArrayDefault"
-        />
-
     </PreferenceCategory>
 </PreferenceScreen>
