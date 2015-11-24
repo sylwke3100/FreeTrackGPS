@@ -77,4 +77,5 @@
     <string name="notificationsGroupLabel">Powiadomienia</string>
     <string name="settingShwoWorkoutInfoTitle">Pokaż informacje treningu</string>
     <string name="gpsWorkoutSettingsLabel">Ustawienia GPS</string>
+    <string name="disableMapSettingLabel">Dezaktywuj mapę</string>
 </resources>

@@ -78,4 +78,5 @@
     <string name="otherSettingsLabel">Others</string>
     <string name="settingShwoWorkoutInfoTitle">Show workout info</string>
     <string name="gpsWorkoutSettingsLabel">GPS settings</string>
+    <string name="disableMapSettingLabel">Disable map</string>
 </resources>
