@@ -43,7 +43,7 @@ public class GPSRunnerServiceReceiver extends BroadcastReceiver {
 
     public void sendRouteStatus() {
         Intent message = new Intent();
-        message.putExtra("command", "workoutStatus");
+        message.putExtra("command", MainActivityReceiver.COMMANDS.WORKOUT_STATUS);
         if (currentRoute.getStatus() == DefaultValues.routeStatus.pause)
             message.putExtra("status", 2);
         if (currentRoute.getStatus() == DefaultValues.routeStatus.stop)

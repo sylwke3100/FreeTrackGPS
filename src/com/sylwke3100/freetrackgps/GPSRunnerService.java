@@ -27,7 +27,7 @@ public class GPSRunnerService extends Service {
                 Integer.valueOf(
                     sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
                 new GPSListener(currentRoute, this));
-            sendMessageToUi("gpsOn", new Intent());
+            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
             Location lastLocation =
                 (Location) service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             gpsCurrentStatus = true;
@@ -36,17 +36,20 @@ public class GPSRunnerService extends Service {
                     Intent gpsPosIntent = new Intent();
                     gpsPosIntent.putExtra("lat", lastLocation.getLatitude());
                     gpsPosIntent.putExtra("lon", lastLocation.getLongitude());
-                    sendMessageToUi("gpsPos", gpsPosIntent);
+                    sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_POS, gpsPosIntent);
                 }
             }
         } else {
-            sendMessageToUi("gpsOff", new Intent());
+            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
                 Integer.valueOf(
                     sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
                 new GPSListener(currentRoute, this));
         }
+        Intent message = new Intent();
+        message.putExtra("dist", "0,0");
+        sendMessageToUi(MainActivityReceiver.COMMANDS.WORKOUT_DISTANCE, message);
     }
 
     public void onCreate() {
