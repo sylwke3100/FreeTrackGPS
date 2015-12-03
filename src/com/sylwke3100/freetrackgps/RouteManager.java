@@ -19,7 +19,6 @@ public class RouteManager {
     private DatabaseManager currentDB;
     private long currentId;
     private List<IgnorePointsListElement> globalIgnorePointsList;
-
     private VibrateNotificationManager vibrateNotificationManager;
 
     public RouteManager(Context globalContext) {
@@ -63,8 +62,8 @@ public class RouteManager {
             long currentTime = currentDate.getTime();
             if (findPointInIgnore(currentLocation) == false) {
                 RouteElement routePoint =
-                    new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(),
-                        currentLocation.getAltitude(), currentTime);
+                        new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(),
+                                currentLocation.getAltitude(), currentTime);
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
                 vibrateNotificationManager.proccesNotify(currentLocation);
@@ -82,6 +81,7 @@ public class RouteManager {
 
     public void unPause() {
         status = DefaultValues.routeStatus.start;
+        lastPosition = null;
     }
 
     public double getDistanceInKm() {
