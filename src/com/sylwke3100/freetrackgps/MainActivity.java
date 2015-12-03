@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     private LocationManager service;
     private Button pauseButton, startButton;
     private SharedPreferences sharedPrefs;
-    private MainActivityGuiOperations mainOperations;
+    private MainActivityGuiManager mainOperations;
     private LocationSharing currentLocation;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
             }
         });
         mainOperations =
-            new MainActivityGuiOperations(getBaseContext(), textViewElements, buttonsList);
+            new MainActivityGuiManager(getBaseContext(), textViewElements, buttonsList);
         currentLocation = new LocationSharing(getBaseContext());
         currentLocation.clearCurrentLocation();
         IntentFilter mainFiler = new IntentFilter();

@@ -17,10 +17,10 @@ public class MainActivityReceiver extends BroadcastReceiver {
         public static String WORKOUT_DISTANCE = "workoutDistance";
         public static String WORKOUT_STATUS = "workoutStatus";
     }
-    public MainActivityGuiOperations globalGuiOperations;
+    public MainActivityGuiManager globalGuiOperations;
     public MainActivity.StatusWorkout statusRoute;
 
-    public MainActivityReceiver(MainActivityGuiOperations operations,
+    public MainActivityReceiver(MainActivityGuiManager operations,
         MainActivity.StatusWorkout status) {
         globalGuiOperations = operations;
         statusRoute = status;

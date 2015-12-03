@@ -7,14 +7,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivityGuiOperations {
+public class MainActivityGuiManager {
     Context localContext;
     private TextView gpsWorkStatus, gpsPosition, workoutStatus, workoutDistance;
     private Button startButton, pauseButton;
     private boolean pauseButtonStatus = false;
 
-    public MainActivityGuiOperations(Context mainContext, List<TextView> textViewElements,
-        List<Button> buttonsList) {
+    public MainActivityGuiManager(Context mainContext, List<TextView> textViewElements,
+                                  List<Button> buttonsList) {
         gpsWorkStatus = textViewElements.get(0);
         gpsPosition = textViewElements.get(1);
         workoutDistance = textViewElements.get(2);
