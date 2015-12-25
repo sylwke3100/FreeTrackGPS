@@ -43,6 +43,15 @@
         <service
                 android:name=".GPSRunnerService"
                 android:enabled="true" />
+        <receiver android:name=".WorkoutControlAppWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="MainActivityAction" />
+                <action android:name="com.sylwke3100.freetrackgps.BUTTON_WIDGET_ACTION" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/workout_control_appwidget_info" />
+        </receiver>
 
     </application>
 

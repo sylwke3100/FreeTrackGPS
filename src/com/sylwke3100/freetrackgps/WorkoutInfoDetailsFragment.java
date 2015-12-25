@@ -64,5 +64,8 @@ public class WorkoutInfoDetailsFragment extends Fragment {
         pointCount = route.size();
     }
 
+    /**
+     * Created by administrator on 05.12.15.
+     */
 }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="30dp"
+    android:updatePeriodMillis="1000"
+    android:previewImage="@drawable/icon"
+    android:initialLayout="@layout/appwidget_workout_control"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen">
+</appwidget-provider>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:transitionGroup="true" tools:showIn="@layout/workout_control_appwidget_info" >
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/startStopButton"
+            android:src="@android:drawable/ic_media_play"
+            android:layout_alignBottom="@+id/distanceWidgetTextView"
+            android:layout_toRightOf="@+id/distanceWidgetTextView" android:layout_toEndOf="@+id/distanceWidgetTextView"
+            android:layout_marginLeft="42dp" android:layout_marginStart="42dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="0,00 km"
+            android:id="@+id/distanceWidgetTextView"
+            android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/workoutDistanceLabel"
+            android:id="@+id/textView3"
+            android:layout_above="@+id/distanceWidgetTextView" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+</RelativeLayout>
+

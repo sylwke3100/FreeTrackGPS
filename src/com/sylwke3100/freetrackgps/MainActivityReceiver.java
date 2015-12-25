@@ -28,6 +28,7 @@ public class MainActivityReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
         String command = intent.getStringExtra("command");
+        Log.i("GPSRunnerService", "action: " + intent.getAction());
         Log.i("GPSRunnerService", "command: " + command);
         if (command.equals(COMMANDS.GPS_ON))
             globalGuiOperations.setOnGPS();

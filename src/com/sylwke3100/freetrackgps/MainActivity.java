@@ -175,6 +175,23 @@ public class MainActivity extends Activity {
         }
     }
 
+    protected void onResume(){
+        checkWorkoutStatus();
+        if (workoutStatus.status == DefaultValues.routeStatus.stop) {
+            mainOperations.setWorkoutInactive();
+            setPreviewStatus(View.INVISIBLE);
+        }
+        if (workoutStatus.status == DefaultValues.routeStatus.start) {
+            mainOperations.setWorkoutActive();
+            setPreviewStatus(View.VISIBLE);
+        }
+        if (workoutStatus.status == DefaultValues.routeStatus.pause) {
+            mainOperations.setWorkoutPause();
+        }
+
+        super.onResume();
+    }
+
     protected void onDestroy() {
         super.onDestroy();
         checkWorkoutStatus();
