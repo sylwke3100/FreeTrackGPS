@@ -24,8 +24,11 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
             Log.i("UpdateWidget", Double.toString(distance) + " km");
             view.setTextViewText(R.id.distanceWidgetTextView, Double.toString(distance) + " km");
             Intent buttonIntent = new Intent(BUTTON_WIDGET_ACTION);
+            Intent mainAcivity = new Intent(context, MainActivity.class);
+            PendingIntent  mainAcivityPending = PendingIntent.getActivity(context, 0, mainAcivity, PendingIntent.FLAG_UPDATE_CURRENT);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.startStopButton, pendingIntent);
+            view.setOnClickPendingIntent(R.id.widgetAcitivty, mainAcivityPending);
             appWidgetManager.updateAppWidget(appWidgetIds[i], view);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
