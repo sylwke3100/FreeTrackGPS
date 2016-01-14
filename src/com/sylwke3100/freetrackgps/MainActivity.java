@@ -83,26 +83,27 @@ public class MainActivity extends Activity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intentToStart = new Intent();
         switch (item.getItemId()) {
             case R.id.action_ignorepoints_list:
-                startActivity(new Intent(this, IgnorePointsListActivity.class));
+                intentToStart = new Intent(this, IgnorePointsListActivity.class );
                 break;
             case R.id.action_workouts_list:
-                startActivity(new Intent(this, WorkoutsListActivity.class));
+                intentToStart = new Intent(this, WorkoutsListActivity.class);
                 break;
             case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                intentToStart = new Intent(this, SettingsActivity.class);
                 break;
             case R.id.action_gpssettings:
-                Intent locationSettingsIntent =
+                intentToStart  =
                     new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                locationSettingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(locationSettingsIntent);
+                intentToStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
             case R.id.action_about:
-                startActivity(new Intent(this, AboutActivity.class));
+                intentToStart = new Intent(this, AboutActivity.class);
                 break;
         }
+        startActivity(intentToStart);
         return true;
     }
 

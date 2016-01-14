@@ -27,7 +27,7 @@ public class GPSRunnerService extends Service {
                 Integer.valueOf(
                     sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
                 new GPSListener(currentRoute, this));
-            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
+            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_ON);
             Location lastLocation =
                 (Location) service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             gpsCurrentStatus = true;
@@ -40,7 +40,7 @@ public class GPSRunnerService extends Service {
                 }
             }
         } else {
-            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
+            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
                 Integer.valueOf(
@@ -62,9 +62,7 @@ public class GPSRunnerService extends Service {
         onCreateGPSConnection();
         super.onCreate();
     }
-
-
-
+    
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("GPSRunnerService", "Received start id " + startId + ": " + intent);
         return START_STICKY_COMPATIBILITY;
@@ -82,6 +80,10 @@ public class GPSRunnerService extends Service {
         intent.putExtra("command", command);
         intent.setAction(MainActivity.MAINACTIVITY_ACTION);
         sendBroadcast(intent);
+    }
+
+    private void sendMessageToUi(String command) {
+        sendMessageToUi(command, new Intent());
     }
 
     public IBinder onBind(Intent intent) {
