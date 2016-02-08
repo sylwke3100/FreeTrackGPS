@@ -15,13 +15,13 @@ Features
 - Workouts filtering by name and start time
 - Preview route info (distance start and end time, min and max height and route map with marked start and end point)
 - Add Ignoring points in workout(from gps location and map points)
-
+- Possibly created widget on home screen
 
 ScreenShots
 
 ![Alt Main window](http://i.imgur.com/Ais4Aoy.png)
 ![Alt Workouts list](http://i.imgur.com/GPgJZGq.png)
-![Alt Settings window](http://i.imgur.com/ZDRnvn6.png)
+![Alt Settings window](http://i.imgur.com/e4U9wCt.png)
 ![Alt About Workout window](http://i.imgur.com/iWWojv2.png)
 ![Alt Map Workout window](http://i.imgur.com/UzbnC1p.png)
 ![Alt ignore points window](http://i.imgur.com/uqLsIo6.png)
