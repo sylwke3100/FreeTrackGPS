@@ -3,7 +3,6 @@ package com.sylwke3100.freetrackgps;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,32 +45,17 @@ public class WorkoutsListManager {
         currentDataBase.deleteRoute(rawWorkoutsList.get(id).id);
     }
 
-    public void exportWorkout(int id) {
-        RouteListElement object = rawWorkoutsList.get(id);
-        List<RouteElement> pointsWorkout = currentDataBase.getPointsInRoute(object.id);
-        GPXWriter gpx = new GPXWriter(object.startTime, object.name);
-        for (RouteElement point : pointsWorkout) {
-            gpx.addPoint(point);
-        }
-        if (gpx.save())
-            Toast.makeText(localContext,
-                localContext.getString(R.string.SaveTrueInfo) + " " + gpx.getFilename(),
-                Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(localContext,
-                localContext.getString(R.string.SaveFalseInfo) + " " + gpx.getFilename(),
-                Toast.LENGTH_LONG).show();
+    public List<RouteElement> getPointsInRoute(Integer id) {
+        return currentDataBase.getPointsInRoute(id);
     }
 
     public void setTimeOneFilter(long time) {
         timeFilter.setViewFilter(time);
-
     }
 
     public void setNameFilter(String name) {
         nameFilter.setViewFilter(name);
     }
-
 
     public boolean getStatusTimeFilter() {
         ;

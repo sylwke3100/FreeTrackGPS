@@ -2,6 +2,8 @@ package com.sylwke3100.freetrackgps;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ public class WorkoutsListActivity extends Activity {
     private ListView workoutList;
     private Menu optionsMenu;
     private ArrayList<HashMap<String, String>> routesList;
+    public static final int EXPORT_DIALOG = 1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,7 @@ public class WorkoutsListActivity extends Activity {
                 onDeleteWorkoutAlert(info.position);
                 return true;
             case R.id.action_workout_export:
-                workoutsListManager.exportWorkout(info.position);
+                new ExportTask(this, workoutsListManager).execute(info.position);
                 return true;
             case R.id.action_workout_change:
                 onUpdateNameWorkout(info.position);
@@ -177,5 +180,21 @@ public class WorkoutsListActivity extends Activity {
     public void onResume() {
         super.onResume();
         onUpdateWorkoutsList();
+    }
+
+    public Dialog onCreateDialog(int dialogId) {
+
+        switch (dialogId) {
+            case EXPORT_DIALOG:
+                ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setTitle(getString(R.string.exportingTitleLabel));
+                dialog.setMessage(getString(R.string.exportingMessageLabel));
+                dialog.setCancelable(false);
+                return dialog;
+            default:
+                break;
+        }
+
+        return null;
     }
 }

@@ -79,4 +79,6 @@
     <string name="settingShwoWorkoutInfoTitle">Show workout info</string>
     <string name="gpsWorkoutSettingsLabel">GPS settings</string>
     <string name="disableMapSettingLabel">Disable map</string>
+    <string name="exportingTitleLabel">Exporting</string>
+    <string name="exportingMessageLabel">Please Wait...</string>
 </resources>

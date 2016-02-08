@@ -78,4 +78,6 @@
     <string name="settingShwoWorkoutInfoTitle">Pokaż informacje treningu</string>
     <string name="gpsWorkoutSettingsLabel">Ustawienia GPS</string>
     <string name="disableMapSettingLabel">Dezaktywuj mapę</string>
+    <string name="exportingMessageLabel">Proszę Czekać...</string>
+    <string name="exportingTitleLabel">Eksportowanie</string>
 </resources>
