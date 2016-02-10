@@ -117,10 +117,7 @@ public class MainActivity extends Activity {
     }
 
     public void checkWorkoutStatus() {
-        Intent message = new Intent();
-        message.putExtra("command", GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
-        message.setAction(GPSRunnerService.ACTION);
-        sendBroadcast(message);
+        sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
     }
 
     public void sendMessageToService(Integer messageAction) {
