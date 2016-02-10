@@ -18,6 +18,11 @@
                     android:icon="@drawable/emptytick"
                     android:title="@string/workoutsFilterByName"
                     android:showAsAction="always|withText"/>
+            <item
+                    android:id="@+id/action_filters_reset"
+                    android:icon="@drawable/emptytick"
+                    android:title="@string/resetFiltersLabel"
+                    android:showAsAction="always|withText"/>
         </menu>
     </item>
 

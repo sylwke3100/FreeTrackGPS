@@ -28,6 +28,7 @@ public class DatabaseTimeFilter implements DatabaseFilter {
     public void clearFilters() {
         startTimeFilter = 0;
         endTimeFilter = 0;
+        setViewFilter(-1);
     }
 
     public String getGeneratedFilterString() {

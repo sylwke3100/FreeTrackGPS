@@ -81,4 +81,5 @@
     <string name="disableMapSettingLabel">Disable map</string>
     <string name="exportingTitleLabel">Exporting</string>
     <string name="exportingMessageLabel">Please Wait...</string>
+    <string name="resetFiltersLabel">Reset filters</string>
 </resources>

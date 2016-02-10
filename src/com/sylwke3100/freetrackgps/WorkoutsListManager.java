@@ -65,6 +65,11 @@ public class WorkoutsListManager {
             return false;
     }
 
+    public void clearAllFilters(){
+        timeFilter.clearFilters();
+        nameFilter.clearFilters();
+    }
+
     public boolean getStatusNameFilter() {
         if (nameFilter.isActive())
             return true;

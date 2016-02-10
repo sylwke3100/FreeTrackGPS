@@ -108,7 +108,7 @@ public class WorkoutsListActivity extends Activity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_workoutpreview, menu);
+        getMenuInflater().inflate(R.menu.options_workoutpreview_filters, menu);
         this.optionsMenu = menu;
         updateIconOptionMenu();
         return super.onCreateOptionsMenu(menu);
@@ -128,6 +128,10 @@ public class WorkoutsListActivity extends Activity {
                 break;
             case R.id.action_filter_by_name:
                 onUpdateNameFilter();
+                break;
+            case R.id.action_filters_reset:
+                workoutsListManager.clearAllFilters();
+                onUpdateWorkoutsList();
                 break;
         }
         return true;
