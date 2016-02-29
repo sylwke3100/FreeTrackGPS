@@ -20,33 +20,34 @@ public class WorkoutInfoDetailsFragment extends Fragment {
     private Context context;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View myInflate = inflater.inflate(R.layout.activity_workout_info, container, false);
         context = myInflate.getContext();
         Bundle localBundle = getArguments();
         if (localBundle != null) {
             calculateRouteProperties(localBundle.getInt("routeId"));
+            RouteListElement currentRoute = getRouteInfo(localBundle.getInt("routeId"));
             ((TextView) myInflate.findViewById(R.id.distanceText))
-                .setText(String.format("%.2f km", localBundle.getDouble("distanceInfo") / 1000));
+                    .setText(String.format("%.2f km", currentRoute.distance / 1000));
             ((TextView) myInflate.findViewById(R.id.startTimeText))
-                .setText(formatDate.format(localBundle.getLong("startTimeInfo")));
+                    .setText(formatDate.format(currentRoute.startTime));
             if (lastEndDate != 0)
                 ((TextView) myInflate.findViewById(R.id.endTimeText))
-                    .setText(formatDate.format(lastEndDate));
+                        .setText(formatDate.format(lastEndDate));
             else
                 ((TextView) myInflate.findViewById(R.id.endTimeText)).setText("- -");
-            if (localBundle.getString("routeName") != null)
+            if (currentRoute.name != null)
                 ((TextView) myInflate.findViewById(R.id.nameWorkoutTextView))
-                    .setText(localBundle.getString("routeName"));
+                        .setText(currentRoute.name);
             else
                 ((TextView) myInflate.findViewById(R.id.nameWorkoutTextView))
-                    .setText(getString(R.string.Unnamend));
+                        .setText(getString(R.string.Unnamend));
             ((TextView) myInflate.findViewById(R.id.pointsText))
-                .setText(Integer.toString(pointCount));
+                    .setText(Integer.toString(pointCount));
             ((TextView) myInflate.findViewById(R.id.maxHeightText))
-                .setText(String.format("%.2f m", maxHeight));
+                    .setText(String.format("%.2f m", maxHeight));
             ((TextView) myInflate.findViewById(R.id.minHeightText))
-                .setText(String.format("%.2f m", minHeight));
+                    .setText(String.format("%.2f m", minHeight));
         }
         return myInflate;
     }
@@ -64,8 +65,12 @@ public class WorkoutInfoDetailsFragment extends Fragment {
         pointCount = route.size();
     }
 
-    /**
-     * Created by administrator on 05.12.15.
-     */
+    private RouteListElement getRouteInfo(int id) {
+        DatabaseManager localManager = new DatabaseManager(context);
+        RouteListElement route = localManager.getRouteInfo(id);
+        if (route != null)
+            return route;
+        return new RouteListElement(0, 0, 0, "");
+    }
 }
 

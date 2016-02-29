@@ -22,11 +22,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
-            "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String)");
+                "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String)");
         db.execSQL(
-            "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)");
+                "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)");
         db.execSQL(
-            "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER, name TEXT)");
+                "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER, name TEXT)");
     }
 
     public long startWorkout(long timeStartWorkout) {
@@ -53,9 +53,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public boolean addIgnorePoint(double latitude, double longitude, String name) {
         Cursor currentCursor = readableDatabase
-            .query("ignorePointsList", null, "latitude=? AND longitude=?",
-                new String[] {Double.toString(latitude), Double.toString(longitude)}, null, null,
-                null);
+                .query("ignorePointsList", null, "latitude=? AND longitude=?",
+                        new String[]{Double.toString(latitude), Double.toString(longitude)}, null, null,
+                        null);
         if (currentCursor.getCount() == 0) {
             ContentValues ignorePointValues = new ContentValues();
             ignorePointValues.put("latitude", latitude);
@@ -78,7 +78,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
         if (!(filters.size() == 0) && isActiveAnyFilter == true)
             databaseFilterString =
-                databaseFilterString.substring(0, databaseFilterString.length() - 5);
+                    databaseFilterString.substring(0, databaseFilterString.length() - 5);
         else
             databaseFilterString = "";
         return databaseFilterString;
@@ -87,13 +87,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public List<RouteListElement> getRoutesList(List<DatabaseFilter> filters) {
         List<RouteListElement> currentRoutesList = new LinkedList<RouteListElement>();
         Cursor currentCursor = readableDatabase
-            .query("workoutsList", null, getPreparedStringFilters(filters), null, null, null,
-                "timeStart DESC");
+                .query("workoutsList", null, getPreparedStringFilters(filters), null, null, null,
+                        "timeStart DESC");
         if (currentCursor.moveToFirst()) {
             do {
                 currentRoutesList.add(
-                    new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1),
-                        currentCursor.getDouble(2), currentCursor.getString(3)));
+                        new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1),
+                                currentCursor.getDouble(2), currentCursor.getString(3)));
             } while (currentCursor.moveToNext());
         }
         return currentRoutesList;
@@ -106,19 +106,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void deleteIgnorePoint(double lat, double lon) {
         writableDatabase.delete("ignorePointsList", " latitude =? AND longitude =?",
-            new String[] {Double.toString(lat), Double.toString(lon)});
+                new String[]{Double.toString(lat), Double.toString(lon)});
     }
 
     public List<IgnorePointsListElement> getIgnorePointsList() {
         List<IgnorePointsListElement> currentIgnorePointsList =
-            new LinkedList<IgnorePointsListElement>();
+                new LinkedList<IgnorePointsListElement>();
         Cursor currentCursor =
-            readableDatabase.query("ignorePointsList", null, null, null, null, null, null, null);
+                readableDatabase.query("ignorePointsList", null, null, null, null, null, null, null);
         if (currentCursor.moveToFirst()) {
             do {
                 IgnorePointsListElement element =
-                    new IgnorePointsListElement(currentCursor.getDouble(1),
-                        currentCursor.getDouble(2), currentCursor.getString(3));
+                        new IgnorePointsListElement(currentCursor.getDouble(1),
+                                currentCursor.getDouble(2), currentCursor.getString(3));
                 currentIgnorePointsList.add(element);
             } while (currentCursor.moveToNext());
         }
@@ -128,22 +128,28 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public List<RouteElement> getPointsInRoute(long id) {
         List<RouteElement> currentPointsList = new LinkedList<RouteElement>();
         Cursor currentCursor = readableDatabase
-            .query("workoutPoint", null, "id=" + Long.toString(id), null, null, null, null, null);
+                .query("workoutPoint", null, "id=" + Long.toString(id), null, null, null, null, null);
         if (currentCursor.moveToFirst()) {
             do {
                 currentPointsList.add(
-                    new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),
-                        currentCursor.getDouble(5), currentCursor.getLong(1)));
+                        new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),
+                                currentCursor.getDouble(5), currentCursor.getLong(1)));
             } while (currentCursor.moveToNext());
         }
         return currentPointsList;
+    }
+
+    public RouteListElement getRouteInfo(long id) {
+        Cursor currentCursor = readableDatabase.query("workoutsList", null, "id=" + Long.toString(id), null, null, null, null, null);
+        currentCursor.moveToFirst();
+        return new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2), currentCursor.getString(3));
     }
 
     public void updateNameWorkout(long idWorkout, String name) {
         ContentValues workoutValues = new ContentValues();
         workoutValues.put("name", name);
         writableDatabase
-            .update("workoutsList", workoutValues, "id=" + Long.toString(idWorkout), null);
+                .update("workoutsList", workoutValues, "id=" + Long.toString(idWorkout), null);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -154,7 +160,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                     db.execSQL("ALTER TABLE workoutsList ADD COLUMN name TEXT");
                 if (oldVersion == 3)
                     db.execSQL(
-                        "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
+                            "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
                 if (oldVersion == 4)
                     db.execSQL("ALTER TABLE ignorePointsList ADD COLUMN name TEXT");
             }

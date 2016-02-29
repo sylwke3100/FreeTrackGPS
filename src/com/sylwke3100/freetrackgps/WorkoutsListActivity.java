@@ -39,10 +39,7 @@ public class WorkoutsListActivity extends Activity {
 
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(WorkoutsListActivity.this, WorkoutInfoActivity.class);
-                intent.putExtra("distanceInfo", objects.get(i).distance);
-                intent.putExtra("startTimeInfo", objects.get(i).startTime);
                 intent.putExtra("routeId", objects.get(i).id);
-                intent.putExtra("routeName", objects.get(i).name);
                 startActivity(intent);
             }
         });
@@ -51,12 +48,12 @@ public class WorkoutsListActivity extends Activity {
     private void onUpdateWorkoutsList() {
         routesList = workoutsListManager.getUpdatedWorkoutsList();
         simpleAdapter = new SimpleAdapter(this, routesList, R.layout.textview_row_lines,
-            new String[] {"time", "distance"}, new int[] {R.id.line_time, R.id.line_distance});
+                new String[]{"time", "distance"}, new int[]{R.id.line_time, R.id.line_distance});
         workoutList.setAdapter(simpleAdapter);
     }
 
     public void onCreateContextMenu(ContextMenu menu, View v,
-        ContextMenu.ContextMenuInfo menuInfo) {
+                                    ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_workoutspreview, menu);
@@ -64,7 +61,7 @@ public class WorkoutsListActivity extends Activity {
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info =
-            (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.action_workout_delete:
                 onDeleteWorkoutAlert(info.position);
@@ -79,17 +76,17 @@ public class WorkoutsListActivity extends Activity {
         }
     }
 
-    public void onDeleteWorkoutAlert(final int id){
+    public void onDeleteWorkoutAlert(final int id) {
         new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle(getString(R.string.deleteWorkoutTitleAlert))
-            .setMessage(getString(R.string.deleteWorkoutTextAlert))
-            .setPositiveButton(this.getString(R.string.yesLabel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        workoutsListManager.deleteWorkout(id);
-                        onUpdateWorkoutsList();
-                    }
-                }).setNegativeButton(this.getString(R.string.noLabel), null).show();
+                .setTitle(getString(R.string.deleteWorkoutTitleAlert))
+                .setMessage(getString(R.string.deleteWorkoutTextAlert))
+                .setPositiveButton(this.getString(R.string.yesLabel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                workoutsListManager.deleteWorkout(id);
+                                onUpdateWorkoutsList();
+                            }
+                        }).setNegativeButton(this.getString(R.string.noLabel), null).show();
 
     }
 
@@ -100,7 +97,7 @@ public class WorkoutsListActivity extends Activity {
         else
             dateFilterIcon = R.drawable.emptytick;
         if (workoutsListManager.getStatusNameFilter())
-           nameFilterIcon = R.drawable.tick;
+            nameFilterIcon = R.drawable.tick;
         else
             nameFilterIcon = R.drawable.emptytick;
         optionsMenu.findItem(R.id.action_overflow).getSubMenu().findItem(R.id.action_filter_by_date).setIcon(dateFilterIcon);
@@ -145,12 +142,12 @@ public class WorkoutsListActivity extends Activity {
         final EditText input = (EditText) promptView.findViewById(R.id.nameFilter);
         input.setText(workoutsListManager.getFilterName());
         alertDialogBuilder.setCancelable(false)
-            .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    workoutsListManager.setNameFilter(input.getText().toString());
-                    onUpdateWorkoutsList();
-                }
-            }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        workoutsListManager.setNameFilter(input.getText().toString());
+                        onUpdateWorkoutsList();
+                    }
+                }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
             }
@@ -167,12 +164,12 @@ public class WorkoutsListActivity extends Activity {
         final EditText input = (EditText) promptView.findViewById(R.id.nameWorkout);
         input.setText(workoutsListManager.getWorkoutName(idWorkout));
         alertDialogBuilder.setCancelable(false)
-            .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    workoutsListManager.updateWorkoutName(idWorkout, input.getText().toString());
-                    onUpdateWorkoutsList();
-                }
-            }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        workoutsListManager.updateWorkoutName(idWorkout, input.getText().toString());
+                        onUpdateWorkoutsList();
+                    }
+                }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
             }
