@@ -42,7 +42,7 @@
     <string name="workoutsListLabel">Lista treningów</string>
     <string name="Unnamend">Bez nazwy</string>
     <string name="startTimeLabel">Czas rozpoczęcia</string>
-    <string name="endTimeLabel">Czas końca</string>
+    <string name="endTimeLabel">Czas zakończenia</string>
     <string name="Points">Punkty</string>
     <string name="maxHeight">Max. wysokość</string>
     <string name="minHeight">Min. wysokość</string>
