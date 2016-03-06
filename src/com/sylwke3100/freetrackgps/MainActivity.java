@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +57,7 @@ public class MainActivity extends Activity {
         mainFiler.addAction(MAINACTIVITY_ACTION);
         registerReceiver(new MainActivityReceiver(mainOperations, workoutStatus), mainFiler);
         startService(new Intent(this, GPSRunnerService.class));
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         setPreviewStatus(View.INVISIBLE);
         this.mainOperations.setWorkoutInactive();
     }
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
     }
 
     public boolean onPrepareOptionsMenu(Menu menu) {
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start
                 || workoutStatus.status == DefaultValues.routeStatus.pause) {
             menu.findItem(R.id.action_workouts_list).setEnabled(false);
@@ -117,12 +116,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void checkWorkoutStatus() {
+    public void updateWorkoutStatus() {
         messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
     }
 
     public void onStartRoute() {
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.stop) {
             mainOperations.setWorkoutActive();
             setPreviewStatus(View.VISIBLE);
@@ -135,7 +134,7 @@ public class MainActivity extends Activity {
     }
 
     public void onPauseRoute() {
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start) {
             messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE);
             mainOperations.setWorkoutPause();
@@ -146,7 +145,7 @@ public class MainActivity extends Activity {
     }
 
     public void onBackPressed() {
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         if (sharedPrefs.getBoolean("exitAlert", true))
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle(getString(R.string.finishApp))
@@ -168,7 +167,7 @@ public class MainActivity extends Activity {
     }
 
     protected void onResume() {
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.stop) {
             mainOperations.setWorkoutInactive();
             setPreviewStatus(View.INVISIBLE);
@@ -186,7 +185,7 @@ public class MainActivity extends Activity {
 
     protected void onDestroy() {
         super.onDestroy();
-        checkWorkoutStatus();
+        updateWorkoutStatus();
         if (workoutStatus.status != DefaultValues.routeStatus.stop) {
             messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
         }

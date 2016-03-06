@@ -50,10 +50,8 @@ public class GPSListener implements LocationListener {
         messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_POS, message);
     }
 
-
-
-    public void onStatusChanged(String s, int i, Bundle b) {
-        switch (i) {
+    public void onStatusChanged(String s, int status, Bundle b) {
+        switch (status) {
             case LocationProvider.AVAILABLE:
                 messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
                 if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
