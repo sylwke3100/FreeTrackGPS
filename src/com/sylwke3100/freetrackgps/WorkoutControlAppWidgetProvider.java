@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -14,10 +15,12 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
 
     private static DefaultValues.routeStatus currentStatus = DefaultValues.routeStatus.stop;
     private Double distance = 0.0;
+    private GPSRunnerServiceMessageController messageController;
     private String BUTTON_WIDGET_ACTION = "com.sylwke3100.freetrackgps.BUTTON_WIDGET_ACTION";
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i("UpdateWidget", "Start");
+        messageController = new GPSRunnerServiceMessageController(context);
         sendRequestStatus(context);
         for (int i = 0; i < appWidgetIds.length; i++) {
             RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.appwidget_workout_control);
@@ -25,7 +28,7 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
             view.setTextViewText(R.id.distanceWidgetTextView, Double.toString(distance) + " km");
             Intent buttonIntent = new Intent(BUTTON_WIDGET_ACTION);
             Intent mainAcivity = new Intent(context, MainActivity.class);
-            PendingIntent  mainAcivityPending = PendingIntent.getActivity(context, 0, mainAcivity, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent mainAcivityPending = PendingIntent.getActivity(context, 0, mainAcivity, PendingIntent.FLAG_UPDATE_CURRENT);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.startStopButton, pendingIntent);
             view.setOnClickPendingIntent(R.id.widgetAcitivty, mainAcivityPending);
@@ -35,6 +38,7 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
     }
 
     public void onReceive(Context context, Intent intent) {
+        messageController = new GPSRunnerServiceMessageController(context);
         super.onReceive(context, intent);
         Log.i("ReciveWidget ", intent.getAction());
         if (intent.getStringExtra("command") != null) {
@@ -46,7 +50,6 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
                     case 0:
                         currentStatus = DefaultValues.routeStatus.stop;
                         break;
-
                     case 1:
                         currentStatus = DefaultValues.routeStatus.start;
                         break;
@@ -70,11 +73,11 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
         if (intent.getAction().equals(BUTTON_WIDGET_ACTION)) {
             Log.i("ReciveWidget", "Button up");
             if (currentStatus == DefaultValues.routeStatus.start)
-                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE, context);
+                messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE);
             if (currentStatus == DefaultValues.routeStatus.pause)
-                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_UNPAUSE, context);
+                messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_UNPAUSE);
             if (currentStatus == DefaultValues.routeStatus.stop)
-                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_START, context);
+                messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_START);
             Log.i("ReciveWidgetStatus", currentStatus.toString());
         }
     }
@@ -89,18 +92,8 @@ public class WorkoutControlAppWidgetProvider extends AppWidgetProvider {
         AppWidgetManager.getInstance(context).updateAppWidget(componentName, remoteViews);
     }
 
-    public void sendMessageToService(Integer messageAction, Context context) {
-        Intent message = new Intent();
-        message.putExtra("command", messageAction);
-        message.setAction(GPSRunnerService.ACTION);
-        sendRequestStatus(context);
-        context.sendBroadcast(message);
-    }
-
     public void sendRequestStatus(Context context) {
-        Intent message = new Intent();
-        message.putExtra("command", GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
-        message.setAction(GPSRunnerService.ACTION);
-        context.sendBroadcast(message);
+        messageController = new GPSRunnerServiceMessageController(context);
+        messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
     }
 }
