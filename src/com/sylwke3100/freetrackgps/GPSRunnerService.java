@@ -18,6 +18,7 @@ public class GPSRunnerService extends Service {
     private RouteManager currentRoute;
     private SharedPreferences sharedPrefs;
     private boolean gpsCurrentStatus = false;
+    private GPSRunnerServiceMessageController messageController;
     private LocationManager service;
 
     private void onCreateGPSConnection() {
@@ -27,7 +28,7 @@ public class GPSRunnerService extends Service {
                 Integer.valueOf(
                     sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
                 new GPSListener(currentRoute, this));
-            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_ON);
+            messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_ON);
             Location lastLocation =
                 (Location) service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             gpsCurrentStatus = true;
@@ -36,11 +37,11 @@ public class GPSRunnerService extends Service {
                     Intent gpsPosIntent = new Intent();
                     gpsPosIntent.putExtra("lat", lastLocation.getLatitude());
                     gpsPosIntent.putExtra("lon", lastLocation.getLongitude());
-                    sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_POS, gpsPosIntent);
+                    messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_POS, gpsPosIntent);
                 }
             }
         } else {
-            sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF);
+            messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_OFF);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
                 Integer.valueOf(
@@ -49,10 +50,11 @@ public class GPSRunnerService extends Service {
         }
         Intent message = new Intent();
         message.putExtra("dist", "0,0");
-        sendMessageToUi(MainActivityReceiver.COMMANDS.WORKOUT_DISTANCE, message);
+        messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_DISTANCE, message);
     }
 
     public void onCreate() {
+        messageController = new GPSRunnerServiceMessageController(this);
         currentRoute = new RouteManager(this);
         service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         sharedPrefs = this.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
@@ -76,15 +78,6 @@ public class GPSRunnerService extends Service {
         super.onDestroy();
     }
 
-    private void sendMessageToUi(String command, Intent intent) {
-        intent.putExtra("command", command);
-        intent.setAction(MainActivity.MAINACTIVITY_ACTION);
-        sendBroadcast(intent);
-    }
-
-    private void sendMessageToUi(String command) {
-        sendMessageToUi(command, new Intent());
-    }
 
     public IBinder onBind(Intent intent) {
         return mBinder;

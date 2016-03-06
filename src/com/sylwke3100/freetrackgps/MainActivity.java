@@ -20,22 +20,23 @@ import java.util.List;
 public class MainActivity extends Activity {
     public static final String MAINACTIVITY_ACTION = "MainActivityAction";
     StatusWorkout workoutStatus;
-    private LocationManager service;
     private Button pauseButton, startButton;
     private SharedPreferences sharedPrefs;
     private MainActivityGuiManager mainOperations;
     private LocationSharing currentLocation;
+    private GPSRunnerServiceMessageController messageController;
 
     protected void onCreate(Bundle savedInstanceState) {
+        messageController = new GPSRunnerServiceMessageController(getBaseContext());
         workoutStatus = new StatusWorkout();
         sharedPrefs = getSharedPreferences("com.sylwke3100.freetrackgps_preferences", Activity.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         List<TextView> textViewElements = Arrays
-            .asList((TextView) this.findViewById(R.id.textGPSStatus),
-                (TextView) this.findViewById(R.id.textPosition),
-                (TextView) this.findViewById(R.id.textWorkoutDistance),
-                (TextView) this.findViewById(R.id.textWorkoutStatus));
+                .asList((TextView) this.findViewById(R.id.textGPSStatus),
+                        (TextView) this.findViewById(R.id.textPosition),
+                        (TextView) this.findViewById(R.id.textWorkoutDistance),
+                        (TextView) this.findViewById(R.id.textWorkoutStatus));
         pauseButton = (Button) this.findViewById(R.id.pauseButton);
         startButton = (Button) this.findViewById(R.id.startButton);
         List<Button> buttonsList = Arrays.asList(startButton, pauseButton);
@@ -50,7 +51,7 @@ public class MainActivity extends Activity {
             }
         });
         mainOperations =
-            new MainActivityGuiManager(getBaseContext(), textViewElements, buttonsList);
+                new MainActivityGuiManager(getBaseContext(), textViewElements, buttonsList);
         currentLocation = new LocationSharing(getBaseContext());
         currentLocation.clearCurrentLocation();
         IntentFilter mainFiler = new IntentFilter();
@@ -70,7 +71,7 @@ public class MainActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         checkWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start
-            || workoutStatus.status == DefaultValues.routeStatus.pause) {
+                || workoutStatus.status == DefaultValues.routeStatus.pause) {
             menu.findItem(R.id.action_workouts_list).setEnabled(false);
             menu.findItem(R.id.action_ignorepoints_list).setEnabled(false);
             menu.findItem(R.id.action_settings).setEnabled(false);
@@ -86,7 +87,7 @@ public class MainActivity extends Activity {
         Intent intentToStart = new Intent();
         switch (item.getItemId()) {
             case R.id.action_ignorepoints_list:
-                intentToStart = new Intent(this, IgnorePointsListActivity.class );
+                intentToStart = new Intent(this, IgnorePointsListActivity.class);
                 break;
             case R.id.action_workouts_list:
                 intentToStart = new Intent(this, WorkoutsListActivity.class);
@@ -95,8 +96,8 @@ public class MainActivity extends Activity {
                 intentToStart = new Intent(this, SettingsActivity.class);
                 break;
             case R.id.action_gpssettings:
-                intentToStart  =
-                    new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                intentToStart =
+                        new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 intentToStart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
             case R.id.action_about:
@@ -117,14 +118,7 @@ public class MainActivity extends Activity {
     }
 
     public void checkWorkoutStatus() {
-        sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
-    }
-
-    public void sendMessageToService(Integer messageAction) {
-        Intent message = new Intent();
-        message.putExtra("command", messageAction);
-        message.setAction(GPSRunnerService.ACTION);
-        sendBroadcast(message);
+        messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS);
     }
 
     public void onStartRoute() {
@@ -132,9 +126,9 @@ public class MainActivity extends Activity {
         if (workoutStatus.status == DefaultValues.routeStatus.stop) {
             mainOperations.setWorkoutActive();
             setPreviewStatus(View.VISIBLE);
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_START);
+            messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_START);
         } else if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
+            messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
             mainOperations.setWorkoutInactive();
             setPreviewStatus(View.INVISIBLE);
         }
@@ -143,10 +137,10 @@ public class MainActivity extends Activity {
     public void onPauseRoute() {
         checkWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.start) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE);
+            messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_PAUSE);
             mainOperations.setWorkoutPause();
         } else if (workoutStatus.status == DefaultValues.routeStatus.pause) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_UNPAUSE);
+            messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_UNPAUSE);
             mainOperations.setWorkoutActive();
         }
     }
@@ -155,25 +149,25 @@ public class MainActivity extends Activity {
         checkWorkoutStatus();
         if (sharedPrefs.getBoolean("exitAlert", true))
             new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(getString(R.string.finishApp))
-                .setMessage(getString(R.string.finishAppInfo))
-                .setPositiveButton(this.getString(R.string.yesLabel),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-                                sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
-                            }
-                            finish();
-                            System.exit(0);
-                        }
-                    }).setNegativeButton(this.getString(R.string.noLabel), null).show();
+                    .setTitle(getString(R.string.finishApp))
+                    .setMessage(getString(R.string.finishAppInfo))
+                    .setPositiveButton(this.getString(R.string.yesLabel),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (workoutStatus.status != DefaultValues.routeStatus.stop) {
+                                        messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
+                                    }
+                                    finish();
+                                    System.exit(0);
+                                }
+                            }).setNegativeButton(this.getString(R.string.noLabel), null).show();
         else {
             finish();
             System.exit(0);
         }
     }
 
-    protected void onResume(){
+    protected void onResume() {
         checkWorkoutStatus();
         if (workoutStatus.status == DefaultValues.routeStatus.stop) {
             mainOperations.setWorkoutInactive();
@@ -194,10 +188,9 @@ public class MainActivity extends Activity {
         super.onDestroy();
         checkWorkoutStatus();
         if (workoutStatus.status != DefaultValues.routeStatus.stop) {
-            sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
+            messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
         }
     }
-
 
     public class StatusWorkout {
         public DefaultValues.routeStatus status;

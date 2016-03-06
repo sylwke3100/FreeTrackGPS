@@ -13,8 +13,10 @@ public class GPSListener implements LocationListener {
     private Context currentContext;
     private RouteManager localRoute;
     private LocationSharing currentLocation;
+    private GPSRunnerServiceMessageController messageController;
 
     public GPSListener(RouteManager route, Context mainContext) {
+        messageController = new GPSRunnerServiceMessageController(mainContext);
         localRoute = route;
         notify = new AreaNotificationManager(mainContext, R.drawable.icon,
             mainContext.getString(R.string.app_name));
@@ -30,7 +32,7 @@ public class GPSListener implements LocationListener {
             localRoute.addPoint(location);
             Intent message = new Intent();
             message.putExtra("dist", localRoute.getDistanceInKm());
-            sendMessageToUi(MainActivityReceiver.COMMANDS.WORKOUT_DISTANCE, message);
+            messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_DISTANCE, message);
             currentContext.sendBroadcast(message);
             if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                 if (localRoute.getPointStatus() == DefaultValues.areaStatus.ok)
@@ -45,54 +47,50 @@ public class GPSListener implements LocationListener {
         Intent message = new Intent();
         message.putExtra("lat", location.getLatitude());
         message.putExtra("lon", location.getLongitude());
-        sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_POS, message);
+        messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_POS, message);
     }
 
-    private void sendMessageToUi(String command, Intent intent) {
-        intent.putExtra("command", command);
-        intent.setAction(MainActivity.MAINACTIVITY_ACTION);
-        currentContext.sendBroadcast(intent);
-    }
+
 
     public void onStatusChanged(String s, int i, Bundle b) {
         switch (i) {
             case LocationProvider.AVAILABLE:
-                sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
+                messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
                 if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
                     localRoute.unPause();
-                    sendMessageToUi(MainActivityReceiver.COMMANDS.WORKOUT_ACTIVE, new Intent());
+                    messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_ACTIVE, new Intent());
                 }
                 break;
             case LocationProvider.OUT_OF_SERVICE:
-                sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
+                messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
                 if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
-                    sendMessageToUi(MainActivityReceiver.COMMANDS.WORKOUT_PAUSE, new Intent());
+                    messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_PAUSE, new Intent());
                 }
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
+                messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
                 if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
-                    sendMessageToUi(MainActivityReceiver.COMMANDS.WORKOUT_PAUSE, new Intent());
+                    messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_PAUSE, new Intent());
                 }
                 break;
         }
     }
 
     public void onProviderDisabled(String s) {
-        sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
+        messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_OFF, new Intent());
         if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
             localRoute.pause();
-            sendMessageToUi("workoutPause", new Intent());
+            messageController.sendMessageToGUI("workoutPause", new Intent());
         }
     }
 
     public void onProviderEnabled(String s) {
-        sendMessageToUi(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
+        messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_ON, new Intent());
         if (localRoute.getStatus() == DefaultValues.routeStatus.pause) {
             localRoute.unPause();
-            sendMessageToUi("workoutActive", new Intent());
+            messageController.sendMessageToGUI("workoutActive", new Intent());
         }
     }
 }

@@ -8,10 +8,9 @@ import android.widget.TextView;
 import java.util.List;
 
 public class MainActivityGuiManager {
-    Context localContext;
+    private Context localContext;
     private TextView gpsWorkStatus, gpsPosition, workoutStatus, workoutDistance;
     private Button startButton, pauseButton;
-    private boolean pauseButtonStatus = false;
 
     public MainActivityGuiManager(Context mainContext, List<TextView> textViewElements,
                                   List<Button> buttonsList) {
