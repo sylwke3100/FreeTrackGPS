@@ -3,7 +3,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
     <item
-            android:title="@string/menu"
+            android:title="@string/menuFiltersLabel"
             android:id="@+id/action_overflow"
             android:showAsAction="always">
         <menu>

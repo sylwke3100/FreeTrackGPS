@@ -82,4 +82,5 @@
     <string name="exportingTitleLabel">Exporting</string>
     <string name="exportingMessageLabel">Please Wait...</string>
     <string name="resetFiltersLabel">Reset filters</string>
+    <string name="menuFiltersLabel">Filters</string>
 </resources>
