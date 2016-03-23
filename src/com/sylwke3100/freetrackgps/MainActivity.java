@@ -74,10 +74,13 @@ public class MainActivity extends Activity {
             menu.findItem(R.id.action_workouts_list).setEnabled(false);
             menu.findItem(R.id.action_ignorepoints_list).setEnabled(false);
             menu.findItem(R.id.action_settings).setEnabled(false);
+            menu.findItem(R.id.action_workout_mapview).setEnabled(true);
+
         } else {
             menu.findItem(R.id.action_workouts_list).setEnabled(true);
             menu.findItem(R.id.action_ignorepoints_list).setEnabled(true);
             menu.findItem(R.id.action_settings).setEnabled(true);
+            menu.findItem(R.id.action_workout_mapview).setEnabled(false);
         }
         return super.onPrepareOptionsMenu(menu);
     }

@@ -82,4 +82,5 @@
     <string name="exportingTitleLabel">Eksportowanie</string>
     <string name="resetFiltersLabel">Resetuj filtry</string>
     <string name="menuFiltersLabel">Filtry</string>
+    <string name="action_workout_mapview">Mapa treningu</string>
 </resources>
