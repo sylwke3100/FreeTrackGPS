@@ -16,6 +16,7 @@ public class MainActivityReceiver extends BroadcastReceiver {
         public static String WORKOUT_PAUSE = "workoutPause";
         public static String WORKOUT_DISTANCE = "workoutDistance";
         public static String WORKOUT_STATUS = "workoutStatus";
+        public static String WORKOUT_ID = "workoutId";
     }
     public MainActivityGuiManager globalGuiOperations;
     public MainActivity.StatusWorkout statusRoute;

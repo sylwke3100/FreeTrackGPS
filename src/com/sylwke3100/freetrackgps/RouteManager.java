@@ -84,6 +84,10 @@ public class RouteManager {
         lastPosition = null;
     }
 
+    public long getCurrentId(){
+        return currentId;
+    }
+
     public double getDistanceInKm() {
         return distance / 1000;
     }

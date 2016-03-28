@@ -24,13 +24,13 @@ public class GPSRunnerService extends Service {
     private void onCreateGPSConnection() {
         if (service != null) {
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
-                Integer.valueOf(
-                    sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
-                new GPSListener(currentRoute, this));
+                    Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
+                    Integer.valueOf(
+                            sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
+                    new GPSListener(currentRoute, this));
             messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_ON);
             Location lastLocation =
-                (Location) service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    (Location) service.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             gpsCurrentStatus = true;
             if (lastLocation != null) {
                 if (currentRoute.getStatus() != DefaultValues.routeStatus.stop) {
@@ -43,10 +43,10 @@ public class GPSRunnerService extends Service {
         } else {
             messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.GPS_OFF);
             service.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
-                Integer.valueOf(
-                    sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
-                new GPSListener(currentRoute, this));
+                    Integer.valueOf(sharedPrefs.getString("time", DefaultValues.defaultMinSpeedIndex)),
+                    Integer.valueOf(
+                            sharedPrefs.getString("distance", DefaultValues.defaultMinDistanceIndex)),
+                    new GPSListener(currentRoute, this));
         }
         Intent message = new Intent();
         message.putExtra("dist", "0,0");
@@ -64,7 +64,7 @@ public class GPSRunnerService extends Service {
         onCreateGPSConnection();
         super.onCreate();
     }
-    
+
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("GPSRunnerService", "Received start id " + startId + ": " + intent);
         return START_STICKY_COMPATIBILITY;
@@ -90,6 +90,7 @@ public class GPSRunnerService extends Service {
         public static final int WORKOUT_PAUSE = 2;
         public static final int WORKOUT_STATUS = 3;
         public static final int WORKOUT_UNPAUSE = 4;
+        public static final int WORKOUT_ID = 5;
     }
 
 

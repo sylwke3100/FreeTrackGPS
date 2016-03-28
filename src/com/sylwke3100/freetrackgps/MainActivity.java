@@ -88,6 +88,9 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intentToStart = new Intent();
         switch (item.getItemId()) {
+            case R.id.action_workout_mapview:
+                intentToStart = new Intent(this, WorkoutMapViewActivity.class);
+                break;
             case R.id.action_ignorepoints_list:
                 intentToStart = new Intent(this, IgnorePointsListActivity.class);
                 break;

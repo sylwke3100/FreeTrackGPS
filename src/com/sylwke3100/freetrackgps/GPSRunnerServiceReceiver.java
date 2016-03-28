@@ -9,10 +9,12 @@ import android.util.Log;
 public class GPSRunnerServiceReceiver extends BroadcastReceiver {
     private RouteManager currentRoute;
     private Context currentContext;
+    private GPSRunnerServiceMessageController messageController;
 
     public GPSRunnerServiceReceiver(RouteManager route, Context context) {
         currentRoute = route;
         currentContext = context;
+        messageController = new GPSRunnerServiceMessageController(context);
     }
 
     public void onReceive(Context context, Intent intent) {
@@ -33,6 +35,15 @@ public class GPSRunnerServiceReceiver extends BroadcastReceiver {
                 break;
             case GPSRunnerService.SERVICE_ACTION.WORKOUT_STATUS:
                 sendRouteStatus();
+                break;
+            case GPSRunnerService.SERVICE_ACTION.WORKOUT_ID:
+                Intent message = new Intent();
+                if (currentRoute.getStatus() == DefaultValues.routeStatus.start || currentRoute.getStatus() == DefaultValues.routeStatus.pause)
+                    message.putExtra("workoutId", currentRoute.getCurrentId());
+                else
+                    message.putExtra("workoutId", -1);
+                messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_ID, message);
+
                 break;
             default:
                 currentRoute.stop();

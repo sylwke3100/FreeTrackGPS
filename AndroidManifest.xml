@@ -40,6 +40,7 @@
         <activity android:name=".WorkoutInfoActivity" android:label="@string/action_info"/>
         <activity android:name=".IgnorePointsListActivity" android:label="@string/action_ignorepoints_list"/>
         <activity android:name=".IgnorePointsAddFromMapActivity" android:label="@string/action_ignorepoints_add_from_map" android:exported="true" />
+        <activity android:name=".WorkoutMapViewActivity" android:label="@string/action_workout_mapview"/>
         <service
                 android:name=".GPSRunnerService"
                 android:enabled="true" />
