@@ -41,10 +41,11 @@ public class WorkoutMapViewActivity extends Activity {
         android.os.Handler updateView = new android.os.Handler(new android.os.Handler.Callback() {
             public boolean handleMessage(Message message) {
                 currentWorkoutId = sharePrefs.getLong("currentWorkoutId", -1);
-                onUpdateMap();
                 ((TextView) findViewById(R.id.distanceValue)).setText(String.format("%.2f km", message.getData().getDouble("dist", 0)));
-                if (message.getData().getInt("updateCounter", 0) == 3)
+                if (message.getData().getInt("updateCounter", 0) == 3) {
+                    onUpdateMap();
                     onReDrawMap();
+                }
                 return true;
             }
         });
