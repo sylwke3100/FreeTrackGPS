@@ -107,5 +107,6 @@ public class RouteManager {
 
     public void setAreaNotifyInstance(AreaNotificationManager notify) {
         this.areaNotification = notify;
+        areaNotification.deleteNotify();
     }
 }
