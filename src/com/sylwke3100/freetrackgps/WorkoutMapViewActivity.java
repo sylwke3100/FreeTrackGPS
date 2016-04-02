@@ -29,22 +29,23 @@ public class WorkoutMapViewActivity extends Activity {
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");
     private MapView mMapView;
     private DatabaseManager workoutDatabase;
-    private SharedPreferences sharePrefs;
     private long currentWorkoutId = -1;
 
     public void onCreate(Bundle savedInstanceState) {
-        sharePrefs = getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_mapview);
         IntentFilter filter = new IntentFilter();
         filter.addAction(MainActivity.MAINACTIVITY_ACTION);
         android.os.Handler updateView = new android.os.Handler(new android.os.Handler.Callback() {
             public boolean handleMessage(Message message) {
-                currentWorkoutId = sharePrefs.getLong("currentWorkoutId", -1);
-                ((TextView) findViewById(R.id.distanceValue)).setText(String.format("%.2f km", message.getData().getDouble("dist", 0)));
-                if (message.getData().getInt("updateCounter", 0) == 3) {
-                    onUpdateMap();
-                    onReDrawMap();
+                if (message.getData().getLong("currentWorkoutId", -1) != -1)
+                    currentWorkoutId = message.getData().getLong("currentWorkoutId", -1);
+                else {
+                    ((TextView) findViewById(R.id.distanceValue)).setText(String.format("%.2f km", message.getData().getDouble("dist", 0)));
+                    if (message.getData().getInt("updateCounter", 0) == 3) {
+                        onUpdateMap();
+                        onReDrawMap();
+                    }
                 }
                 return true;
             }
@@ -54,7 +55,6 @@ public class WorkoutMapViewActivity extends Activity {
         controller.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_ID);
         workoutDatabase = new DatabaseManager(this);
         mMapView = (MapView) findViewById(R.id.currentmap);
-        currentWorkoutId = sharePrefs.getLong("currentWorkoutId", -1);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
@@ -90,7 +90,6 @@ public class WorkoutMapViewActivity extends Activity {
     }
 
     public void onResume() {
-        currentWorkoutId = sharePrefs.getLong("currentWorkoutId", -1);
         onReDrawMap();
         super.onResume();
     }
