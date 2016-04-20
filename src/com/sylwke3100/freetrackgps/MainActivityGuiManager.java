@@ -32,9 +32,8 @@ public class MainActivityGuiManager {
     }
 
     public void setGpsPosition(double latitude, double longitude) {
-        String message = String.format(" %1$s %2$s", String.format("%.2f", longitude),
-            String.format("%.2f", latitude));
-        this.gpsPosition.setText(message);
+        if (latitude != 0.0 && longitude != 0.0)
+            this.gpsPosition.setText(localContext.getString(R.string.okLabel));
     }
 
     public void setWorkoutDistance(double distance) {
