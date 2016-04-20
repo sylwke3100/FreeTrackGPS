@@ -24,8 +24,10 @@ public class MainActivity extends Activity {
     private MainActivityGuiManager mainOperations;
     private LocationSharing currentLocation;
     private GPSRunnerServiceMessageController messageController;
+    private Intent serviceIntent;
 
     protected void onCreate(Bundle savedInstanceState) {
+        serviceIntent = new Intent(this, GPSRunnerService.class);
         messageController = new GPSRunnerServiceMessageController(getBaseContext());
         workoutStatus = new StatusWorkout();
         sharedPrefs = getSharedPreferences("com.sylwke3100.freetrackgps_preferences", Activity.MODE_PRIVATE);
@@ -56,7 +58,7 @@ public class MainActivity extends Activity {
         IntentFilter mainFiler = new IntentFilter();
         mainFiler.addAction(MAINACTIVITY_ACTION);
         registerReceiver(new MainActivityReceiver(mainOperations, workoutStatus), mainFiler);
-        startService(new Intent(this, GPSRunnerService.class));
+        startService(serviceIntent);
         updateWorkoutStatus();
         setPreviewStatus(View.INVISIBLE);
         this.mainOperations.setWorkoutInactive();
@@ -167,6 +169,7 @@ public class MainActivity extends Activity {
                                         messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
                                     }
                                     finish();
+                                    stopService(serviceIntent);
                                     System.exit(0);
                                 }
                             }).setNegativeButton(this.getString(R.string.noLabel), null).show();
@@ -199,6 +202,7 @@ public class MainActivity extends Activity {
         if (workoutStatus.status != DefaultValues.routeStatus.stop) {
             messageController.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_STOP);
         }
+        stopService(serviceIntent);
     }
 
     public class StatusWorkout {
