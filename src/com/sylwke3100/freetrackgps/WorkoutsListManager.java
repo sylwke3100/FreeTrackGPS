@@ -58,7 +58,6 @@ public class WorkoutsListManager {
     }
 
     public boolean getStatusTimeFilter() {
-        ;
         if (timeFilter.isActive())
             return true;
         else

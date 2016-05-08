@@ -30,6 +30,7 @@ public class WorkoutMapViewActivity extends Activity {
     private MapView mMapView;
     private DatabaseManager workoutDatabase;
     private long currentWorkoutId = -1;
+    private int firstRunMap = 0;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +43,10 @@ public class WorkoutMapViewActivity extends Activity {
                     currentWorkoutId = message.getData().getLong("currentWorkoutId", -1);
                 else {
                     ((TextView) findViewById(R.id.distanceValue)).setText(String.format("%.2f km", message.getData().getDouble("dist", 0)));
-                    if (message.getData().getInt("updateCounter", 0) == 3) {
+                    if (message.getData().getInt("updateCounter", 0) == 3 || firstRunMap == 0) {
                         onUpdateMap();
                         onReDrawMap();
+                        if (firstRunMap == 0) firstRunMap = 1;
                     }
                 }
                 return true;
