@@ -54,15 +54,24 @@ public class WorkoutInfoDetailsFragment extends Fragment {
 
     private void calculateRouteProperties(int id) {
         DatabaseManager baseLocal = new DatabaseManager(context);
-        List<RouteElement> route = baseLocal.getPointsInRoute(id);
-        for (RouteElement element : route) {
-            lastEndDate = element.time;
-            if (element.altitude > maxHeight)
-                maxHeight = element.altitude;
-            if (element.altitude < maxHeight)
-                minHeight = element.altitude;
+        RouteListElement currentWorkout = baseLocal.getRouteInfo(id);
+        if (currentWorkout.minHeight != -1 && currentWorkout.maxHeight != -1) {
+            minHeight = currentWorkout.minHeight;
+            maxHeight = currentWorkout.maxHeight;
+            lastEndDate = currentWorkout.endTime;
+            pointCount = currentWorkout.pointCount;
+        } else {
+            List<RouteElement> route = baseLocal.getPointsInRoute(id);
+            for (RouteElement element : route) {
+                lastEndDate = element.time;
+                if (element.altitude > maxHeight)
+                    maxHeight = element.altitude;
+                if (element.altitude < maxHeight)
+                    minHeight = element.altitude;
+            }
+            pointCount = route.size();
+            baseLocal.updateRouteProperties(id, minHeight, maxHeight, lastEndDate, pointCount);
         }
-        pointCount = route.size();
     }
 
     private RouteListElement getRouteInfo(int id) {

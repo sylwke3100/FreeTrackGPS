@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class DatabaseManager extends SQLiteOpenHelper {
-    private static final int databaseVersion = 4;
+    private static final int databaseVersion = 5;
     private SQLiteDatabase writableDatabase, readableDatabase;
 
     public DatabaseManager(Context context) {
@@ -22,7 +22,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
-                "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String)");
+                "CREATE TABLE workoutsList (id INTEGER PRIMARY KEY AUTOINCREMENT , timeStart INTEGER, distance NUMBER, name String, minHeight NUMBER DEFAULT -1, maxHeight NUMBER DEFAULT -1, timeEnd INTEGER, pointCount INTEGER, endTime)");
         db.execSQL(
                 "CREATE TABLE workoutPoint (id INTEGER, timestamp INTEGER, distance NUMBER, latitude NUMBER, longitude NUMBER, altitude NUMBER)");
         db.execSQL(
@@ -142,7 +142,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public RouteListElement getRouteInfo(long id) {
         Cursor currentCursor = readableDatabase.query("workoutsList", null, "id=" + Long.toString(id), null, null, null, null, null);
         currentCursor.moveToFirst();
-        return new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2), currentCursor.getString(3));
+        return new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2), currentCursor.getString(3), currentCursor.getDouble(4), currentCursor.getDouble(5), currentCursor.getLong(6), currentCursor.getInt(7));
+    }
+
+    public void updateRouteProperties(long id, double minHeight, double maxHeight, long endTime, int pointCount){
+        ContentValues workoutProperties = new ContentValues();
+        workoutProperties.put("minHeight", minHeight);
+        workoutProperties.put("maxHeight", maxHeight);
+        workoutProperties.put("timeEnd", endTime);
+        workoutProperties.put("pointCount", pointCount);
+        writableDatabase.update("workoutsList", workoutProperties, "id=" + id, null);
     }
 
     public void updateNameWorkout(long idWorkout, String name) {
@@ -163,6 +172,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
                             "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER)");
                 if (oldVersion == 4)
                     db.execSQL("ALTER TABLE ignorePointsList ADD COLUMN name TEXT");
+                if (oldVersion == 5) {
+                    db.execSQL("ALTER TABLE workoutsList ADD COLUMN minHeight NUMBER DEFAULT -1");
+                    db.execSQL("ALTER TABLE workoutsList ADD COLUMN maxHeight NUMBER DEFAULT -1");
+                    db.execSQL("ALTER TABLE workoutsList ADD COLUMN timeEnd INTEGER");
+                    db.execSQL("ALTER TABLE workoutsList ADD COLUMN pointCount INTEGER");
+                }
             }
         else
             onCreate(db);

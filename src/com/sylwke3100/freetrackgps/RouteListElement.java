@@ -9,7 +9,11 @@ public class RouteListElement {
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd.MM.yyyy HH:mm ");
     public int id;
     public long startTime;
+    public long endTime;
+    public double minHeight = -1;
+    public double maxHeight = -1;
     public double distance;
+    public int pointCount;
     public String name = "";
 
     public RouteListElement(int id, long startTime, double distance, String name) {
@@ -17,6 +21,17 @@ public class RouteListElement {
         this.startTime = startTime;
         this.distance = distance;
         this.name = name;
+    }
+
+    public RouteListElement(int id, long startTime, double distance, String name, double minHeight, double maxHeight, long endTime, int pointCount) {
+        this.id = id;
+        this.startTime = startTime;
+        this.distance = distance;
+        this.name = name;
+        this.minHeight = minHeight;
+        this.maxHeight = maxHeight;
+        this.endTime = endTime;
+        this.pointCount = pointCount;
     }
 
     public String getPreparedName() {
