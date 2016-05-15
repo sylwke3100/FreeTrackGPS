@@ -28,7 +28,7 @@ import java.util.List;
 public class WorkoutMapViewActivity extends Activity {
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");
     private MapView mMapView;
-    private DatabaseManager workoutDatabase;
+    private WorkoutDatabaseController workoutController;
     private long currentWorkoutId = -1;
     private int firstRunMap = 0;
 
@@ -55,7 +55,7 @@ public class WorkoutMapViewActivity extends Activity {
         registerReceiver(new WorkoutMapViewReciver(getBaseContext(), updateView), filter);
         GPSRunnerServiceMessageController controller = new GPSRunnerServiceMessageController(this);
         controller.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_ID);
-        workoutDatabase = new DatabaseManager(this);
+        workoutController = new WorkoutDatabaseController(this);
         mMapView = (MapView) findViewById(R.id.currentmap);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setBuiltInZoomControls(true);
@@ -102,7 +102,7 @@ public class WorkoutMapViewActivity extends Activity {
 
     private PathOverlay getRoutePath() {
         Log.d("GRStatus", Long.toString(currentWorkoutId));
-        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(currentWorkoutId);
+        List<RouteElement> pointsList = workoutController.getPoints(currentWorkoutId);
         PathOverlay routeMapPath = new PathOverlay(Color.BLUE, this);
         for (RouteElement routePoint : pointsList) {
             GeoPoint point = new GeoPoint(routePoint.latitude, routePoint.longitude);
@@ -112,7 +112,7 @@ public class WorkoutMapViewActivity extends Activity {
     }
 
     private ItemizedIconOverlay<OverlayItem> getStartEndMarkers(final Context inflanterContext) {
-        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(currentWorkoutId);
+        List<RouteElement> pointsList = workoutController.getPoints(currentWorkoutId);
         final List<OverlayItem> routeMarkersArray = new ArrayList<OverlayItem>();
         if (pointsList.size() >= 2) {
             RouteElement startPoint = pointsList.get(0);
@@ -152,7 +152,7 @@ public class WorkoutMapViewActivity extends Activity {
     }
 
     private BoundingBoxE6 getLimitedAreaPath() {
-        List<RouteElement> pointsList = workoutDatabase.getPointsInRoute(currentWorkoutId);
+        List<RouteElement> pointsList = workoutController.getPoints(currentWorkoutId);
         double minLatitude = Double.MAX_VALUE, maxLatitude = Double.MIN_VALUE, minLongitude =
                 Double.MAX_VALUE, maxLongitude = Double.MIN_VALUE;
         if (pointsList.size() > 0) {

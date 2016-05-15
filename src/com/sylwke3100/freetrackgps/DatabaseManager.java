@@ -29,136 +29,26 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 "CREATE TABLE ignorePointsList (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude NUMBER, longitude NUMBER, name TEXT)");
     }
 
-    public long startWorkout(long timeStartWorkout) {
-        ContentValues workoutValues = new ContentValues();
-        workoutValues.put("timeStart", timeStartWorkout);
-        workoutValues.put("distance", 0);
-        long workoutId = this.writableDatabase.insert("workoutsList", null, workoutValues);
-        return workoutId;
+    public void updateValues(String table, ContentValues values, String conditions){
+        writableDatabase.update(table, values, conditions, null);
     }
 
-    public void addPoint(long workoutId, RouteElement point, double distance) {
-        ContentValues workoutPointValues = new ContentValues();
-        ContentValues workoutPointUpdatedValues = new ContentValues();
-        workoutPointValues.put("id", workoutId);
-        workoutPointValues.put("timestamp", point.time);
-        workoutPointValues.put("distance", distance);
-        workoutPointValues.put("latitude", point.latitude);
-        workoutPointValues.put("longitude", point.longitude);
-        workoutPointValues.put("altitude", point.altitude);
-        writableDatabase.insert("workoutPoint", null, workoutPointValues);
-        workoutPointUpdatedValues.put("distance", distance);
-        writableDatabase.update("workoutsList", workoutPointUpdatedValues, "id=" + workoutId, null);
+    public Cursor getCursor(String table, String selection, String[] selectionArg){
+        Cursor currentCursor = readableDatabase.query(table, null, selection, selectionArg, null, null, null );
+        return currentCursor;
     }
 
-    public boolean addIgnorePoint(double latitude, double longitude, String name) {
-        Cursor currentCursor = readableDatabase
-                .query("ignorePointsList", null, "latitude=? AND longitude=?",
-                        new String[]{Double.toString(latitude), Double.toString(longitude)}, null, null,
-                        null);
-        if (currentCursor.getCount() == 0) {
-            ContentValues ignorePointValues = new ContentValues();
-            ignorePointValues.put("latitude", latitude);
-            ignorePointValues.put("longitude", longitude);
-            ignorePointValues.put("name", name);
-            writableDatabase.insert("ignorePointsList", null, ignorePointValues);
-            return true;
-        } else
-            return false;
+    public Cursor getCursor(String table, String selection, String[] selectionArg, String order){
+        Cursor currentCursor = readableDatabase.query(table, null, selection, selectionArg, null, null, order );
+        return currentCursor;
     }
 
-    private String getPreparedStringFilters(List<DatabaseFilter> filters) {
-        boolean isActiveAnyFilter = false;
-        String databaseFilterString = new String();
-        for (DatabaseFilter filter : filters) {
-            if (filter.isActive()) {
-                isActiveAnyFilter = true;
-                databaseFilterString += filter.getGeneratedFilterString() + " AND ";
-            }
-        }
-        if (!(filters.size() == 0) && isActiveAnyFilter == true)
-            databaseFilterString =
-                    databaseFilterString.substring(0, databaseFilterString.length() - 5);
-        else
-            databaseFilterString = "";
-        return databaseFilterString;
+    public long insertValues(String table, ContentValues values){
+        return writableDatabase.insert(table, null, values);
     }
 
-    public List<RouteListElement> getRoutesList(List<DatabaseFilter> filters) {
-        List<RouteListElement> currentRoutesList = new LinkedList<RouteListElement>();
-        Cursor currentCursor = readableDatabase
-                .query("workoutsList", null, getPreparedStringFilters(filters), null, null, null,
-                        "timeStart DESC");
-        if (currentCursor.moveToFirst()) {
-            do {
-                currentRoutesList.add(
-                        new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1),
-                                currentCursor.getDouble(2), currentCursor.getString(3)));
-            } while (currentCursor.moveToNext());
-        }
-        return currentRoutesList;
-    }
-
-    public void deleteRoute(long id) {
-        writableDatabase.delete("workoutsList", "id=" + Long.toString(id), null);
-        writableDatabase.delete("workoutPoint", "id=" + Long.toString(id), null);
-    }
-
-    public void deleteIgnorePoint(double lat, double lon) {
-        writableDatabase.delete("ignorePointsList", " latitude =? AND longitude =?",
-                new String[]{Double.toString(lat), Double.toString(lon)});
-    }
-
-    public List<IgnorePointsListElement> getIgnorePointsList() {
-        List<IgnorePointsListElement> currentIgnorePointsList =
-                new LinkedList<IgnorePointsListElement>();
-        Cursor currentCursor =
-                readableDatabase.query("ignorePointsList", null, null, null, null, null, null, null);
-        if (currentCursor.moveToFirst()) {
-            do {
-                IgnorePointsListElement element =
-                        new IgnorePointsListElement(currentCursor.getDouble(1),
-                                currentCursor.getDouble(2), currentCursor.getString(3));
-                currentIgnorePointsList.add(element);
-            } while (currentCursor.moveToNext());
-        }
-        return currentIgnorePointsList;
-    }
-
-    public List<RouteElement> getPointsInRoute(long id) {
-        List<RouteElement> currentPointsList = new LinkedList<RouteElement>();
-        Cursor currentCursor = readableDatabase
-                .query("workoutPoint", null, "id=" + Long.toString(id), null, null, null, null, null);
-        if (currentCursor.moveToFirst()) {
-            do {
-                currentPointsList.add(
-                        new RouteElement(currentCursor.getDouble(3), currentCursor.getDouble(4),
-                                currentCursor.getDouble(5), currentCursor.getLong(1)));
-            } while (currentCursor.moveToNext());
-        }
-        return currentPointsList;
-    }
-
-    public RouteListElement getRouteInfo(long id) {
-        Cursor currentCursor = readableDatabase.query("workoutsList", null, "id=" + Long.toString(id), null, null, null, null, null);
-        currentCursor.moveToFirst();
-        return new RouteListElement(currentCursor.getInt(0), currentCursor.getLong(1), currentCursor.getDouble(2), currentCursor.getString(3), currentCursor.getDouble(4), currentCursor.getDouble(5), currentCursor.getLong(6), currentCursor.getInt(7));
-    }
-
-    public void updateRouteProperties(long id, double minHeight, double maxHeight, long endTime, int pointCount){
-        ContentValues workoutProperties = new ContentValues();
-        workoutProperties.put("minHeight", minHeight);
-        workoutProperties.put("maxHeight", maxHeight);
-        workoutProperties.put("timeEnd", endTime);
-        workoutProperties.put("pointCount", pointCount);
-        writableDatabase.update("workoutsList", workoutProperties, "id=" + id, null);
-    }
-
-    public void updateNameWorkout(long idWorkout, String name) {
-        ContentValues workoutValues = new ContentValues();
-        workoutValues.put("name", name);
-        writableDatabase
-                .update("workoutsList", workoutValues, "id=" + Long.toString(idWorkout), null);
+    public void deleteValues(String table, String conditions, String[] conditionsArgs){
+        writableDatabase.delete(table, conditions, conditionsArgs);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

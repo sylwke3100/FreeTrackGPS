@@ -16,17 +16,19 @@ public class RouteManager {
     private Location lastPosition;
     private double distance;
     private AreaNotificationManager areaNotification;
-    private DatabaseManager currentDB;
     private long currentId;
     private List<IgnorePointsListElement> globalIgnorePointsList;
     private VibrateNotificationManager vibrateNotificationManager;
+    private WorkoutDatabaseController workoutController;
+    private IgnorePointsDatabaseController ignorePointsController;
 
     public RouteManager(Context globalContext) {
         context = globalContext;
         status = DefaultValues.routeStatus.stop;
-        currentDB = new DatabaseManager(globalContext);
+        workoutController = new WorkoutDatabaseController(globalContext);
         currentStatus = DefaultValues.areaStatus.ok;
         vibrateNotificationManager = new VibrateNotificationManager(globalContext);
+        ignorePointsController = new IgnorePointsDatabaseController(globalContext);
     }
 
     public DefaultValues.areaStatus getPointStatus() {
@@ -46,9 +48,9 @@ public class RouteManager {
     }
 
     public void start() {
-        globalIgnorePointsList = currentDB.getIgnorePointsList();
+        globalIgnorePointsList = ignorePointsController.getList();
         startTime = System.currentTimeMillis();
-        currentId = currentDB.startWorkout(startTime);
+        currentId = workoutController.start(startTime);
         status = DefaultValues.routeStatus.start;
         distance = 0.0;
         areaNotification.setContent(context.getString(R.string.workoutDistanceLabel) + ": " + String
@@ -67,7 +69,7 @@ public class RouteManager {
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
                 vibrateNotificationManager.proccesNotify(currentLocation);
-                currentDB.addPoint(currentId, routePoint, distance);
+                workoutController.addPoint(currentId, routePoint, distance);
                 currentStatus = DefaultValues.areaStatus.ok;
                 lastPosition = currentLocation;
             } else

@@ -11,25 +11,27 @@ import java.util.List;
 
 public class WorkoutsListManager {
     private SharedPreferences sharePrefs;
-    private DatabaseManager currentDataBase;
+    private WorkoutsListDatabaseController workoutsListController;
     private List<RouteListElement> rawWorkoutsList;
     private Context localContext;
+    private WorkoutDatabaseController workoutController;
     private DatabaseTimeFilter timeFilter;
     private DatabaseNameFilter nameFilter;
 
     WorkoutsListManager(Context context) {
-        currentDataBase = new DatabaseManager(context);
+        workoutsListController = new WorkoutsListDatabaseController(context);
         localContext = context;
         sharePrefs = context.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
         timeFilter = new DatabaseTimeFilter(context);
         nameFilter = new DatabaseNameFilter(context);
+        workoutController = new WorkoutDatabaseController(context);
     }
 
     public ArrayList<HashMap<String, String>> getUpdatedWorkoutsList() {
         List<DatabaseFilter> filtersList = new LinkedList<DatabaseFilter>();
         filtersList.add(timeFilter);
         filtersList.add(nameFilter);
-        rawWorkoutsList = currentDataBase.getRoutesList(filtersList);
+        rawWorkoutsList =  workoutsListController.getRoutes(filtersList);
         ArrayList<HashMap<String, String>> workoutsList = new ArrayList<HashMap<String, String>>();
         for (RouteListElement workout : rawWorkoutsList) {
             workoutsList.add(workout.getPreparedHashMapToView());
@@ -42,11 +44,11 @@ public class WorkoutsListManager {
     }
 
     public void deleteWorkout(int id) {
-        currentDataBase.deleteRoute(rawWorkoutsList.get(id).id);
+        workoutsListController.delete(rawWorkoutsList.get(id).id);
     }
 
     public List<RouteElement> getPointsInRoute(Integer id) {
-        return currentDataBase.getPointsInRoute(id);
+        return workoutController.getPoints(id);
     }
 
     public void setTimeOneFilter(long time) {
@@ -87,6 +89,6 @@ public class WorkoutsListManager {
 
     public void updateWorkoutName(int id, String name) {
         RouteListElement object = rawWorkoutsList.get(id);
-        currentDataBase.updateNameWorkout(object.id, name);
+        workoutController.updateName(object.id, name);
     }
 }

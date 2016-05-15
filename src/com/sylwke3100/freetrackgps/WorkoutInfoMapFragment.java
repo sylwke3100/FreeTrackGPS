@@ -26,16 +26,16 @@ import java.util.List;
 public class WorkoutInfoMapFragment extends Fragment {
     private static final SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");
     private MapView mMapView;
-    private DatabaseManager workoutDatabase;
+    private WorkoutDatabaseController workoutController;
     private Context globalContext;
     private List<RouteElement> pointsList;
 
     public void onCreate(Bundle savedInstanceState) {
         globalContext = getActivity().getBaseContext();
-        workoutDatabase = new DatabaseManager(globalContext);
+        workoutController = new WorkoutDatabaseController(globalContext);
         Bundle localBundle = getArguments();
         Integer routeId = localBundle.getInt("routeId");
-        pointsList = workoutDatabase.getPointsInRoute(routeId);
+        pointsList = workoutController.getPoints(routeId);
         super.onCreate(savedInstanceState);
     }
 

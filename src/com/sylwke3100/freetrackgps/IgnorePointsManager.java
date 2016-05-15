@@ -9,18 +9,18 @@ import java.util.List;
 
 public class IgnorePointsManager {
     private Context localContext;
-    private DatabaseManager databaseHandler;
+    private IgnorePointsDatabaseController ignorePointsController;
     private List<IgnorePointsListElement> localListIgnore;
 
     public IgnorePointsManager(Context globalContext) {
         localContext = globalContext;
-        databaseHandler = new DatabaseManager(globalContext);
+        ignorePointsController = new IgnorePointsDatabaseController(globalContext);
 
     }
 
     public ArrayList<HashMap<String, String>> getIgnorePointsPreparedList() {
         ArrayList<HashMap<String, String>> baseList = new ArrayList<HashMap<String, String>>();
-        localListIgnore = databaseHandler.getIgnorePointsList();
+        localListIgnore = ignorePointsController.getList();
         for (IgnorePointsListElement element : localListIgnore) {
             baseList.add(element.getPreparedHashMapToView());
         }
@@ -32,11 +32,11 @@ public class IgnorePointsManager {
     }
 
     public void deleteIgnorePoint(IgnorePointsListElement point){
-        databaseHandler.deleteIgnorePoint(point.latitude, point.longitude);
+        ignorePointsController.deletePoint(point.latitude, point.longitude);
     }
 
     public boolean addIgnorePoint(double latitude,double longitude,String name){
-        return databaseHandler.addIgnorePoint(latitude, longitude, name);
+        return ignorePointsController.addPoint(latitude, longitude, name);
     }
 
 }
