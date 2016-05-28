@@ -74,6 +74,7 @@ public class IgnorePointsAddFromMapActivity extends Activity {
                         sharedLocation.getCurrentLocation();
                 mMapView.getController()
                         .setCenter(new GeoPoint(location.latitude, location.longitude));
+                mMapView.getController().setZoom(DefaultValues.defaultZoomLevel);
                 mMapView.invalidate();
                 break;
             case R.id.action_ignorepoints_add_done:
