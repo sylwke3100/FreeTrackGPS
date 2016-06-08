@@ -84,4 +84,5 @@
     <string name="resetFiltersLabel">Reset filters</string>
     <string name="menuFiltersLabel">Filters</string>
     <string name="action_workout_mapview">Workout map</string>
+    <string name="gpsOffText">GPS is off</string>
 </resources>

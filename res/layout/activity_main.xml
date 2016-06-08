@@ -10,7 +10,7 @@
                   android:layout_height="37dp" android:textStyle="bold"
                   android:layout_marginTop="10dp" android:layout_weight="0.09"/>
     </LinearLayout>
-    <TableRow android:layout_marginTop="20dp">
+    <TableRow android:layout_marginTop="20dp" >
 
         <TextView
                 android:id="@+id/textGPSStatusLabel"
@@ -52,7 +52,7 @@
                 android:text="- -" android:layout_column="6"/>
     </TableRow>
 
-    <TableRow android:layout_marginBottom="20dp">
+    <TableRow android:layout_marginBottom="20dp" >
         <TextView
                 android:id="@+id/textWorkoutStatusLabel"
                 android:layout_width="wrap_content"

@@ -64,6 +64,7 @@ public class GPSListener implements LocationListener {
                 if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
                     messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_PAUSE, new Intent());
+                    messageController.sendAreaNotification(currentContext.getString(R.string.gpsOffText));
                 }
                 break;
             case LocationProvider.TEMPORARILY_UNAVAILABLE:
@@ -71,6 +72,7 @@ public class GPSListener implements LocationListener {
                 if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
                     localRoute.pause();
                     messageController.sendMessageToGUI(MainActivityReceiver.COMMANDS.WORKOUT_PAUSE, new Intent());
+                    messageController.sendAreaNotification(currentContext.getString(R.string.gpsOffText));
                 }
                 break;
         }
@@ -81,6 +83,7 @@ public class GPSListener implements LocationListener {
         if (localRoute.getStatus() == DefaultValues.routeStatus.start) {
             localRoute.pause();
             messageController.sendMessageToGUI("workoutPause", new Intent());
+            messageController.sendAreaNotification(currentContext.getString(R.string.gpsOffText));
         }
     }
 

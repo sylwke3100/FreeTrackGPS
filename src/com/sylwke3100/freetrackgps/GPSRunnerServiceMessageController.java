@@ -28,4 +28,10 @@ public class GPSRunnerServiceMessageController {
         sendMessageToGUI(command, new Intent());
     }
 
+    public void sendAreaNotification(String message){
+        AreaNotificationManager notificationManager = new AreaNotificationManager(mContext, R.drawable.icon, mContext.getString(R.string.app_name));
+        notificationManager.setContent(message);
+        notificationManager.sendNotify();
+    }
+
 }
