@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="distanceArray">
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>180</item>
+    </string-array>
+    <string name="distanceArrayDefault">100</string>
+</resources>
