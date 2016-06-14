@@ -47,12 +47,21 @@ public class GPXWriter {
 
     private String prepareFilename(long startTime){
         fileNameBuffer = new StringBuffer();
-        File dir = new File(
-            Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
-        if (!(dir.exists() && dir.isDirectory()))
-            dir.mkdir();
-        fileNameBuffer.append(
-            Environment.getExternalStorageDirectory() + DefaultValues.defaultFolderWithWorkout);
+        if (Environment.isExternalStorageEmulated()) {
+            File dir = new File(
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + DefaultValues.defaultFolderWithWorkout);
+            if (!(dir.exists() && dir.isDirectory()))
+                dir.mkdir();
+            fileNameBuffer.append(
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + DefaultValues.defaultFolderWithWorkout);
+        } else{
+            File dir = new File(
+                    Environment.getExternalStorageDirectory() +  DefaultValues.defaultFolderWithWorkout);
+            if (!(dir.exists() && dir.isDirectory()))
+                dir.mkdir();
+            fileNameBuffer.append(
+                    Environment.getExternalStorageDirectory() +  DefaultValues.defaultFolderWithWorkout);
+        }
         fileNameBuffer.append(fileGpxFormat.format(new Date(startTime)) + "."
             + DefaultValues.defaultFileFormat);
         return fileNameBuffer.toString();
