@@ -5,19 +5,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.StrictMode;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class VibrateNotificationManager {
     private Vibrator notificationService;
     private SharedPreferences sharePrefs;
-    private double lastDistance = 0, distanceToNotification = 0;
-    private Location lastPoint;
-    private boolean isPoint = false;
+    private int distanceToNotification = 0;
 
     public VibrateNotificationManager(Context mainContext) {
         notificationService = (Vibrator) mainContext.getSystemService(Context.VIBRATOR_SERVICE);
         sharePrefs = mainContext.getSharedPreferences(DefaultValues.prefs, Activity.MODE_PRIVATE);
-        lastPoint = new Location(LocationManager.GPS_PROVIDER);
     }
 
     private boolean getStatusSetting() {
@@ -29,26 +28,15 @@ public class VibrateNotificationManager {
             notificationService.vibrate(200);
     }
 
-    public void proccesNotify(Location current) {
-        if (isPoint) {
-            float currentDistance = current.distanceTo(lastPoint);
-            if (distanceToNotification < 1000) {
-                distanceToNotification += currentDistance - lastDistance;
-                lastDistance = currentDistance;
-            } else {
-                run();
-                clear(false);
-            }
-        } else {
-            lastPoint = current;
-            isPoint = true;
+    public void activateNotify(Double distance) {
+        int integerDistance = distance.intValue();
+        if (integerDistance != distanceToNotification){
+            run();
+            distanceToNotification = integerDistance;
         }
     }
 
-    public void clear(boolean clearPermanently) {
+    public void clear() {
         distanceToNotification = 0;
-        if (clearPermanently)
-            lastDistance = 0;
-        isPoint = false;
     }
 }

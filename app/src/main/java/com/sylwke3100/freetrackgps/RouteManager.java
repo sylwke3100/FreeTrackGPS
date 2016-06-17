@@ -68,7 +68,7 @@ public class RouteManager {
                                 currentLocation.getAltitude(), currentTime);
                 if (lastPosition != null)
                     distance += lastPosition.distanceTo(currentLocation);
-                vibrateNotificationManager.proccesNotify(currentLocation);
+                vibrateNotificationManager.activateNotify(getDistanceInKm());
                 workoutController.addPoint(currentId, routePoint, distance);
                 currentStatus = DefaultValues.areaStatus.ok;
                 lastPosition = currentLocation;
@@ -104,7 +104,7 @@ public class RouteManager {
         lastPosition = null;
         areaNotification.deleteNotify();
         currentId = -1;
-        vibrateNotificationManager.clear(true);
+        vibrateNotificationManager.clear();
     }
 
     public void setAreaNotifyInstance(AreaNotificationManager notify) {
