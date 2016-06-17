@@ -25,7 +25,7 @@ public class VibrateNotificationManager {
 
     public void run() {
         if (getStatusSetting())
-            notificationService.vibrate(200);
+            notificationService.vibrate(400);
     }
 
     public void activateNotify(Double distance) {
