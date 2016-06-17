@@ -3,7 +3,7 @@ FreeTrackGPS
 
 Simple application for saving  points gps workout to GPX file for Android 
 
-current version: 0.9
+current version: 0.9.10
 
 Features
 
