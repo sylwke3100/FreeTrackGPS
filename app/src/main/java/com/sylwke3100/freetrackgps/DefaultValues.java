@@ -7,6 +7,7 @@ public final class DefaultValues {
     public static String defaultFolderWithWorkout = "/workout/";
     public static String defaultFileFormat = "gpx";
     public static int defaultZoomLevel = 15;
+    public static int defaultVibrationTime = 400;
     public static enum routeStatus {
         stop,
         pause,

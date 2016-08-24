@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:transitionGroup="true" tools:showIn="@layout/workout_control_appwidget_info"
                 android:id="@+id/widgetAcitivty">
     <ImageButton
             android:layout_width="wrap_content"

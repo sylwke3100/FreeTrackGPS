@@ -9,6 +9,8 @@ import android.os.StrictMode;
 import android.os.Vibrator;
 import android.util.Log;
 
+import static com.sylwke3100.freetrackgps.DefaultValues.defaultVibrationTime;
+
 public class VibrateNotificationManager {
     private Vibrator notificationService;
     private SharedPreferences sharePrefs;
@@ -25,7 +27,7 @@ public class VibrateNotificationManager {
 
     public void run() {
         if (getStatusSetting())
-            notificationService.vibrate(400);
+            notificationService.vibrate(DefaultValues.defaultVibrationTime);
     }
 
     public void activateNotify(Double distance) {
