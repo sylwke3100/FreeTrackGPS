@@ -2,10 +2,8 @@ package com.sylwke3100.freetrackgps;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 
 import java.util.Date;
-import java.util.List;
 
 
 public class RouteManager {
@@ -17,7 +15,7 @@ public class RouteManager {
     private double distance;
     private AreaNotificationManager areaNotification;
     private long currentId;
-    private List<IgnorePointsListElement> globalIgnorePointsList;
+    private IgnorePointsManager ignorePointsManager;
     private VibrateNotificationManager vibrateNotificationManager;
     private WorkoutDatabaseController workoutController;
     private IgnorePointsDatabaseController ignorePointsController;
@@ -28,27 +26,16 @@ public class RouteManager {
         workoutController = new WorkoutDatabaseController(globalContext);
         currentStatus = DefaultValues.areaStatus.ok;
         vibrateNotificationManager = new VibrateNotificationManager(globalContext);
-        ignorePointsController = new IgnorePointsDatabaseController(globalContext);
+        ignorePointsManager = new IgnorePointsManager(globalContext);
     }
 
     public DefaultValues.areaStatus getPointStatus() {
         return currentStatus;
     }
 
-    public boolean findPointInIgnore(Location cLocation) {
-        for (IgnorePointsListElement element : globalIgnorePointsList) {
-            Location current = new Location(LocationManager.GPS_PROVIDER);
-            current.setLatitude(element.latitude);
-            current.setLongitude(element.longitude);
-            float distance = current.distanceTo(cLocation);
-            if (distance < 100)
-                return true;
-        }
-        return false;
-    }
 
     public void start() {
-        globalIgnorePointsList = ignorePointsController.getList();
+        ignorePointsManager.loadList();
         startTime = System.currentTimeMillis();
         currentId = workoutController.start(startTime);
         status = DefaultValues.routeStatus.start;
@@ -62,7 +49,7 @@ public class RouteManager {
         Date currentDate = new Date();
         if (status == DefaultValues.routeStatus.start) {
             long currentTime = currentDate.getTime();
-            if (findPointInIgnore(currentLocation) == false) {
+            if (ignorePointsManager.findIgnorePoint(currentLocation) == false) {
                 RouteElement routePoint =
                         new RouteElement(currentLocation.getLatitude(), currentLocation.getLongitude(),
                                 currentLocation.getAltitude(), currentTime);

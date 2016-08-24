@@ -2,6 +2,8 @@ package com.sylwke3100.freetrackgps;
 
 
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,11 +22,15 @@ public class IgnorePointsManager {
 
     public ArrayList<HashMap<String, String>> getIgnorePointsPreparedList() {
         ArrayList<HashMap<String, String>> baseList = new ArrayList<HashMap<String, String>>();
-        localListIgnore = ignorePointsController.getList();
+        loadList();
         for (IgnorePointsListElement element : localListIgnore) {
             baseList.add(element.getPreparedHashMapToView());
         }
         return baseList;
+    }
+
+    public void loadList(){
+        localListIgnore = ignorePointsController.getList();
     }
 
     public IgnorePointsListElement getIgnorePoint(int id){
@@ -38,5 +44,17 @@ public class IgnorePointsManager {
     public boolean addIgnorePoint(double latitude,double longitude,String name){
         return ignorePointsController.addPoint(latitude, longitude, name);
     }
+    public boolean findIgnorePoint(Location cLocation) {
+        for (IgnorePointsListElement element : ignorePointsController.getList()) {
+            Location current = new Location(LocationManager.GPS_PROVIDER);
+            current.setLatitude(element.latitude);
+            current.setLongitude(element.longitude);
+            float distance = current.distanceTo(cLocation);
+            if (distance < 100)
+                return true;
+        }
+        return false;
+    }
+
 
 }
