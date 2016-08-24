@@ -115,6 +115,33 @@ public class IgnorePointsListActivity extends Activity {
         alertD.show();
     }
 
+    public void onAddIgnorePointsAlertDialogShowWithArgs(EditText inputLat, EditText inputLon,
+                                                         EditText inputName) {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.prompt_ignorepoints_add, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptView);
+        ((EditText) promptView.findViewById(R.id.nameEdit)).setText(inputName.getText());
+        ((EditText) promptView.findViewById(R.id.latEdit)).setText(inputLat.getText());
+        ((EditText) promptView.findViewById(R.id.lonEdit)).setText(inputLon.getText());
+        final EditText newInputName = (EditText) promptView.findViewById(R.id.nameEdit);
+        final EditText newInputLat = (EditText) promptView.findViewById(R.id.latEdit);
+        final EditText newInputLon = (EditText) promptView.findViewById(R.id.lonEdit);
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton(R.string.okLabel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        addIgnorePointsFromAlertDialog(newInputLat, newInputLon, newInputName);
+                    }
+                }).setNegativeButton(R.string.cancelLabel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+
+
     public void addIgnorePointsFromAlertDialog(EditText inputLat, EditText inputLon,
                                                EditText inputName) {
         if (!inputLat.getText().toString().isEmpty() && !inputLon.getText().toString().isEmpty()) {
@@ -126,7 +153,9 @@ public class IgnorePointsListActivity extends Activity {
                     Toast.makeText(getBaseContext(), R.string.ignorePointsExists, Toast.LENGTH_LONG)
                             .show();
             onUpdateIgnoreList();
-        } else
+        } else {
             onEmptyErrorAlertShow();
+            onAddIgnorePointsAlertDialogShowWithArgs(inputLat, inputLon, inputName);
+        }
     }
 }
