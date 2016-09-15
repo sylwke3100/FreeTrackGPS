@@ -11,7 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.Display;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.widget.TextView;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBoxE6;
@@ -31,6 +35,12 @@ public class WorkoutMapViewActivity extends Activity {
     private WorkoutDatabaseController workoutController;
     private long currentWorkoutId = -1;
     private int firstRunMap = 0;
+
+    private int getScreenSizeHeight(Context context){
+        WindowManager wm = (WindowManager)    context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        return display.getHeight();
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +66,18 @@ public class WorkoutMapViewActivity extends Activity {
         GPSRunnerServiceMessageController controller = new GPSRunnerServiceMessageController(this);
         controller.sendMessageToService(GPSRunnerService.SERVICE_ACTION.WORKOUT_ID);
         workoutController = new WorkoutDatabaseController(this);
+
         mMapView = (MapView) findViewById(R.id.currentmap);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
         mMapView.getOverlays().add(getRoutePath());
         mMapView.getOverlays().add(getStartEndMarkers(this));
+        if (getScreenSizeHeight(getBaseContext()) < 400 ){
+            ViewGroup.LayoutParams params = mMapView.getLayoutParams();
+            params.height = getScreenSizeHeight(getBaseContext()) - 80;
+            mMapView.setLayoutParams(params);
+        }
     }
 
     public void onUpdateMap() {
